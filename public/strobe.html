@@ -860,14 +860,14 @@ window.addEventListener('gamepadconnected', (e) => {
   gp.crossY = area.height / 2;
   updateCrosshairPosition();
 
-  console.log('🎮 Gamepad connected:', e.gamepad.id);
+
 });
 
 window.addEventListener('gamepaddisconnected', () => {
   gp.connected = false;
   gp.index = null;
   setInputMode('mouse');
-  console.log('🎮 Gamepad disconnected');
+
 });
 
 // Switch input mode
@@ -1254,33 +1254,37 @@ function endGame() {
   $('resultsScreen').classList.remove('hidden');
 
   // ─── SAVE SCORE TO SERVER ───
-  fetch('/api/scores', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      game: 'strobe',
-      tier: state.tier,
-      score: state.score,
-      accuracy: acc,
-      bestStreak: state.bestStreak,
-      avgReaction: avgR,
-      hits: state.hits,
-      misses: state.misses,
-      inputMode: gp.connected ? 'controller' : 'mouse',
-      grade,
-    }),
-  }).then(r => r.json()).then(d => {
-    if (d.success) console.log('✅ Score saved:', d.entry.id);
-  }).catch(e => console.warn('Score save failed:', e));
+  try {
+    fetch('/api/scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        game: 'strobe',
+        tier: state.tier,
+        score: state.score,
+        accuracy: acc,
+        bestStreak: state.bestStreak,
+        avgReaction: avgR,
+        hits: state.hits,
+        misses: state.misses,
+        inputMode: gp.connected ? 'controller' : 'mouse',
+        grade: grade
+      })
+    }).then(function() {}).catch(function() {});
+  } catch (ignore) {}
 }
 
 function restartGame() {
+  document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); });
+  $('strobeOverlay').classList.remove('active');
   $('resultsScreen').classList.add('hidden');
   startCountdown();
 }
 
 function backToMenu() {
   state.screen = 'start';
+  document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); });
+  $('strobeOverlay').classList.remove('active');
   $('resultsScreen').classList.add('hidden');
   $('startScreen').classList.remove('hidden');
 }
