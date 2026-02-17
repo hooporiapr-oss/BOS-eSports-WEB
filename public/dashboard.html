@@ -46,7 +46,6 @@
     z-index: 9998;
   }
 
-  /* ─── NAV ─── */
   .nav {
     display: flex;
     justify-content: space-between;
@@ -96,12 +95,9 @@
 
   .nav-btn:hover { color: var(--hot); border-color: var(--hot); }
 
-  /* ─── MAIN ─── */
   .main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
-  .welcome {
-    margin-bottom: 2.5rem;
-  }
+  .welcome { margin-bottom: 2.5rem; }
 
   .welcome h1 {
     font-family: 'Exo 2', sans-serif;
@@ -121,7 +117,6 @@
     margin-top: 0.3rem;
   }
 
-  /* ─── STATS ROW ─── */
   .stats-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -168,7 +163,6 @@
     margin-top: 0.4rem;
   }
 
-  /* ─── GAMES ─── */
   .section-header {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.6rem;
@@ -246,7 +240,6 @@
 
   .game-card p { color: var(--text-mid); font-size: 0.82rem; line-height: 1.6; }
 
-  /* ─── LEADERBOARD / HISTORY ─── */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -305,6 +298,13 @@
     color: var(--gold);
   }
 
+  .lb-game {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.5rem;
+    color: var(--text-dim);
+    margin-left: 0.5rem;
+  }
+
   .history-row {
     display: flex;
     justify-content: space-between;
@@ -321,6 +321,8 @@
     font-size: 0.55rem;
     color: var(--text-dim);
   }
+
+  .history-right { display: flex; align-items: center; }
 
   .history-score { font-weight: 700; color: var(--gold); }
   .history-grade { font-weight: 700; margin-left: 0.5rem; }
@@ -350,8 +352,8 @@
 <nav class="nav">
   <a href="/dashboard" class="nav-logo">BOS ESPORTS</a>
   <div class="nav-right">
-    <span class="nav-user">Player: <strong id="navUsername">—</strong></span>
-    <button class="nav-btn" onclick="logout()">Logout</button>
+    <span class="nav-user">Player: <strong id="navUsername">--</strong></span>
+    <button class="nav-btn" id="logoutBtn">Logout</button>
   </div>
 </nav>
 
@@ -361,7 +363,6 @@
     <p id="sessionCount">Loading stats...</p>
   </div>
 
-  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-box"><div class="stat-val" id="statSessions">0</div><div class="stat-lbl">Sessions</div></div>
     <div class="stat-box"><div class="stat-val gold" id="statBest">0</div><div class="stat-lbl">Best Score</div></div>
@@ -370,110 +371,194 @@
     <div class="stat-box"><div class="stat-val gold" id="statStreak">0</div><div class="stat-lbl">Best Streak</div></div>
   </div>
 
-  <!-- GAMES -->
   <div class="section-header">Training Drills</div>
   <div class="games-row">
     <a href="/play/strobe" class="game-card live">
-      <span class="badge badge-live">● Live</span>
-      <span class="icon">👁</span>
+      <span class="badge badge-live">&#9679; Live</span>
+      <span class="icon">&#128065;</span>
       <h3>Strobe Drill</h3>
       <p>Target acquisition under strobe disruption. Mouse + Controller supported.</p>
     </a>
     <a href="/play/flickshot" class="game-card live">
-      <span class="badge badge-live">● Live</span>
-      <span class="icon">🎯</span>
+      <span class="badge badge-live">&#9679; Live</span>
+      <span class="icon">&#127919;</span>
       <h3>FlickShot</h3>
       <p>Precision flick aim training. Moving targets, shrinking targets, distance scoring. Mouse + Controller.</p>
     </a>
     <div class="game-card locked">
       <span class="badge badge-soon">Coming Soon</span>
-      <span class="icon">🔄</span>
+      <span class="icon">&#128260;</span>
       <h3>Split Focus</h3>
       <p>Multi-zone peripheral awareness training.</p>
     </div>
     <div class="game-card locked">
       <span class="badge badge-soon">Coming Soon</span>
-      <span class="icon">⚡</span>
+      <span class="icon">&#9889;</span>
       <h3>Clutch Timer</h3>
       <p>Decision-making under extreme time pressure.</p>
     </div>
   </div>
 
-  <!-- LEADERBOARD + HISTORY -->
   <div class="two-col">
     <div class="panel">
-      <div class="panel-title">🏆 Global Leaderboard — Strobe Drill</div>
+      <div class="panel-title">Global Leaderboard</div>
       <div id="leaderboard"><div class="empty-state">Loading leaderboard...</div></div>
     </div>
     <div class="panel">
-      <div class="panel-title">📊 Your Recent Sessions</div>
+      <div class="panel-title">Your Recent Sessions</div>
       <div id="history"><div class="empty-state">Loading history...</div></div>
     </div>
   </div>
 </div>
 
 <script>
-async function loadDashboard() {
-  try {
-    const res = await fetch('/api/dashboard');
-    const data = await res.json();
+(function() {
+  var navUsername = document.getElementById('navUsername');
+  var welcomeName = document.getElementById('welcomeName');
+  var sessionCount = document.getElementById('sessionCount');
+  var statSessions = document.getElementById('statSessions');
+  var statBest = document.getElementById('statBest');
+  var statAccuracy = document.getElementById('statAccuracy');
+  var statReaction = document.getElementById('statReaction');
+  var statStreak = document.getElementById('statStreak');
+  var leaderboardEl = document.getElementById('leaderboard');
+  var historyEl = document.getElementById('history');
+  var logoutBtn = document.getElementById('logoutBtn');
 
-    if (!data.user) { window.location.href = '/'; return; }
-
-    // User info
-    document.getElementById('navUsername').textContent = data.user.username;
-    document.getElementById('welcomeName').textContent = data.user.username;
-
-    // Stats
-    const s = data.stats;
-    document.getElementById('statSessions').textContent = s.sessions;
-    document.getElementById('statBest').textContent = s.bestScore;
-    document.getElementById('statAccuracy').textContent = s.avgAccuracy + '%';
-    document.getElementById('statReaction').textContent = s.avgReaction + 'ms';
-    document.getElementById('statStreak').textContent = s.bestStreak;
-    document.getElementById('sessionCount').textContent = `${s.sessions} training sessions completed`;
-
-    // Leaderboard
-    const lb = document.getElementById('leaderboard');
-    if (data.topScores.length === 0) {
-      lb.innerHTML = '<div class="empty-state">No scores yet — be the first!</div>';
-    } else {
-      lb.innerHTML = data.topScores.map((s, i) => {
-        const rankClass = i === 0 ? 'top-1' : i === 1 ? 'top-2' : i === 2 ? 'top-3' : '';
-        const isMe = s.userId === data.user.id;
-        return `<div class="lb-row">
-          <span class="lb-rank ${rankClass}">#${i + 1}</span>
-          <span class="lb-name ${isMe ? 'me' : ''}">${s.username}</span>
-          <span class="lb-score">${s.score}</span>
-        </div>`;
-      }).join('');
-    }
-
-    // History
-    const hist = document.getElementById('history');
-    if (!s.recentScores || s.recentScores.length === 0) {
-      hist.innerHTML = '<div class="empty-state">No sessions yet — start training!</div>';
-    } else {
-      hist.innerHTML = s.recentScores.map(sc => {
-        const date = new Date(sc.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        const gc = sc.grade === 'S' ? 's' : sc.grade === 'A' ? 'a' : sc.grade === 'B' ? 'b' : 'c';
-        return `<div class="history-row">
-          <span class="history-meta">${date} · T${sc.tier} · ${sc.inputMode === 'controller' ? '🎮' : '🖱️'}</span>
-          <span><span class="history-score">${sc.score}</span><span class="history-grade ${gc}">${sc.grade}</span></span>
-        </div>`;
-      }).join('');
-    }
-  } catch (err) {
-    console.error('Dashboard load error:', err);
+  function getGradeClass(grade) {
+    if (grade === 'S') return 's';
+    if (grade === 'A') return 'a';
+    if (grade === 'B') return 'b';
+    return 'c';
   }
-}
 
-async function logout() {
-  await fetch('/auth/logout', { method: 'POST' });
-  window.location.href = '/';
-}
+  function getRankClass(index) {
+    if (index === 0) return 'top-1';
+    if (index === 1) return 'top-2';
+    if (index === 2) return 'top-3';
+    return '';
+  }
 
-loadDashboard();
+  function getGameLabel(game) {
+    if (game === 'flickshot') return 'FLK';
+    return 'STR';
+  }
+
+  function getInputLabel(mode) {
+    if (mode === 'controller') return 'PAD';
+    return 'MKB';
+  }
+
+  function formatDate(dateStr) {
+    try {
+      var d = new Date(dateStr);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return months[d.getMonth()] + ' ' + d.getDate();
+    } catch (e) {
+      return '--';
+    }
+  }
+
+  function renderLeaderboard(scores, userId) {
+    if (!scores || scores.length === 0) {
+      leaderboardEl.innerHTML = '<div class="empty-state">No scores yet - be the first!</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < scores.length; i++) {
+      var s = scores[i];
+      var rankClass = getRankClass(i);
+      var nameClass = (s.userId === userId) ? ' me' : '';
+      var gameLabel = getGameLabel(s.game);
+      html += '<div class="lb-row">';
+      html += '<span class="lb-rank ' + rankClass + '">#' + (i + 1) + '</span>';
+      html += '<span class="lb-name' + nameClass + '">' + (s.username || 'Player') + '</span>';
+      html += '<span class="lb-game">' + gameLabel + '</span>';
+      html += '<span class="lb-score">' + (s.score || 0) + '</span>';
+      html += '</div>';
+    }
+    leaderboardEl.innerHTML = html;
+  }
+
+  function renderHistory(scores) {
+    if (!scores || scores.length === 0) {
+      historyEl.innerHTML = '<div class="empty-state">No sessions yet - start training!</div>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < scores.length; i++) {
+      var sc = scores[i];
+      var date = formatDate(sc.createdAt);
+      var gc = getGradeClass(sc.grade);
+      var gameLabel = getGameLabel(sc.game);
+      var inputLabel = getInputLabel(sc.inputMode);
+      html += '<div class="history-row">';
+      html += '<span class="history-meta">' + date + ' | ' + gameLabel + ' | T' + (sc.tier || 1) + ' | ' + inputLabel + '</span>';
+      html += '<span class="history-right">';
+      html += '<span class="history-score">' + (sc.score || 0) + '</span>';
+      html += '<span class="history-grade ' + gc + '">' + (sc.grade || 'C') + '</span>';
+      html += '</span>';
+      html += '</div>';
+    }
+    historyEl.innerHTML = html;
+  }
+
+  function showDefaults() {
+    leaderboardEl.innerHTML = '<div class="empty-state">No scores yet - be the first!</div>';
+    historyEl.innerHTML = '<div class="empty-state">No sessions yet - start training!</div>';
+    sessionCount.textContent = '0 training sessions completed';
+  }
+
+  function loadDashboard() {
+    try {
+      fetch('/api/dashboard')
+        .then(function(res) {
+          if (!res.ok) { showDefaults(); return null; }
+          return res.json();
+        })
+        .then(function(data) {
+          if (!data) return;
+          if (!data.user) {
+            window.location.href = '/';
+            return;
+          }
+
+          var username = data.user.username || 'Player';
+          navUsername.textContent = username;
+          welcomeName.textContent = username;
+
+          var s = data.stats || {};
+          var sessions = s.sessions || 0;
+          statSessions.textContent = sessions;
+          statBest.textContent = s.bestScore || 0;
+          statAccuracy.textContent = (s.avgAccuracy || 0) + '%';
+          statReaction.textContent = (s.avgReaction || 0) + 'ms';
+          statStreak.textContent = s.bestStreak || 0;
+          sessionCount.textContent = sessions + ' training sessions completed';
+
+          renderLeaderboard(data.topScores, data.user.id);
+          renderHistory(s.recentScores);
+        })
+        .catch(function() {
+          showDefaults();
+        });
+    } catch (e) {
+      showDefaults();
+    }
+  }
+
+  logoutBtn.addEventListener('click', function() {
+    try {
+      fetch('/auth/logout', { method: 'POST' })
+        .then(function() { window.location.href = '/'; })
+        .catch(function() { window.location.href = '/'; });
+    } catch (e) {
+      window.location.href = '/';
+    }
+  });
+
+  loadDashboard();
+})();
 </script>
 
 </body>
