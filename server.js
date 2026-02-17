@@ -50,7 +50,7 @@ app.get('/dashboard', requireAuth, (req, res) => {
 
 app.get('/play/:game', requireAuth, (req, res) => {
   const game = req.params.game;
-  const allowed = ['strobe'];
+  const allowed = ['strobe', 'flickshot'];
   if (!allowed.includes(game)) return res.redirect('/dashboard');
   res.sendFile(path.join(__dirname, 'public', `${game}.html`));
 });
