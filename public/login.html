@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOS ESPORTS — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05060a;
+    --bg-card: #0a0c14;
+    --neon: #00ff88;
+    --neon-dim: rgba(0, 255, 136, 0.08);
+    --neon-glow: rgba(0, 255, 136, 0.35);
+    --electric: #00d4ff;
+    --hot: #ff2d6b;
+    --text: #e8e6e1;
+    --text-mid: #6b6e78;
+    --text-dim: #2a2d36;
+    --border: rgba(0, 255, 136, 0.06);
+    --border-bright: rgba(0, 255, 136, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo-section {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .logo {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon);
+    text-shadow: 0 0 30px var(--neon-glow);
+  }
+
+  .logo-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+
+  .auth-card {
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    padding: 2.5rem;
+    position: relative;
+  }
+
+  .auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon), var(--electric));
+    box-shadow: 0 0 10px var(--neon-glow);
+  }
+
+  .tab-row {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab-btn {
+    flex: 1;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .tab-btn.active { color: var(--neon); }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 2px;
+    background: var(--neon);
+    box-shadow: 0 0 8px var(--neon-glow);
+  }
+
+  .tab-btn:hover:not(.active) { color: var(--text-mid); }
+
+  .form-panel { display: none; }
+  .form-panel.active { display: block; }
+
+  .field {
+    margin-bottom: 1.5rem;
+  }
+
+  .field label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .field input {
+    width: 100%;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .field input:focus {
+    border-color: var(--neon);
+    box-shadow: 0 0 15px rgba(0,255,136,0.1);
+    background: rgba(0,255,136,0.02);
+  }
+
+  .field input::placeholder { color: var(--text-dim); }
+
+  .submit-btn {
+    width: 100%;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--neon);
+    color: var(--bg);
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover {
+    box-shadow: 0 0 40px var(--neon-glow);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .error-msg {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--hot);
+    text-align: center;
+    margin-top: 1rem;
+    min-height: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-note {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 2rem;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="login-container">
+  <div class="logo-section">
+    <div class="logo">BOS ESPORTS</div>
+    <div class="logo-sub">Neurocognitive Training Platform</div>
+  </div>
+
+  <div class="auth-card">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+      <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="form-panel active" id="loginPanel">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="submit-btn" id="loginBtn" onclick="doLogin()">Login</button>
+      <div class="error-msg" id="loginError"></div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div class="form-panel" id="signupPanel">
+      <div class="field">
+        <label>Gamertag</label>
+        <input type="text" id="signupUsername" placeholder="YourTag" maxlength="20" autocomplete="username">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="6+ characters" autocomplete="new-password">
+      </div>
+      <button class="submit-btn" id="signupBtn" onclick="doSignup()">Create Account</button>
+      <div class="error-msg" id="signupError"></div>
+    </div>
+  </div>
+
+  <div class="footer-note">Train your brain. Outplay everyone.</div>
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+  if (tab === 'login') {
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('loginPanel').classList.add('active');
+  } else {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('signupPanel').classList.add('active');
+  }
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const err = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+  err.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Connecting...';
+
+  try {
+    const res = await fetch('/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      window.location.href = '/dashboard';
+    } else {
+      err.textContent = data.error || 'Login failed';
+    }
+  } catch (e) {
+    err.textContent = 'Connection error';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Login';
+}
+
+async function doSignup() {
+  const username = document.getElementById('signupUsername').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const err = document.getElementById('signupError');
+  const btn = document.getElementById('signupBtn');
+  err.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Creating...';
+
+  try {
+    const res = await fetch('/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, username, password }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      window.location.href = '/dashboard';
+    } else {
+      err.textContent = data.error || 'Signup failed';
+    }
+  } catch (e) {
+    err.textContent = 'Connection error';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Create Account';
+}
+
+// Enter key support
+document.getElementById('loginPassword').addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('signupPassword').addEventListener('keydown', (e) => { if (e.key === 'Enter') doSignup(); });
+</script>
+
+</body>
+</html>
