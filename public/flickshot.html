@@ -1272,28 +1272,41 @@ function endGame() {
   $('resultsScreen').classList.remove('hidden');
 
   // ─── SAVE SCORE TO SERVER ───
-  fetch('/api/scores', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      game: 'flickshot',
-      tier: state.tier,
-      score: state.score,
-      accuracy: acc,
-      bestStreak: state.bestStreak,
-      avgReaction: avgR,
-      hits: state.hits,
-      misses: state.misses,
-      inputMode: gp.connected ? 'controller' : 'mouse',
-      grade,
-    }),
-  }).then(r => r.json()).then(d => {
-    if (d.success) console.log('✅ FlickShot score saved:', d.entry.id);
-  }).catch(e => console.warn('Score save failed:', e));
+  try {
+    fetch('/api/scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        game: 'flickshot',
+        tier: state.tier,
+        score: state.score,
+        accuracy: acc,
+        bestStreak: state.bestStreak,
+        avgReaction: avgR,
+        hits: state.hits,
+        misses: state.misses,
+        inputMode: gp.connected ? 'controller' : 'mouse',
+        grade: grade
+      })
+    }).then(function() {}).catch(function() {});
+  } catch (ignore) {}
 }
 
-function restartGame() { $('resultsScreen').classList.add('hidden'); startCountdown(); }
-function backToMenu() { state.screen = 'start'; $('resultsScreen').classList.add('hidden'); $('startScreen').classList.remove('hidden'); }
+function restartGame() {
+  // Clean up any leftover DOM elements
+  document.querySelectorAll('.flick-target, .flick-line, .hit-effect, .hit-score, .distance-tag').forEach(function(el) { el.remove(); });
+  $('originMarker').classList.remove('visible');
+  $('resultsScreen').classList.add('hidden');
+  startCountdown();
+}
+
+function backToMenu() {
+  state.screen = 'start';
+  document.querySelectorAll('.flick-target, .flick-line, .hit-effect, .hit-score, .distance-tag').forEach(function(el) { el.remove(); });
+  $('originMarker').classList.remove('visible');
+  $('resultsScreen').classList.add('hidden');
+  $('startScreen').classList.remove('hidden');
+}
 </script>
 
 </body>
