@@ -60,7 +60,7 @@
     .nav-right {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
     }
 
     .nav-user {
@@ -83,12 +83,112 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
+        text-decoration: none;
     }
 
     .nav-btn:hover {
+        color: var(--text);
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    .nav-btn.logout:hover {
         color: var(--red);
         border-color: var(--red);
     }
+
+    .nav-btn.pricing-btn {
+        color: var(--dark);
+        background: linear-gradient(135deg, var(--gold), var(--orange));
+        border: none;
+        font-weight: 700;
+    }
+
+    .nav-btn.pricing-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    /* ===== UPGRADE BANNER ===== */
+    .upgrade-banner {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 107, 53, 0.08));
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        border-radius: 16px;
+        padding: 18px 22px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .upgrade-banner.hidden { display: none; }
+
+    .upgrade-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .upgrade-icon {
+        font-size: 1.8rem;
+    }
+
+    .upgrade-text h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 3px;
+    }
+
+    .upgrade-text p {
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.4;
+    }
+
+    .upgrade-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 22px;
+        border-radius: 50px;
+        background: linear-gradient(135deg, var(--gold), var(--orange));
+        color: var(--dark);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: all 0.2s;
+    }
+
+    .upgrade-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(255, 215, 0, 0.3);
+    }
+
+    /* ===== PLAN BADGE ===== */
+    .plan-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 50px;
+        font-size: 0.55rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-left: 8px;
+    }
+
+    .plan-free { background: rgba(255,255,255,0.08); color: var(--muted); }
+    .plan-player { background: rgba(0, 217, 165, 0.15); color: var(--teal); }
+    .plan-pro { background: rgba(255, 215, 0, 0.15); color: var(--gold); }
+    .plan-team { background: rgba(255, 107, 53, 0.15); color: var(--orange); }
+    .plan-trialing { background: rgba(0, 217, 165, 0.15); color: var(--teal); }
 
     /* ===== MAIN ===== */
     .main {
@@ -414,11 +514,21 @@
         line-height: 1.5;
     }
 
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
         .two-col { grid-template-columns: 1fr; }
         .games-row { grid-template-columns: 1fr; }
         .stats-row { grid-template-columns: repeat(2, 1fr); }
+        .upgrade-banner { flex-direction: column; text-align: center; }
+        .upgrade-left { flex-direction: column; }
+        .nav-right { gap: 5px; }
+        .nav-btn { padding: 5px 10px; font-size: 0.6rem; }
     }
 
     @media (max-width: 380px) {
@@ -434,16 +544,28 @@
 <nav class="top-nav">
     <a href="/dashboard" class="nav-logo">BOS ESPORTS</a>
     <div class="nav-right">
-        <a href="/leaderboard" class="nav-btn" style="color:var(--gold);border-color:rgba(255,215,0,0.3);text-decoration:none;">&#127942; Leaderboard</a>
-        <a href="/analytics" class="nav-btn" style="text-decoration:none;">&#128200; Analytics</a>
-        <a href="/analytics" class="nav-btn" style="text-decoration:none;">&#128202; Analytics</a>
-        <span class="nav-user">Player: <strong id="navUsername">--</strong></span>
-        <button class="nav-btn" id="logoutBtn">Logout</button>
+        <a href="/leaderboard" class="nav-btn" style="color:var(--gold);border-color:rgba(255,215,0,0.3);">&#127942; Leaderboard</a>
+        <a href="/analytics" class="nav-btn">&#128200; Analytics</a>
+        <a href="/pricing.html" class="nav-btn pricing-btn" id="navPricingBtn">&#9889; Upgrade</a>
+        <span class="nav-user">Player: <strong id="navUsername">--</strong><span class="plan-badge plan-free" id="planBadge">FREE</span></span>
+        <button class="nav-btn logout" id="logoutBtn">Logout</button>
     </div>
 </nav>
 
 <!-- ===== MAIN ===== -->
 <div class="main">
+
+    <!-- UPGRADE BANNER (shown for free/trial users) -->
+    <div class="upgrade-banner hidden" id="upgradeBanner">
+        <div class="upgrade-left">
+            <span class="upgrade-icon">&#9889;</span>
+            <div class="upgrade-text">
+                <h3 id="bannerTitle">UNLOCK YOUR FULL POTENTIAL</h3>
+                <p id="bannerText">Get unlimited sessions, global leaderboard access, and performance analytics. Start with a 7-day free trial.</p>
+            </div>
+        </div>
+        <a href="/pricing.html" class="upgrade-cta">Choose Your Plan &#8594;</a>
+    </div>
 
     <!-- WELCOME -->
     <div class="welcome">
@@ -497,8 +619,8 @@
             <p>Divided attention and cognitive flexibility. Track targets, ignore decoys, adapt to rule switches. Mouse + Controller.</p>
         </a>
         <a href="/play/clutch-timer" class="game-card live">
-            <span class="game-badge badge-new">★ New</span>
-            <span class="game-icon">⏱</span>
+            <span class="game-badge badge-new">&#9733; New</span>
+            <span class="game-icon">&#9201;</span>
             <h3>Clutch Timer</h3>
             <p>Decision quality under cognitive load. Multi-rule evaluation, shrinking windows, speed-accuracy tradeoff. Mouse + Controller.</p>
         </a>
@@ -541,6 +663,65 @@
     var leaderboardEl = document.getElementById('leaderboard');
     var historyEl = document.getElementById('history');
     var logoutBtn = document.getElementById('logoutBtn');
+    var upgradeBanner = document.getElementById('upgradeBanner');
+    var navPricingBtn = document.getElementById('navPricingBtn');
+    var planBadge = document.getElementById('planBadge');
+    var bannerTitle = document.getElementById('bannerTitle');
+    var bannerText = document.getElementById('bannerText');
+
+    // ── Check subscription status and show/hide upgrade UI ──
+    function checkSubscription() {
+        fetch('/api/stripe/status')
+            .then(function(res) { return res.ok ? res.json() : null; })
+            .then(function(data) {
+                if (!data) return;
+
+                var plan = data.plan || 'free';
+                var status = data.status || 'none';
+
+                // Update plan badge
+                planBadge.textContent = plan.toUpperCase();
+                planBadge.className = 'plan-badge plan-' + plan;
+
+                if (status === 'trialing') {
+                    planBadge.textContent = plan.toUpperCase() + ' (TRIAL)';
+                    planBadge.className = 'plan-badge plan-trialing';
+                }
+
+                // Show/hide upgrade banner and nav button
+                if (plan === 'free' && status === 'none') {
+                    // Free user — show upgrade banner
+                    upgradeBanner.classList.remove('hidden');
+                    navPricingBtn.style.display = '';
+                } else if (status === 'trialing') {
+                    // Trialing — show different banner
+                    upgradeBanner.classList.remove('hidden');
+                    bannerTitle.textContent = 'YOUR FREE TRIAL IS ACTIVE';
+                    var trialEnd = data.trialEndsAt ? new Date(data.trialEndsAt) : null;
+                    var daysLeft = trialEnd ? Math.max(0, Math.ceil((trialEnd - new Date()) / (1000 * 60 * 60 * 24))) : '?';
+                    bannerText.textContent = daysLeft + ' days remaining. You have access to all games with 3 sessions/day. Upgrade now for unlimited access.';
+                    navPricingBtn.textContent = '⚡ Manage Plan';
+                    navPricingBtn.href = '/pricing.html';
+                } else {
+                    // Active subscriber — hide upgrade UI
+                    upgradeBanner.classList.add('hidden');
+                    navPricingBtn.textContent = '⚡ Manage Plan';
+                    // Link to Stripe portal for active subscribers
+                    navPricingBtn.href = '#';
+                    navPricingBtn.onclick = function(e) {
+                        e.preventDefault();
+                        fetch('/api/stripe/portal', { method: 'POST' })
+                            .then(function(res) { return res.json(); })
+                            .then(function(d) { if (d.url) window.location.href = d.url; })
+                            .catch(function() { alert('Could not open billing portal.'); });
+                    };
+                }
+            })
+            .catch(function() {
+                // If status check fails, show upgrade banner as default
+                upgradeBanner.classList.remove('hidden');
+            });
+    }
 
     function getGradeClass(grade) {
         if (grade === 'S') return 's';
@@ -677,6 +858,7 @@
     });
 
     loadDashboard();
+    checkSubscription();
 })();
 </script>
 
