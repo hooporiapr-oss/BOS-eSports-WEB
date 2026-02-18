@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOS ESPORTS — Global Leaderboard</title>
+<meta name="description" content="BOS Esports global leaderboard. See top neurocognitive performance scores across all training drills.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --gold: #FFD700;
+        --gold-dim: rgba(255, 215, 0, 0.1);
+        --gold-glow: rgba(255, 215, 0, 0.3);
+        --orange: #FF6B35;
+        --teal: #00D9A5;
+        --cyan: #00CED1;
+        --red: #FF1744;
+        --dark: #0a0a0f;
+        --darker: #050508;
+        --card: #111118;
+        --card-hover: #16161f;
+        --text: #FFFFFF;
+        --muted: #8892a0;
+        --border: rgba(255,255,255,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--dark);
+        color: var(--text);
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ===== TOP NAV ===== */
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        background: var(--darker);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .nav-logo {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 4px;
+        color: var(--gold);
+        text-decoration: none;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-btn {
+        padding: 6px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+
+    .nav-btn:hover {
+        color: var(--gold);
+        border-color: var(--gold);
+    }
+
+    .nav-btn.active {
+        color: var(--gold);
+        border-color: var(--gold);
+        background: var(--gold-dim);
+    }
+
+    /* ===== MAIN ===== */
+    .main {
+        flex: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px 15px 40px;
+        width: 100%;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.2rem;
+        letter-spacing: 5px;
+        line-height: 1;
+    }
+
+    .page-header h1 .gold { color: var(--gold); }
+
+    .page-header p {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 4px;
+    }
+
+    /* ===== YOUR RANK BANNER ===== */
+    .rank-banner {
+        background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,107,53,0.06));
+        border: 1px solid rgba(255,215,0,0.15);
+        border-radius: 16px;
+        padding: 16px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .rank-banner-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .rank-number {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.4rem;
+        color: var(--gold);
+        letter-spacing: 2px;
+        line-height: 1;
+    }
+
+    .rank-label {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .rank-player {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text);
+    }
+
+    .rank-banner-right {
+        text-align: right;
+    }
+
+    .rank-percentile {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.3rem;
+        color: var(--teal);
+        letter-spacing: 1px;
+    }
+
+    .rank-pct-label {
+        font-size: 0.55rem;
+        color: var(--muted);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+
+    .filter-group {
+        display: flex;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .filter-btn {
+        padding: 8px 14px;
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+        color: var(--text);
+        background: rgba(255,255,255,0.03);
+    }
+
+    .filter-btn.active {
+        color: var(--dark);
+        background: linear-gradient(135deg, var(--gold), var(--orange));
+        font-weight: 700;
+    }
+
+    .filter-btn + .filter-btn {
+        border-left: 1px solid var(--border);
+    }
+
+    /* ===== LEADERBOARD TABLE ===== */
+    .lb-container {
+        background: var(--card);
+        border: 2px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .lb-header-row {
+        display: grid;
+        grid-template-columns: 50px 1fr 70px 60px 60px 55px 70px;
+        padding: 12px 18px;
+        background: var(--darker);
+        border-bottom: 1px solid var(--border);
+        font-size: 0.55rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--muted);
+    }
+
+    .lb-header-row span:nth-child(n+3) {
+        text-align: right;
+    }
+
+    .lb-body {
+        max-height: 65vh;
+        overflow-y: auto;
+    }
+
+    .lb-body::-webkit-scrollbar {
+        width: 4px;
+    }
+    .lb-body::-webkit-scrollbar-track {
+        background: var(--card);
+    }
+    .lb-body::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.1);
+        border-radius: 4px;
+    }
+
+    .lb-entry {
+        display: grid;
+        grid-template-columns: 50px 1fr 70px 60px 60px 55px 70px;
+        padding: 12px 18px;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+        transition: background 0.15s;
+    }
+
+    .lb-entry:last-child {
+        border-bottom: none;
+    }
+
+    .lb-entry:hover {
+        background: var(--card-hover);
+    }
+
+    .lb-entry.is-you {
+        background: rgba(255, 215, 0, 0.04);
+        border-left: 3px solid var(--gold);
+    }
+
+    .lb-entry.is-you:hover {
+        background: rgba(255, 215, 0, 0.07);
+    }
+
+    /* Rank */
+    .entry-rank {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.1rem;
+        color: var(--muted);
+        letter-spacing: 1px;
+    }
+
+    .entry-rank.top-1 { color: var(--gold); }
+    .entry-rank.top-2 { color: var(--teal); }
+    .entry-rank.top-3 { color: var(--orange); }
+
+    .rank-medal {
+        display: none;
+    }
+
+    .top-1 .rank-medal,
+    .top-2 .rank-medal,
+    .top-3 .rank-medal {
+        display: inline;
+        margin-right: 2px;
+    }
+
+    /* Player */
+    .entry-player {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        min-width: 0;
+    }
+
+    .entry-name {
+        font-weight: 700;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .entry-name.is-you {
+        color: var(--gold);
+    }
+
+    .entry-meta {
+        font-size: 0.55rem;
+        color: var(--muted);
+        letter-spacing: 0.5px;
+    }
+
+    /* Game tag */
+    .entry-game {
+        text-align: right;
+    }
+
+    .game-tag {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 0.55rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .game-tag.strobe { background: rgba(255,215,0,0.12); color: var(--gold); }
+    .game-tag.flickshot { background: rgba(255,107,53,0.12); color: var(--orange); }
+    .game-tag.splitfocus { background: rgba(0,217,165,0.12); color: var(--teal); }
+    .game-tag.clutchtimer { background: rgba(0,206,209,0.12); color: var(--cyan); }
+
+    /* Score */
+    .entry-score {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.15rem;
+        color: var(--gold);
+        letter-spacing: 1px;
+        text-align: right;
+    }
+
+    /* Accuracy */
+    .entry-accuracy {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .acc-high { color: var(--teal); }
+    .acc-mid { color: var(--cyan); }
+    .acc-low { color: var(--muted); }
+
+    /* Grade */
+    .entry-grade {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.1rem;
+        text-align: right;
+        letter-spacing: 1px;
+    }
+
+    .grade-s { color: var(--gold); }
+    .grade-a { color: var(--teal); }
+    .grade-b { color: var(--cyan); }
+    .grade-c { color: var(--muted); }
+
+    /* Date */
+    .entry-date {
+        font-size: 0.65rem;
+        color: var(--muted);
+        text-align: right;
+    }
+
+    /* Empty state */
+    .lb-empty {
+        padding: 60px 20px;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--muted);
+    }
+
+    .lb-empty .empty-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    /* Loading */
+    .lb-loading {
+        padding: 60px 20px;
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--muted);
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+    }
+
+    .lb-loading .dots {
+        animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+        padding: 30px 20px;
+        text-align: center;
+        background: var(--darker);
+        border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 3px;
+        margin-bottom: 8px;
+        color: var(--gold);
+    }
+
+    .footer-links {
+        margin: 10px 0;
+        font-size: 0.65rem;
+    }
+
+    .footer-links a {
+        color: var(--muted);
+        text-decoration: none;
+        margin: 0 8px;
+        transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-company {
+        font-size: 0.65rem;
+        color: var(--muted);
+    }
+
+    .footer-trademarks {
+        font-size: 0.55rem;
+        color: var(--muted);
+        margin-top: 12px;
+        line-height: 1.5;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .lb-header-row,
+        .lb-entry {
+            grid-template-columns: 40px 1fr 50px 50px 40px;
+        }
+
+        /* Hide accuracy + date columns on mobile */
+        .lb-header-row span:nth-child(4),
+        .lb-header-row span:nth-child(7),
+        .lb-entry .entry-accuracy,
+        .lb-entry .entry-date {
+            display: none;
+        }
+
+        .filter-bar {
+            gap: 6px;
+        }
+
+        .filter-btn {
+            padding: 7px 10px;
+            font-size: 0.58rem;
+        }
+
+        .rank-banner {
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .rank-banner-left {
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .rank-banner-right {
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .lb-header-row,
+        .lb-entry {
+            grid-template-columns: 36px 1fr 44px 38px;
+            padding: 10px 12px;
+        }
+
+        /* Also hide game column on very small screens */
+        .lb-header-row span:nth-child(3),
+        .lb-entry .entry-game {
+            display: none;
+        }
+
+        .entry-score { font-size: 1rem; }
+        .entry-grade { font-size: 0.9rem; }
+    }
+</style>
+</head>
+<body>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="top-nav">
+    <a href="/dashboard" class="nav-logo">BOS ESPORTS</a>
+    <div class="nav-right">
+        <a href="/dashboard" class="nav-btn">Dashboard</a>
+        <a href="/leaderboard" class="nav-btn active">Leaderboard</a>
+    </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>&#127942; <span class="gold">GLOBAL</span> LEADERBOARD</h1>
+        <p>Top neurocognitive performers across all training drills</p>
+    </div>
+
+    <!-- YOUR RANK BANNER -->
+    <div class="rank-banner" id="rankBanner" style="display:none;">
+        <div class="rank-banner-left">
+            <div>
+                <div class="rank-label">Your Rank</div>
+                <div class="rank-number" id="yourRankNum">#--</div>
+            </div>
+            <div>
+                <div class="rank-player" id="yourRankName">--</div>
+            </div>
+        </div>
+        <div class="rank-banner-right">
+            <div class="rank-percentile" id="yourPercentile">--</div>
+            <div class="rank-pct-label">Percentile</div>
+        </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <div class="filter-group" id="gameFilters">
+            <button class="filter-btn active" data-game="all">All Games</button>
+            <button class="filter-btn" data-game="strobe">Strobe</button>
+            <button class="filter-btn" data-game="flickshot">FlickShot</button>
+            <button class="filter-btn" data-game="splitfocus">Split Focus</button>
+            <button class="filter-btn" data-game="clutchtimer">Clutch Timer</button>
+        </div>
+        <div class="filter-group" id="timeFilters">
+            <button class="filter-btn active" data-time="all">All Time</button>
+            <button class="filter-btn" data-time="week">This Week</button>
+            <button class="filter-btn" data-time="today">Today</button>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD TABLE -->
+    <div class="lb-container">
+        <div class="lb-header-row">
+            <span>Rank</span>
+            <span>Player</span>
+            <span>Game</span>
+            <span>Score</span>
+            <span>Acc</span>
+            <span>Grade</span>
+            <span>Date</span>
+        </div>
+        <div class="lb-body" id="lbBody">
+            <div class="lb-loading"><span class="dots">Loading leaderboard...</span></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-logo">BOS ESPORTS</div>
+    <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+    </div>
+    <div class="footer-company">&copy; 2026 GoStar Digital LLC. All Rights Reserved. &#127477;&#127479;</div>
+    <div class="footer-trademarks">BOS Esports&trade; is a trademark of GoStar Digital LLC.</div>
+</footer>
+
+<script>
+(function() {
+    var lbBody = document.getElementById('lbBody');
+    var rankBanner = document.getElementById('rankBanner');
+    var yourRankNum = document.getElementById('yourRankNum');
+    var yourRankName = document.getElementById('yourRankName');
+    var yourPercentile = document.getElementById('yourPercentile');
+
+    var currentGame = 'all';
+    var currentTime = 'all';
+    var currentUserId = null;
+
+    // ─── Game name helpers ───
+    var gameLabels = {
+        strobe: 'Strobe', flickshot: 'FlickShot',
+        splitfocus: 'Split Focus', clutchtimer: 'Clutch Timer'
+    };
+
+    var gameClasses = {
+        strobe: 'strobe', flickshot: 'flickshot',
+        splitfocus: 'splitfocus', clutchtimer: 'clutchtimer'
+    };
+
+    function getGameTag(game) {
+        return gameLabels[game] || game;
+    }
+
+    function getGameClass(game) {
+        return gameClasses[game] || 'strobe';
+    }
+
+    function getAccClass(acc) {
+        if (acc >= 80) return 'acc-high';
+        if (acc >= 60) return 'acc-mid';
+        return 'acc-low';
+    }
+
+    function getGradeClass(grade) {
+        if (grade === 'S') return 'grade-s';
+        if (grade === 'A') return 'grade-a';
+        if (grade === 'B') return 'grade-b';
+        return 'grade-c';
+    }
+
+    function getRankClass(index) {
+        if (index === 0) return 'top-1';
+        if (index === 1) return 'top-2';
+        if (index === 2) return 'top-3';
+        return '';
+    }
+
+    function getMedal(index) {
+        if (index === 0) return '&#129351;';
+        if (index === 1) return '&#129352;';
+        if (index === 2) return '&#129353;';
+        return '';
+    }
+
+    function formatDate(dateStr) {
+        try {
+            var d = new Date(dateStr);
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            return months[d.getMonth()] + ' ' + d.getDate();
+        } catch (e) {
+            return '--';
+        }
+    }
+
+    function getInputIcon(mode) {
+        return mode === 'controller' ? '&#127918;' : '&#128433;';
+    }
+
+    // ─── Filter handling ───
+    document.getElementById('gameFilters').addEventListener('click', function(e) {
+        if (e.target.classList.contains('filter-btn')) {
+            var btns = this.querySelectorAll('.filter-btn');
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+            e.target.classList.add('active');
+            currentGame = e.target.getAttribute('data-game');
+            loadLeaderboard();
+        }
+    });
+
+    document.getElementById('timeFilters').addEventListener('click', function(e) {
+        if (e.target.classList.contains('filter-btn')) {
+            var btns = this.querySelectorAll('.filter-btn');
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+            e.target.classList.add('active');
+            currentTime = e.target.getAttribute('data-time');
+            loadLeaderboard();
+        }
+    });
+
+    // ─── Render ───
+    function renderLeaderboard(data) {
+        var entries = data.leaderboard || [];
+        currentUserId = data.userId;
+
+        // Rank banner
+        if (data.yourRank) {
+            rankBanner.style.display = 'flex';
+            yourRankNum.textContent = '#' + data.yourRank;
+
+            // Fetch username
+            fetch('/auth/me')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.user) yourRankName.textContent = d.user.username;
+                })
+                .catch(function(){});
+
+            var total = Math.max(entries.length, data.yourRank);
+            var pct = total > 0 ? Math.round(((total - data.yourRank) / total) * 100) : 0;
+            yourPercentile.textContent = 'TOP ' + Math.max(1, 100 - pct) + '%';
+        } else {
+            rankBanner.style.display = 'none';
+        }
+
+        if (entries.length === 0) {
+            lbBody.innerHTML = '<div class="lb-empty"><span class="empty-icon">&#127942;</span>No scores yet — be the first to claim the throne!</div>';
+            return;
+        }
+
+        var html = '';
+        for (var i = 0; i < entries.length; i++) {
+            var s = entries[i];
+            var isYou = s.userId === currentUserId;
+            var rankClass = getRankClass(i);
+            var medal = getMedal(i);
+            var acc = s.accuracy || 0;
+            var grade = s.grade || 'C';
+            var tier = s.tier || 1;
+            var input = getInputIcon(s.inputMode);
+
+            html += '<div class="lb-entry' + (isYou ? ' is-you' : '') + '">';
+
+            // Rank
+            html += '<div class="entry-rank ' + rankClass + '">';
+            if (medal) html += '<span class="rank-medal">' + medal + '</span>';
+            html += '#' + (i + 1) + '</div>';
+
+            // Player
+            html += '<div class="entry-player">';
+            html += '<div class="entry-name' + (isYou ? ' is-you' : '') + '">' + (s.username || 'Player') + (isYou ? ' (YOU)' : '') + '</div>';
+            html += '<div class="entry-meta">T' + tier + ' ' + input + '</div>';
+            html += '</div>';
+
+            // Game
+            html += '<div class="entry-game"><span class="game-tag ' + getGameClass(s.game) + '">' + getGameTag(s.game) + '</span></div>';
+
+            // Score
+            html += '<div class="entry-score">' + (s.score || 0) + '</div>';
+
+            // Accuracy
+            html += '<div class="entry-accuracy ' + getAccClass(acc) + '">' + acc + '%</div>';
+
+            // Grade
+            html += '<div class="entry-grade ' + getGradeClass(grade) + '">' + grade + '</div>';
+
+            // Date
+            html += '<div class="entry-date">' + formatDate(s.createdAt) + '</div>';
+
+            html += '</div>';
+        }
+
+        lbBody.innerHTML = html;
+    }
+
+    // ─── Fetch ───
+    function loadLeaderboard() {
+        lbBody.innerHTML = '<div class="lb-loading"><span class="dots">Loading leaderboard...</span></div>';
+
+        var url = '/api/leaderboard?game=' + currentGame + '&time=' + currentTime + '&limit=50';
+
+        fetch(url)
+            .then(function(res) {
+                if (!res.ok) {
+                    if (res.status === 401) { window.location.href = '/'; return null; }
+                    throw new Error('Failed');
+                }
+                return res.json();
+            })
+            .then(function(data) {
+                if (data) renderLeaderboard(data);
+            })
+            .catch(function() {
+                lbBody.innerHTML = '<div class="lb-empty"><span class="empty-icon">⚠</span>Failed to load leaderboard. Try refreshing.</div>';
+            });
+    }
+
+    // ─── Init ───
+    loadLeaderboard();
+})();
+</script>
+
+</body>
+</html>
