@@ -4,34 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOS ESPORTS — Strobe Drill</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #05060a;
-    --bg-surface: #0a0c14;
-    --bg-card: #0d1018;
-    --neon: #00ff88;
-    --neon-dim: rgba(0, 255, 136, 0.08);
-    --neon-glow: rgba(0, 255, 136, 0.35);
-    --electric: #00d4ff;
-    --electric-dim: rgba(0, 212, 255, 0.08);
-    --electric-glow: rgba(0, 212, 255, 0.3);
-    --hot: #ff2d6b;
-    --hot-dim: rgba(255, 45, 107, 0.08);
-    --hot-glow: rgba(255, 45, 107, 0.3);
-    --gold: #ffd54f;
-    --gold-glow: rgba(255, 213, 79, 0.3);
-    --text: #e8e6e1;
-    --text-mid: #6b6e78;
-    --text-dim: #2a2d36;
+    --gold: #FFD700;
+    --gold-dim: rgba(255, 215, 0, 0.1);
+    --gold-glow: rgba(255, 215, 0, 0.3);
+    --orange: #FF6B35;
+    --orange-glow: rgba(255, 107, 53, 0.3);
+    --teal: #00D9A5;
+    --teal-dim: rgba(0, 217, 165, 0.08);
+    --teal-glow: rgba(0, 217, 165, 0.3);
+    --cyan: #00CED1;
+    --cyan-glow: rgba(0, 206, 209, 0.3);
+    --red: #FF1744;
+    --red-dim: rgba(255, 23, 68, 0.08);
+    --red-glow: rgba(255, 23, 68, 0.3);
+    --dark: #0a0a0f;
+    --darker: #050508;
+    --card: #111118;
+    --text: #FFFFFF;
+    --muted: #8892a0;
+    --border: rgba(255,255,255,0.08);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--bg);
+    background: var(--dark);
     color: var(--text);
-    font-family: 'Exo 2', sans-serif;
+    font-family: 'Outfit', sans-serif;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
@@ -39,129 +42,109 @@
     user-select: none;
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
-    pointer-events: none;
-    z-index: 9999;
-  }
-
   .game-wrapper { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; }
 
-  /* ─── HUD ─── */
+  /* ═══ HUD ═══ */
   .hud {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 1.5rem;
-    border-bottom: 1px solid rgba(0,255,136,0.06);
-    background: rgba(5,6,10,0.95);
+    padding: 10px 15px;
+    background: var(--darker);
+    border-bottom: 1px solid var(--border);
     z-index: 10;
     flex-shrink: 0;
   }
 
-  .hud-left { display: flex; align-items: center; gap: 1rem; }
+  .hud-left { display: flex; align-items: center; gap: 10px; }
 
   .back-btn {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    background: transparent;
-    border: 1px solid var(--text-dim);
-    padding: 0.3rem 0.7rem;
-    cursor: pointer;
+    color: var(--muted);
     text-decoration: none;
-    transition: all 0.2s ease;
+    font-size: 0.75rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 4px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
   }
 
-  .back-btn:hover { color: var(--neon); border-color: var(--neon); background: var(--neon-dim); }
-  .back-btn svg { width: 10px; height: 10px; fill: currentColor; }
+  .back-btn:hover { color: var(--gold); border-color: var(--gold); }
 
   .hud-logo {
-    font-weight: 800;
-    font-size: 0.9rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--neon);
-    text-shadow: 0 0 15px var(--neon-glow);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: var(--gold);
   }
-
-  .hud-logo span { color: var(--text-dim); font-weight: 400; font-size: 0.75rem; text-shadow: none; }
 
   .hud-rank {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--electric);
-    background: var(--electric-dim);
-    padding: 0.25rem 0.7rem;
+    color: var(--dark);
+    background: linear-gradient(135deg, var(--gold), var(--orange));
+    padding: 3px 10px;
+    border-radius: 50px;
   }
 
-  .hud-center { display: flex; gap: 2.5rem; align-items: center; }
+  .hud-center { display: flex; gap: 20px; align-items: center; }
   .hud-stat { text-align: center; }
 
-  .hud-stat-value { font-weight: 700; font-size: 1.3rem; line-height: 1; letter-spacing: 0.02em; }
-  .hud-stat-value.score-val { color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
-  .hud-stat-value.streak-val { color: var(--neon); text-shadow: 0 0 8px var(--neon-glow); }
-  .hud-stat-value.miss-val { color: var(--hot); }
+  .hud-stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .hud-stat-value.score-val { color: var(--gold); }
+  .hud-stat-value.streak-val { color: var(--teal); }
+  .hud-stat-value.miss-val { color: var(--red); }
   .hud-stat-value.time-val { color: var(--text); }
 
   .hud-stat-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.45rem;
-    letter-spacing: 0.25em;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--text-dim);
-    margin-top: 0.15rem;
+    color: var(--muted);
+    margin-top: 2px;
   }
 
-  .hud-right { display: flex; align-items: center; gap: 1rem; }
+  .hud-right { display: flex; align-items: center; gap: 10px; }
 
   .strobe-readout {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-mid);
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
   }
 
-  .strobe-readout strong { color: var(--neon); font-size: 0.75rem; }
+  .strobe-readout strong { color: var(--gold); font-size: 0.75rem; }
 
-  /* Input mode indicator */
   .input-indicator {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.2rem 0.6rem;
-    border: 1px solid var(--text-dim);
-    transition: all 0.3s ease;
+    gap: 4px;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: all 0.3s;
   }
 
-  .input-indicator.controller-active {
-    color: var(--neon);
-    border-color: rgba(0,255,136,0.2);
-    background: var(--neon-dim);
-  }
-
-  .input-indicator.mouse-active {
-    color: var(--text-mid);
-    border-color: var(--text-dim);
-  }
-
+  .input-indicator.controller-active { color: var(--teal); border-color: rgba(0,217,165,0.2); background: var(--teal-dim); }
+  .input-indicator.mouse-active { color: var(--muted); border-color: var(--border); }
   .input-icon { font-size: 0.75rem; }
 
-  /* ─── PLAY AREA ─── */
+  /* ═══ PLAY AREA ═══ */
   .play-area {
     flex: 1;
     position: relative;
@@ -175,9 +158,9 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,255,136,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,136,0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+    background-size: 50px 50px;
     pointer-events: none;
   }
 
@@ -186,508 +169,287 @@
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    opacity: 0.06;
+    opacity: 0.05;
   }
 
-  .center-mark::before, .center-mark::after {
-    content: '';
-    position: absolute;
-    background: var(--neon);
-  }
-
+  .center-mark::before, .center-mark::after { content: ''; position: absolute; background: var(--gold); }
   .center-mark::before { width: 40px; height: 1px; top: 0; left: -20px; }
   .center-mark::after { width: 1px; height: 40px; top: -20px; left: 0; }
 
   .strobe-overlay {
-    position: absolute;
-    inset: 0;
-    background: var(--bg);
-    z-index: 5;
-    pointer-events: none;
-    opacity: 0;
+    position: absolute; inset: 0; background: var(--dark);
+    z-index: 5; pointer-events: none; opacity: 0;
     transition: opacity 0.04s linear;
   }
 
   .strobe-overlay.active { opacity: 1; }
 
-  /* ─── GAMEPAD CROSSHAIR ─── */
-  .gamepad-crosshair {
-    position: absolute;
-    z-index: 8;
-    pointer-events: none;
-    display: none;
-    transform: translate(-50%, -50%);
-  }
-
+  /* ═══ GAMEPAD CROSSHAIR ═══ */
+  .gamepad-crosshair { position: absolute; z-index: 8; pointer-events: none; display: none; transform: translate(-50%, -50%); }
   .gamepad-crosshair.visible { display: block; }
-
-  .crosshair-outer {
-    width: 40px; height: 40px;
-    position: relative;
-  }
-
-  /* 4 lines forming crosshair with center gap */
-  .crosshair-outer::before {
-    content: '';
-    position: absolute;
-    top: 19px; left: 0;
-    width: 14px; height: 2px;
-    background: var(--neon);
-    box-shadow: 0 0 8px var(--neon-glow), 0 0 20px rgba(0,255,136,0.15);
-  }
-
-  .crosshair-outer::after {
-    content: '';
-    position: absolute;
-    top: 19px; right: 0;
-    width: 14px; height: 2px;
-    background: var(--neon);
-    box-shadow: 0 0 8px var(--neon-glow), 0 0 20px rgba(0,255,136,0.15);
-  }
-
-  .crosshair-v-top, .crosshair-v-bottom {
-    position: absolute;
-    left: 19px;
-    width: 2px;
-    height: 14px;
-    background: var(--neon);
-    box-shadow: 0 0 8px var(--neon-glow), 0 0 20px rgba(0,255,136,0.15);
-  }
-
+  .crosshair-outer { width: 40px; height: 40px; position: relative; }
+  .crosshair-outer::before { content: ''; position: absolute; top: 19px; left: 0; width: 14px; height: 2px; background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+  .crosshair-outer::after { content: ''; position: absolute; top: 19px; right: 0; width: 14px; height: 2px; background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+  .crosshair-v-top, .crosshair-v-bottom { position: absolute; left: 19px; width: 2px; height: 14px; background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
   .crosshair-v-top { top: 0; }
   .crosshair-v-bottom { bottom: 0; }
+  .crosshair-dot { position: absolute; top: 18px; left: 18px; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
 
-  .crosshair-dot {
-    position: absolute;
-    top: 18px; left: 18px;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--neon);
-    box-shadow: 0 0 10px var(--neon-glow);
-  }
+  .crosshair-flash { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; border: 1px solid var(--gold); border-radius: 50%; opacity: 0; box-shadow: 0 0 20px var(--gold-glow); transition: none; }
+  .crosshair-flash.firing { animation: crosshairFire 0.2s ease-out forwards; }
 
-  /* Fire flash effect */
-  .crosshair-flash {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px; height: 50px;
-    border: 1px solid var(--neon);
-    border-radius: 50%;
-    opacity: 0;
-    box-shadow: 0 0 20px var(--neon-glow);
-    transition: none;
-  }
-
-  .crosshair-flash.firing {
-    animation: crosshairFire 0.2s ease-out forwards;
-  }
-
-  @keyframes crosshairFire {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-  }
-
-  /* On-target glow */
   .gamepad-crosshair.on-target .crosshair-outer::before,
   .gamepad-crosshair.on-target .crosshair-outer::after,
   .gamepad-crosshair.on-target .crosshair-v-top,
-  .gamepad-crosshair.on-target .crosshair-v-bottom {
-    background: var(--hot);
-    box-shadow: 0 0 8px var(--hot-glow), 0 0 20px rgba(255,45,107,0.15);
-  }
+  .gamepad-crosshair.on-target .crosshair-v-bottom { background: var(--red); box-shadow: 0 0 8px var(--red-glow); }
+  .gamepad-crosshair.on-target .crosshair-dot { background: var(--red); box-shadow: 0 0 10px var(--red-glow); }
 
-  .gamepad-crosshair.on-target .crosshair-dot {
-    background: var(--hot);
-    box-shadow: 0 0 10px var(--hot-glow);
-  }
-
-  /* ─── TARGETS ─── */
+  /* ═══ TARGETS ═══ */
   .target { position: absolute; z-index: 3; cursor: crosshair; }
 
   .target-ring {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    border: 2px solid var(--neon);
-    background: var(--neon-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 2px solid var(--teal);
+    background: var(--teal-dim);
+    display: flex; align-items: center; justify-content: center;
     position: relative;
     animation: targetPulse 0.8s ease-in-out infinite;
-    box-shadow: 0 0 15px var(--neon-glow), inset 0 0 15px rgba(0,255,136,0.05);
+    box-shadow: 0 0 15px var(--teal-glow), inset 0 0 15px rgba(0,217,165,0.05);
   }
 
-  .target-ring::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,255,136,0.1);
-    animation: targetExpand 1s ease-out infinite;
-  }
+  .target-ring::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(0,217,165,0.1); animation: targetExpand 1s ease-out infinite; }
 
   .target-core { width: 16px; height: 16px; position: relative; }
-
-  .target-core::before, .target-core::after {
-    content: '';
-    position: absolute;
-    background: var(--neon);
-    box-shadow: 0 0 6px var(--neon-glow);
-  }
-
+  .target-core::before, .target-core::after { content: ''; position: absolute; background: var(--teal); box-shadow: 0 0 6px var(--teal-glow); }
   .target-core::before { width: 16px; height: 2px; top: 7px; left: 0; }
   .target-core::after { width: 2px; height: 16px; top: 0; left: 7px; }
 
-  .target.bonus .target-ring { border-color: var(--electric); background: var(--electric-dim); box-shadow: 0 0 15px var(--electric-glow), inset 0 0 15px rgba(0,212,255,0.05); }
-  .target.bonus .target-ring::before { border-color: rgba(0,212,255,0.1); }
-  .target.bonus .target-core::before, .target.bonus .target-core::after { background: var(--electric); box-shadow: 0 0 6px var(--electric-glow); }
+  .target.bonus .target-ring { border-color: var(--cyan); background: rgba(0,206,209,0.08); box-shadow: 0 0 15px var(--cyan-glow); }
+  .target.bonus .target-ring::before { border-color: rgba(0,206,209,0.1); }
+  .target.bonus .target-core::before, .target.bonus .target-core::after { background: var(--cyan); box-shadow: 0 0 6px var(--cyan-glow); }
 
-  .target.decoy .target-ring { border-color: var(--hot); background: var(--hot-dim); border-style: dashed; box-shadow: 0 0 10px var(--hot-glow); }
-  .target.decoy .target-ring::before { border-color: rgba(255,45,107,0.1); }
-  .target.decoy .target-core::before { background: var(--hot); box-shadow: 0 0 4px var(--hot-glow); width: 10px; left: 3px; }
-  .target.decoy .target-core::after { background: var(--hot); box-shadow: 0 0 4px var(--hot-glow); height: 10px; top: 3px; }
+  .target.decoy .target-ring { border-color: var(--red); background: var(--red-dim); border-style: dashed; box-shadow: 0 0 10px var(--red-glow); }
+  .target.decoy .target-ring::before { border-color: rgba(255,23,68,0.1); }
+  .target.decoy .target-core::before { background: var(--red); box-shadow: 0 0 4px var(--red-glow); width: 10px; left: 3px; }
+  .target.decoy .target-core::after { background: var(--red); box-shadow: 0 0 4px var(--red-glow); height: 10px; top: 3px; }
 
-  .hit-effect {
-    position: absolute;
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    border: 2px solid var(--neon);
-    box-shadow: 0 0 20px var(--neon-glow);
-    transform: translate(-50%, -50%);
-    animation: hitBurst 0.5s ease-out forwards;
-    pointer-events: none;
-    z-index: 4;
-  }
+  .hit-effect { position: absolute; width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--teal); box-shadow: 0 0 20px var(--teal-glow); transform: translate(-50%, -50%); animation: hitBurst 0.5s ease-out forwards; pointer-events: none; z-index: 4; }
+  .hit-effect.bonus { border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan-glow); }
 
-  .hit-effect.bonus { border-color: var(--electric); box-shadow: 0 0 20px var(--electric-glow); }
+  .hit-score { position: absolute; transform: translate(-50%, -50%); font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); animation: scoreFloat 0.8s ease-out forwards; pointer-events: none; z-index: 6; letter-spacing: 1px; }
+  .hit-score.bonus { color: var(--cyan); text-shadow: 0 0 15px var(--cyan-glow); font-size: 1.6rem; }
+  .hit-score.penalty { color: var(--red); text-shadow: 0 0 10px var(--red-glow); }
 
-  .hit-score {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: var(--gold);
-    text-shadow: 0 0 15px var(--gold-glow);
-    animation: scoreFloat 0.8s ease-out forwards;
-    pointer-events: none;
-    z-index: 6;
-  }
-
-  .hit-score.bonus { color: var(--electric); text-shadow: 0 0 15px var(--electric-glow); font-size: 1.5rem; }
-  .hit-score.penalty { color: var(--hot); text-shadow: 0 0 10px var(--hot-glow); }
-
-  /* ─── BOTTOM BAR ─── */
+  /* ═══ BOTTOM BAR ═══ */
   .bottom-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.7rem 1.5rem;
-    border-top: 1px solid rgba(0,255,136,0.06);
-    background: rgba(5,6,10,0.95);
+    padding: 8px 15px;
+    background: var(--darker);
+    border-top: 1px solid var(--border);
     z-index: 10;
     flex-shrink: 0;
   }
 
-  .strobe-indicator { display: flex; align-items: center; gap: 0.5rem; }
+  .strobe-indicator { display: flex; align-items: center; gap: 6px; }
 
-  .strobe-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--neon);
-    box-shadow: 0 0 8px var(--neon-glow);
-    animation: strobeBlink 1s ease-in-out infinite;
-  }
+  .strobe-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); animation: strobeBlink 1s ease-in-out infinite; }
 
-  .strobe-text {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-  }
+  .strobe-text { font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
 
-  .progress-section { display: flex; align-items: center; gap: 1rem; }
+  .progress-section { display: flex; align-items: center; gap: 10px; }
+  .progress-label { font-size: 0.55rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .progress-track { width: 120px; height: 4px; background: rgba(255,255,255,0.04); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--orange)); border-radius: 2px; transition: width 0.3s ease; }
 
-  .progress-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
+  .accuracy-display { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; color: var(--gold); letter-spacing: 2px; }
 
-  .progress-track { width: 120px; height: 3px; background: rgba(255,255,255,0.04); overflow: hidden; }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon), var(--electric));
-    box-shadow: 0 0 6px var(--neon-glow);
-    transition: width 0.3s ease;
-  }
-
-  .accuracy-display {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--neon);
-    letter-spacing: 0.08em;
-    text-shadow: 0 0 8px var(--neon-glow);
-  }
-
-  /* ─── SCREENS ─── */
+  /* ═══ SCREEN OVERLAYS ═══ */
   .screen-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 20;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: absolute; inset: 0; z-index: 20;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: rgba(5, 6, 10, 0.97);
     backdrop-filter: blur(20px);
-    text-align: center;
-    padding: 2rem;
+    text-align: center; padding: 2rem;
   }
 
   .screen-overlay.hidden { display: none; }
 
-  .start-icon { font-size: 3.5rem; margin-bottom: 1.5rem; animation: float 3s ease-in-out infinite; }
+  .start-icon { font-size: 3.5rem; margin-bottom: 1.2rem; animation: float 3s ease-in-out infinite; }
 
   .start-title {
-    font-weight: 900;
+    font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2.5rem, 6vw, 4rem);
-    text-transform: uppercase;
+    letter-spacing: 5px;
     line-height: 0.95;
-    letter-spacing: 0.02em;
   }
 
-  .start-title .glow {
-    display: block;
-    color: var(--neon);
-    text-shadow: 0 0 30px var(--neon-glow), 0 0 60px rgba(0,255,136,0.1);
-  }
+  .start-title .glow { display: block; color: var(--gold); }
 
   .start-desc {
-    color: var(--text-mid);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    line-height: 1.8;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
     max-width: 440px;
-    margin: 1.5rem 0 1.5rem;
-    letter-spacing: 0.02em;
+    margin: 1.2rem 0;
   }
 
   .input-hint {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
   }
 
-  .input-hint-item {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
+  .input-hint-item { display: flex; align-items: center; gap: 4px; }
   .input-hint-item .icon { font-size: 0.85rem; }
+  .input-hint-item.active { color: var(--teal); }
 
-  .input-hint-item.active { color: var(--neon); }
-
-  .tier-select { display: flex; gap: 0.4rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center; }
+  .tier-select { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; justify-content: center; }
 
   .tier-btn {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
     background: transparent;
-    color: var(--text-dim);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 0.45rem 0.9rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 6px 16px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
   }
 
-  .tier-btn.active { color: var(--neon); border-color: var(--neon); background: var(--neon-dim); box-shadow: 0 0 10px rgba(0,255,136,0.1); }
-  .tier-btn:hover:not(.active) { border-color: rgba(255,255,255,0.12); color: var(--text-mid); }
-
-  /* Focused tier btn (gamepad navigation) */
-  .tier-btn.gp-focus {
-    outline: 2px solid var(--electric);
-    outline-offset: 2px;
-    box-shadow: 0 0 15px var(--electric-glow);
-  }
+  .tier-btn.active { color: var(--dark); background: linear-gradient(135deg, var(--gold), var(--orange)); border-color: transparent; }
+  .tier-btn:hover:not(.active) { border-color: rgba(255,255,255,0.15); color: var(--text); }
+  .tier-btn.gp-focus { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
   .start-btn {
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    background: var(--neon);
-    color: var(--bg);
+    padding: 16px 40px;
     border: none;
-    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    transition: all 0.3s;
+    background: linear-gradient(135deg, var(--gold), var(--orange));
+    color: var(--dark);
+    box-shadow: 0 8px 30px rgba(255,107,53,0.3);
   }
 
-  .start-btn:hover { box-shadow: 0 0 40px var(--neon-glow); transform: translateY(-2px); }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,107,53,0.4); }
+  .start-btn:active { transform: scale(0.98); }
 
   .btn-back-home {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
     text-decoration: none;
     transition: color 0.2s;
-    margin-top: 1.5rem;
+    margin-top: 1.2rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 4px;
   }
 
-  .btn-back-home:hover { color: var(--neon); }
-  .btn-back-home svg { width: 10px; height: 10px; fill: currentColor; }
+  .btn-back-home:hover { color: var(--gold); }
 
   .countdown-num {
-    font-weight: 900;
+    font-family: 'Bebas Neue', sans-serif;
     font-size: 8rem;
-    color: var(--neon);
-    text-shadow: 0 0 60px var(--neon-glow), 0 0 120px rgba(0,255,136,0.15);
+    color: var(--gold);
+    text-shadow: 0 0 60px var(--gold-glow), 0 0 120px rgba(255,215,0,0.15);
     line-height: 1;
     animation: countPop 0.5s ease-out;
+    letter-spacing: 5px;
   }
 
   .countdown-sub {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--text-dim);
+    color: var(--muted);
     margin-top: 1rem;
   }
 
+  /* ═══ RESULTS ═══ */
   .results-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: rgba(0,255,136,0.04);
-    border: 1px solid rgba(0,255,136,0.06);
+    gap: 2px;
     max-width: 480px;
     width: 100%;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
   }
 
-  .result-cell { background: var(--bg-card); padding: 1.5rem 1rem; text-align: center; }
-
-  .result-value { font-weight: 800; font-size: 1.8rem; line-height: 1; }
-  .result-value.gold { color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
-  .result-value.neon { color: var(--neon); text-shadow: 0 0 10px var(--neon-glow); }
-  .result-value.electric { color: var(--electric); text-shadow: 0 0 10px var(--electric-glow); }
-
-  .result-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.45rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-top: 0.3rem;
-  }
-
-  .result-grade { font-size: 4.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.3rem; }
-  .result-grade.s-rank { color: var(--gold); text-shadow: 0 0 40px var(--gold-glow); }
-  .result-grade.a-rank { color: var(--neon); text-shadow: 0 0 30px var(--neon-glow); }
-  .result-grade.b-rank { color: var(--electric); text-shadow: 0 0 20px var(--electric-glow); }
-  .result-grade.c-rank { color: var(--text-mid); }
-
-  .result-rank {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .result-msg {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-mid);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-  }
-
-  .result-input-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 1rem;
-  }
-
-  .btn-group { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
-
-  .btn-secondary {
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--text);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 0.7rem 1.8rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    display: inline-block;
+  .result-cell {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 10px;
     text-align: center;
   }
 
-  .btn-secondary:hover { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
+  .result-value { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; line-height: 1; letter-spacing: 1px; }
+  .result-value.gold { color: var(--gold); }
+  .result-value.teal { color: var(--teal); }
+  .result-value.cyan { color: var(--cyan); }
 
-  /* Gamepad button hints on screens */
-  .gp-hints {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.5rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    margin-top: 1rem;
-    display: none;
+  .result-label { font-size: 0.5rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+  .result-grade { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; line-height: 1; margin-bottom: 4px; letter-spacing: 5px; }
+  .result-grade.s-rank { color: var(--gold); text-shadow: 0 0 40px var(--gold-glow); }
+  .result-grade.a-rank { color: var(--teal); text-shadow: 0 0 30px var(--teal-glow); }
+  .result-grade.b-rank { color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
+  .result-grade.c-rank { color: var(--muted); }
+
+  .result-rank { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
+  .result-msg { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
+  .result-input-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+
+  .btn-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+  .btn-secondary {
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  .gp-hints { font-size: 0.55rem; color: var(--muted); letter-spacing: 1px; margin-top: 1rem; display: none; }
   .gp-hints.visible { display: block; }
-
-  .gp-hint-key {
-    display: inline-block;
-    border: 1px solid var(--text-dim);
-    padding: 0.15rem 0.4rem;
-    margin: 0 0.2rem;
-    font-size: 0.5rem;
-    border-radius: 2px;
-  }
+  .gp-hint-key { display: inline-block; border: 1px solid var(--muted); padding: 2px 6px; font-size: 0.5rem; border-radius: 4px; }
 
   @keyframes targetPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
   @keyframes targetExpand { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.8); opacity: 0; } }
   @keyframes hitBurst { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(3); opacity: 0; } }
   @keyframes scoreFloat { 0% { transform: translate(-50%, -50%) translateY(0); opacity: 1; } 100% { transform: translate(-50%, -50%) translateY(-60px); opacity: 0; } }
+  @keyframes crosshairFire { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; } }
   @keyframes strobeBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
   @keyframes countPop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
 
   @media (max-width: 600px) {
-    .hud-center { gap: 1rem; }
-    .hud-stat-value { font-size: 1rem; }
-    .bottom-bar { flex-wrap: wrap; gap: 0.5rem; }
+    .hud-center { gap: 10px; }
+    .hud-stat-value { font-size: 1.1rem; }
+    .bottom-bar { flex-wrap: wrap; gap: 6px; }
     .progress-section { display: none; }
     .target-ring { width: 48px; height: 48px; }
     .hud-logo { display: none; }
@@ -700,11 +462,8 @@
 <div class="game-wrapper">
   <div class="hud">
     <div class="hud-left">
-      <a href="/dashboard" class="back-btn">
-        <svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        HUB
-      </a>
-      <div class="hud-logo">BOS<span> ESPORTS</span></div>
+      <a href="/dashboard" class="back-btn">&larr; Hub</a>
+      <div class="hud-logo">BOS ESPORTS</div>
       <div class="hud-rank" id="tierDisplay">BRONZE</div>
     </div>
     <div class="hud-center">
@@ -715,7 +474,7 @@
     </div>
     <div class="hud-right">
       <div class="input-indicator mouse-active" id="inputIndicator">
-        <span class="input-icon" id="inputIcon">🖱️</span>
+        <span class="input-icon" id="inputIcon">&#128433;&#65039;</span>
         <span id="inputLabel">MOUSE</span>
       </div>
       <div class="strobe-readout">STROBE <strong id="strobeRate">OFF</strong> Hz</div>
@@ -726,8 +485,6 @@
     <div class="grid-overlay"></div>
     <div class="center-mark"></div>
     <div class="strobe-overlay" id="strobeOverlay"></div>
-
-    <!-- Gamepad crosshair -->
     <div class="gamepad-crosshair" id="gpCrosshair">
       <div class="crosshair-outer">
         <div class="crosshair-v-top"></div>
@@ -752,15 +509,12 @@
 
   <!-- START SCREEN -->
   <div class="screen-overlay" id="startScreen">
-    <div class="start-icon">🎯</div>
+    <div class="start-icon">&#127919;</div>
     <h1 class="start-title">Strobe<span class="glow">Drill</span></h1>
-    <p class="start-desc">
-      Acquire and eliminate targets while strobe disruptions black out your vision.
-      Trains reaction speed, visual tracking, and target acquisition under cognitive pressure.
-    </p>
+    <p class="start-desc">Acquire and eliminate targets while strobe disruptions black out your vision. Trains reaction speed, visual tracking, and target acquisition under cognitive pressure.</p>
     <div class="input-hint" id="inputHints">
-      <div class="input-hint-item active"><span class="icon">🖱️</span> Mouse + Click</div>
-      <div class="input-hint-item" id="gpHint"><span class="icon">🎮</span> Controller — Connect to activate</div>
+      <div class="input-hint-item active"><span class="icon">&#128433;&#65039;</span> Mouse + Click</div>
+      <div class="input-hint-item" id="gpHint"><span class="icon">&#127918;</span> Controller — Connect to activate</div>
     </div>
     <div class="tier-select" id="tierSelect">
       <button class="tier-btn active" data-tier="1">Bronze</button>
@@ -769,14 +523,11 @@
       <button class="tier-btn" data-tier="4">Diamond</button>
       <button class="tier-btn" data-tier="5">Radiant</button>
     </div>
-    <button class="start-btn" id="startBtn">Start Match</button>
+    <button class="start-btn" id="startBtn">&#127775; Start Match</button>
     <div class="gp-hints" id="gpStartHints">
       <span class="gp-hint-key">A</span> Start &nbsp; <span class="gp-hint-key">D-Pad</span> Select Rank
     </div>
-    <a href="/dashboard" class="btn-back-home">
-      <svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back to BOS Esports
-    </a>
+    <a href="/dashboard" class="btn-back-home">&larr; Back to BOS Esports</a>
   </div>
 
   <!-- COUNTDOWN -->
@@ -793,16 +544,16 @@
     <div class="result-input-tag" id="resultInputTag">Played with: Mouse</div>
     <div class="results-grid">
       <div class="result-cell"><div class="result-value gold" id="resultScore">0</div><div class="result-label">Final Score</div></div>
-      <div class="result-cell"><div class="result-value neon" id="resultAccuracy">0%</div><div class="result-label">Accuracy</div></div>
-      <div class="result-cell"><div class="result-value electric" id="resultStreak">0</div><div class="result-label">Best Streak</div></div>
+      <div class="result-cell"><div class="result-value teal" id="resultAccuracy">0%</div><div class="result-label">Accuracy</div></div>
+      <div class="result-cell"><div class="result-value cyan" id="resultStreak">0</div><div class="result-label">Best Streak</div></div>
       <div class="result-cell"><div class="result-value gold" id="resultHits">0</div><div class="result-label">Eliminations</div></div>
-      <div class="result-cell"><div class="result-value neon" id="resultReaction">0ms</div><div class="result-label">Avg Reaction</div></div>
-      <div class="result-cell"><div class="result-value electric" id="resultTier">BRZ</div><div class="result-label">Rank</div></div>
+      <div class="result-cell"><div class="result-value teal" id="resultReaction">0ms</div><div class="result-label">Avg Reaction</div></div>
+      <div class="result-cell"><div class="result-value cyan" id="resultTier">BRZ</div><div class="result-label">Rank</div></div>
     </div>
     <div class="btn-group">
       <button class="start-btn" id="rematchBtn">Rematch</button>
       <button class="btn-secondary" id="menuBtn">Menu</button>
-      <a href="/dashboard" class="btn-secondary">← Hub</a>
+      <a href="/dashboard" class="btn-secondary">&larr; Hub</a>
     </div>
     <div class="gp-hints" id="gpResultHints">
       <span class="gp-hint-key">A</span> Rematch &nbsp; <span class="gp-hint-key">B</span> Menu
@@ -811,15 +562,11 @@
 </div>
 
 <script>
-// ═══════════════════════════════
-//  GAME STATE
-// ═══════════════════════════════
 const state = {
   tier: 1, score: 0, streak: 0, bestStreak: 0,
   hits: 0, misses: 0, totalTargets: 0,
   timeLeft: 60, running: false, reactionTimes: [],
-  screen: 'start', // start | countdown | playing | results
-  inputMode: 'mouse', // mouse | controller
+  screen: 'start', inputMode: 'mouse',
 };
 
 const TIERS = {
@@ -834,460 +581,161 @@ let config, gameTimer, strobeTimer, spawnTimer, targetIdCounter = 0;
 const $ = id => document.getElementById(id);
 const playArea = $('playArea');
 
-// ═══════════════════════════════
-//  GAMEPAD SYSTEM
-// ═══════════════════════════════
-const gp = {
-  connected: false,
-  index: null,
-  crossX: 0,
-  crossY: 0,
-  sensitivity: 8,
-  deadzone: 0.15,
-  prevButtons: {},
-  fireHeld: false,
-};
+const gp = { connected: false, index: null, crossX: 0, crossY: 0, sensitivity: 8, deadzone: 0.15, prevButtons: {}, fireHeld: false };
 
-// Gamepad connect/disconnect
 window.addEventListener('gamepadconnected', (e) => {
-  gp.connected = true;
-  gp.index = e.gamepad.index;
-  setInputMode('controller');
-
-  // Center crosshair
-  const area = playArea.getBoundingClientRect();
-  gp.crossX = area.width / 2;
-  gp.crossY = area.height / 2;
-  updateCrosshairPosition();
-
-
+  gp.connected = true; gp.index = e.gamepad.index; setInputMode('controller');
+  const area = playArea.getBoundingClientRect(); gp.crossX = area.width / 2; gp.crossY = area.height / 2; updateCrosshairPosition();
 });
+window.addEventListener('gamepaddisconnected', () => { gp.connected = false; gp.index = null; setInputMode('mouse'); });
 
-window.addEventListener('gamepaddisconnected', () => {
-  gp.connected = false;
-  gp.index = null;
-  setInputMode('mouse');
-
-});
-
-// Switch input mode
 function setInputMode(mode) {
   state.inputMode = mode;
-  const ind = $('inputIndicator');
-  const crosshair = $('gpCrosshair');
-
+  const ind = $('inputIndicator'), crosshair = $('gpCrosshair');
   if (mode === 'controller') {
-    ind.className = 'input-indicator controller-active';
-    $('inputIcon').textContent = '🎮';
-    $('inputLabel').textContent = 'CONTROLLER';
-    crosshair.classList.add('visible');
-    playArea.classList.add('controller-mode');
-    $('gpHint').innerHTML = '<span class="icon">🎮</span> Controller Connected ✓';
-    $('gpHint').classList.add('active');
+    ind.className = 'input-indicator controller-active'; $('inputIcon').textContent = '🎮'; $('inputLabel').textContent = 'CONTROLLER';
+    crosshair.classList.add('visible'); playArea.classList.add('controller-mode');
+    $('gpHint').innerHTML = '<span class="icon">🎮</span> Controller Connected ✓'; $('gpHint').classList.add('active');
     document.querySelectorAll('.gp-hints').forEach(h => h.classList.add('visible'));
   } else {
-    ind.className = 'input-indicator mouse-active';
-    $('inputIcon').textContent = '🖱️';
-    $('inputLabel').textContent = 'MOUSE';
-    crosshair.classList.remove('visible');
-    playArea.classList.remove('controller-mode');
+    ind.className = 'input-indicator mouse-active'; $('inputIcon').textContent = '🖱️'; $('inputLabel').textContent = 'MOUSE';
+    crosshair.classList.remove('visible'); playArea.classList.remove('controller-mode');
     document.querySelectorAll('.gp-hints').forEach(h => h.classList.remove('visible'));
   }
 }
 
-// Switch to mouse on mouse movement
-document.addEventListener('mousemove', () => {
-  if (state.inputMode === 'controller' && !gp.connected) {
-    setInputMode('mouse');
-  } else if (state.inputMode === 'controller') {
-    // Keep controller mode if connected, but allow mouse too
-  }
-});
+document.addEventListener('mousemove', () => { if (state.inputMode === 'controller' && !gp.connected) setInputMode('mouse'); });
 
-// Update crosshair element position
-function updateCrosshairPosition() {
-  const ch = $('gpCrosshair');
-  ch.style.left = gp.crossX + 'px';
-  ch.style.top = gp.crossY + 'px';
-}
+function updateCrosshairPosition() { const ch = $('gpCrosshair'); ch.style.left = gp.crossX + 'px'; ch.style.top = gp.crossY + 'px'; }
 
-// Check if crosshair is over a target
 function getCrosshairTarget() {
   const targets = playArea.querySelectorAll('.target');
   for (const t of targets) {
-    const r = t.getBoundingClientRect();
-    const pr = playArea.getBoundingClientRect();
-    const tx = r.left - pr.left;
-    const ty = r.top - pr.top;
-    const cx = gp.crossX;
-    const cy = gp.crossY;
-    // Check if crosshair center is within target bounds (generous hitbox)
-    const hitPad = 10;
-    if (cx >= tx - hitPad && cx <= tx + r.width + hitPad && cy >= ty - hitPad && cy <= ty + r.height + hitPad) {
-      return t;
-    }
+    const r = t.getBoundingClientRect(), pr = playArea.getBoundingClientRect();
+    const tx = r.left - pr.left, ty = r.top - pr.top, hitPad = 10;
+    if (gp.crossX >= tx - hitPad && gp.crossX <= tx + r.width + hitPad && gp.crossY >= ty - hitPad && gp.crossY <= ty + r.height + hitPad) return t;
   }
   return null;
 }
 
-// Fire crosshair flash
-function fireCrosshair() {
-  const flash = $('crosshairFlash');
-  flash.classList.remove('firing');
-  void flash.offsetWidth;
-  flash.classList.add('firing');
-}
+function fireCrosshair() { const flash = $('crosshairFlash'); flash.classList.remove('firing'); void flash.offsetWidth; flash.classList.add('firing'); }
+function buttonPressed(gpad, index) { const pressed = gpad.buttons[index] && gpad.buttons[index].pressed; const was = gp.prevButtons[index] || false; gp.prevButtons[index] = pressed; return pressed && !was; }
+function triggerValue(gpad, index) { return gpad.buttons[index] ? gpad.buttons[index].value : 0; }
 
-// Button press detection (rising edge)
-function buttonPressed(gpad, index) {
-  const pressed = gpad.buttons[index] && gpad.buttons[index].pressed;
-  const wasPressed = gp.prevButtons[index] || false;
-  gp.prevButtons[index] = pressed;
-  return pressed && !wasPressed;
-}
-
-// Trigger value (analog)
-function triggerValue(gpad, index) {
-  return gpad.buttons[index] ? gpad.buttons[index].value : 0;
-}
-
-// ═══════════════════════════════
-//  GAMEPAD POLL LOOP
-// ═══════════════════════════════
 function gamepadLoop() {
-  if (!gp.connected) {
-    requestAnimationFrame(gamepadLoop);
-    return;
-  }
-
-  const gpads = navigator.getGamepads();
-  const gpad = gpads[gp.index];
-  if (!gpad) {
-    requestAnimationFrame(gamepadLoop);
-    return;
-  }
-
-  // Auto-switch to controller on any input
+  if (!gp.connected) { requestAnimationFrame(gamepadLoop); return; }
+  const gpads = navigator.getGamepads(), gpad = gpads[gp.index];
+  if (!gpad) { requestAnimationFrame(gamepadLoop); return; }
   const hasInput = gpad.axes.some(a => Math.abs(a) > gp.deadzone) || gpad.buttons.some(b => b.pressed);
-  if (hasInput && state.inputMode !== 'controller') {
-    setInputMode('controller');
-    const area = playArea.getBoundingClientRect();
-    gp.crossX = area.width / 2;
-    gp.crossY = area.height / 2;
-  }
+  if (hasInput && state.inputMode !== 'controller') { setInputMode('controller'); const area = playArea.getBoundingClientRect(); gp.crossX = area.width / 2; gp.crossY = area.height / 2; }
 
-  // ─── SCREEN: START ───
   if (state.screen === 'start') {
-    // D-pad left/right to change tier
-    if (buttonPressed(gpad, 14)) { // D-pad left
-      state.tier = Math.max(1, state.tier - 1);
-      selectTierUI(state.tier);
-    }
-    if (buttonPressed(gpad, 15)) { // D-pad right
-      state.tier = Math.min(5, state.tier + 1);
-      selectTierUI(state.tier);
-    }
-    // A button to start
-    if (buttonPressed(gpad, 0)) {
-      startCountdown();
-    }
+    if (buttonPressed(gpad, 14)) { state.tier = Math.max(1, state.tier - 1); selectTierUI(state.tier); }
+    if (buttonPressed(gpad, 15)) { state.tier = Math.min(5, state.tier + 1); selectTierUI(state.tier); }
+    if (buttonPressed(gpad, 0)) startCountdown();
   }
 
-  // ─── SCREEN: PLAYING ───
   if (state.screen === 'playing') {
-    // Left stick → move crosshair
-    const lx = gpad.axes[0];
-    const ly = gpad.axes[1];
-    const area = playArea.getBoundingClientRect();
-
-    if (Math.abs(lx) > gp.deadzone) {
-      gp.crossX += lx * gp.sensitivity;
-    }
-    if (Math.abs(ly) > gp.deadzone) {
-      gp.crossY += ly * gp.sensitivity;
-    }
-
-    // Clamp to play area
-    gp.crossX = Math.max(0, Math.min(area.width, gp.crossX));
-    gp.crossY = Math.max(0, Math.min(area.height, gp.crossY));
+    const lx = gpad.axes[0], ly = gpad.axes[1], area = playArea.getBoundingClientRect();
+    if (Math.abs(lx) > gp.deadzone) gp.crossX += lx * gp.sensitivity;
+    if (Math.abs(ly) > gp.deadzone) gp.crossY += ly * gp.sensitivity;
+    gp.crossX = Math.max(0, Math.min(area.width, gp.crossX)); gp.crossY = Math.max(0, Math.min(area.height, gp.crossY));
     updateCrosshairPosition();
-
-    // Check if over target for visual feedback
     const overTarget = getCrosshairTarget();
     $('gpCrosshair').classList.toggle('on-target', !!overTarget);
-
-    // R2/RT (index 7) or A button (index 0) to fire
-    const r2 = triggerValue(gpad, 7);
-    const fireTriggered = buttonPressed(gpad, 7) || buttonPressed(gpad, 0) || (r2 > 0.5 && !gp.fireHeld);
+    const r2 = triggerValue(gpad, 7), fireTriggered = buttonPressed(gpad, 7) || buttonPressed(gpad, 0) || (r2 > 0.5 && !gp.fireHeld);
     gp.fireHeld = r2 > 0.5;
-
-    if (fireTriggered && state.running) {
-      fireCrosshair();
-      if (overTarget) {
-        hitTarget(overTarget);
-      } else {
-        // Miss
-        state.misses++;
-        state.streak = 0;
-        updateHUD();
-      }
-    }
+    if (fireTriggered && state.running) { fireCrosshair(); if (overTarget) hitTarget(overTarget); else { state.misses++; state.streak = 0; updateHUD(); } }
   }
 
-  // ─── SCREEN: RESULTS ───
-  if (state.screen === 'results') {
-    if (buttonPressed(gpad, 0)) { // A = rematch
-      restartGame();
-    }
-    if (buttonPressed(gpad, 1)) { // B = menu
-      backToMenu();
-    }
-  }
-
+  if (state.screen === 'results') { if (buttonPressed(gpad, 0)) restartGame(); if (buttonPressed(gpad, 1)) backToMenu(); }
   requestAnimationFrame(gamepadLoop);
 }
-
-// Start the gamepad loop
 requestAnimationFrame(gamepadLoop);
 
-// ═══════════════════════════════
-//  TIER SELECTION
-// ═══════════════════════════════
-function selectTierUI(t) {
-  state.tier = t;
-  document.querySelectorAll('.tier-btn').forEach(b => {
-    b.classList.toggle('active', parseInt(b.dataset.tier) === t);
-  });
-}
+function selectTierUI(t) { state.tier = t; document.querySelectorAll('.tier-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.tier) === t)); }
+$('tierSelect').addEventListener('click', (e) => { const btn = e.target.closest('.tier-btn'); if (btn) selectTierUI(parseInt(btn.dataset.tier)); });
 
-// Mouse tier clicks
-$('tierSelect').addEventListener('click', (e) => {
-  const btn = e.target.closest('.tier-btn');
-  if (!btn) return;
-  selectTierUI(parseInt(btn.dataset.tier));
-});
-
-// ═══════════════════════════════
-//  GAME FLOW
-// ═══════════════════════════════
 $('startBtn').addEventListener('click', startCountdown);
 $('rematchBtn').addEventListener('click', restartGame);
 $('menuBtn').addEventListener('click', backToMenu);
 
 function startCountdown() {
-  state.screen = 'countdown';
-  $('startScreen').classList.add('hidden');
-  $('countdownScreen').classList.remove('hidden');
-  let count = 3;
-  $('countdownNumber').textContent = count;
-  const iv = setInterval(() => {
-    count--;
-    if (count > 0) {
-      $('countdownNumber').textContent = count;
-      $('countdownNumber').style.animation = 'none';
-      void $('countdownNumber').offsetWidth;
-      $('countdownNumber').style.animation = 'countPop 0.5s ease-out';
-    } else {
-      clearInterval(iv);
-      $('countdownScreen').classList.add('hidden');
-      startGame();
-    }
-  }, 800);
+  state.screen = 'countdown'; $('startScreen').classList.add('hidden'); $('countdownScreen').classList.remove('hidden');
+  let count = 3; $('countdownNumber').textContent = count;
+  const iv = setInterval(() => { count--; if (count > 0) { $('countdownNumber').textContent = count; $('countdownNumber').style.animation = 'none'; void $('countdownNumber').offsetWidth; $('countdownNumber').style.animation = 'countPop 0.5s ease-out'; } else { clearInterval(iv); $('countdownScreen').classList.add('hidden'); startGame(); } }, 800);
 }
 
 function startGame() {
-  state.screen = 'playing';
-  config = TIERS[state.tier];
+  state.screen = 'playing'; config = TIERS[state.tier];
   Object.assign(state, { score: 0, streak: 0, bestStreak: 0, hits: 0, misses: 0, totalTargets: 0, timeLeft: 60, running: true, reactionTimes: [] });
-  $('tierDisplay').textContent = config.name;
-  $('strobeRate').textContent = config.strobeRate || 'OFF';
-  updateHUD();
-
-  // Reset crosshair to center
-  if (gp.connected) {
-    const area = playArea.getBoundingClientRect();
-    gp.crossX = area.width / 2;
-    gp.crossY = area.height / 2;
-    updateCrosshairPosition();
-  }
-
-  gameTimer = setInterval(() => {
-    state.timeLeft--;
-    $('timeDisplay').textContent = state.timeLeft;
-    $('progressFill').style.width = ((60 - state.timeLeft) / 60 * 100) + '%';
-    if (state.timeLeft <= 0) endGame();
-  }, 1000);
-
-  if (config.strobeRate > 0) {
-    const ms = 60000 / config.strobeRate;
-    strobeTimer = setInterval(() => {
-      if (!state.running) return;
-      $('strobeOverlay').classList.add('active');
-      setTimeout(() => $('strobeOverlay').classList.remove('active'), config.strobeDark);
-    }, ms);
-    $('strobeLabel').textContent = 'Strobe Active';
-    $('strobeDot').style.background = 'var(--neon)';
-    $('strobeDot').style.animation = 'strobeBlink 1s ease-in-out infinite';
-  } else {
-    $('strobeLabel').textContent = 'Strobe Off';
-    $('strobeDot').style.background = 'var(--text-dim)';
-    $('strobeDot').style.animation = 'none';
-  }
-
-  spawnTarget();
-  spawnTimer = setInterval(() => {
-    if (!state.running) return;
-    if (document.querySelectorAll('.target').length < config.maxTargets) spawnTarget();
-  }, config.spawnRate);
-
+  $('tierDisplay').textContent = config.name; $('strobeRate').textContent = config.strobeRate || 'OFF'; updateHUD();
+  if (gp.connected) { const area = playArea.getBoundingClientRect(); gp.crossX = area.width / 2; gp.crossY = area.height / 2; updateCrosshairPosition(); }
+  gameTimer = setInterval(() => { state.timeLeft--; $('timeDisplay').textContent = state.timeLeft; $('progressFill').style.width = ((60 - state.timeLeft) / 60 * 100) + '%'; if (state.timeLeft <= 0) endGame(); }, 1000);
+  if (config.strobeRate > 0) { const ms = 60000 / config.strobeRate; strobeTimer = setInterval(() => { if (!state.running) return; $('strobeOverlay').classList.add('active'); setTimeout(() => $('strobeOverlay').classList.remove('active'), config.strobeDark); }, ms); $('strobeLabel').textContent = 'Strobe Active'; $('strobeDot').style.background = 'var(--gold)'; $('strobeDot').style.animation = 'strobeBlink 1s ease-in-out infinite'; } else { $('strobeLabel').textContent = 'Strobe Off'; $('strobeDot').style.background = 'var(--muted)'; $('strobeDot').style.animation = 'none'; }
+  spawnTarget(); spawnTimer = setInterval(() => { if (!state.running) return; if (document.querySelectorAll('.target').length < config.maxTargets) spawnTarget(); }, config.spawnRate);
   playArea.addEventListener('click', onMouseClick);
 }
 
-// ═══════════════════════════════
-//  TARGETS
-// ═══════════════════════════════
 function spawnTarget() {
   if (!state.running) return;
-  const isDecoy = config.decoys && Math.random() < 0.25;
-  const isBonus = !isDecoy && Math.random() < 0.12;
-  const area = playArea.getBoundingClientRect();
-  const m = 40;
-  const x = m + Math.random() * (area.width - 56 - m * 2);
-  const y = m + Math.random() * (area.height - 56 - m * 2);
-
+  const isDecoy = config.decoys && Math.random() < 0.25, isBonus = !isDecoy && Math.random() < 0.12;
+  const area = playArea.getBoundingClientRect(), m = 40;
+  const x = m + Math.random() * (area.width - 56 - m * 2), y = m + Math.random() * (area.height - 56 - m * 2);
   const el = document.createElement('div');
   el.className = `target ${isDecoy ? 'decoy' : ''} ${isBonus ? 'bonus' : ''}`;
   el.dataset.type = isDecoy ? 'decoy' : (isBonus ? 'bonus' : 'normal');
-  el.dataset.spawn = Date.now();
-  el.style.left = x + 'px'; el.style.top = y + 'px';
+  el.dataset.spawn = Date.now(); el.style.left = x + 'px'; el.style.top = y + 'px';
   el.innerHTML = '<div class="target-ring"><div class="target-core"></div></div>';
-
-  // Mouse click on target
   el.addEventListener('click', (e) => { e.stopPropagation(); hitTarget(el); });
-
-  playArea.appendChild(el);
-  state.totalTargets++;
-
+  playArea.appendChild(el); state.totalTargets++;
   const life = isBonus ? config.targetLife * 0.7 : config.targetLife;
-  setTimeout(() => {
-    if (!el.parentNode) return;
-    if (!isDecoy) { state.misses++; state.streak = 0; updateHUD(); }
-    el.remove();
-  }, life);
+  setTimeout(() => { if (!el.parentNode) return; if (!isDecoy) { state.misses++; state.streak = 0; updateHUD(); } el.remove(); }, life);
 }
 
 function hitTarget(el) {
   if (!state.running) return;
-  const type = el.dataset.type;
-  const reaction = Date.now() - parseInt(el.dataset.spawn);
+  const type = el.dataset.type, reaction = Date.now() - parseInt(el.dataset.spawn);
   const r = el.getBoundingClientRect(), pr = playArea.getBoundingClientRect();
   const cx = r.left - pr.left + r.width / 2, cy = r.top - pr.top + r.height / 2;
-
-  if (type === 'decoy') {
-    state.score = Math.max(0, state.score - 50); state.streak = 0;
-    showFx(cx, cy, '-50', 'penalty');
-  } else {
-    const base = type === 'bonus' ? 200 : 100;
-    const pts = base + Math.floor(state.streak / 3) * 25 + (reaction < 500 ? 50 : reaction < 800 ? 25 : 0);
-    state.score += pts; state.hits++; state.streak++;
-    state.bestStreak = Math.max(state.bestStreak, state.streak);
-    state.reactionTimes.push(reaction);
-    showFx(cx, cy, '+' + pts, type === 'bonus' ? 'bonus' : 'normal');
-  }
+  if (type === 'decoy') { state.score = Math.max(0, state.score - 50); state.streak = 0; showFx(cx, cy, '-50', 'penalty'); }
+  else { const base = type === 'bonus' ? 200 : 100; const pts = base + Math.floor(state.streak / 3) * 25 + (reaction < 500 ? 50 : reaction < 800 ? 25 : 0); state.score += pts; state.hits++; state.streak++; state.bestStreak = Math.max(state.bestStreak, state.streak); state.reactionTimes.push(reaction); showFx(cx, cy, '+' + pts, type === 'bonus' ? 'bonus' : 'normal'); }
   el.remove(); updateHUD();
 }
 
-function onMouseClick(e) {
-  if (!state.running || e.target.closest('.target')) return;
-  state.misses++; state.streak = 0; updateHUD();
-}
+function onMouseClick(e) { if (!state.running || e.target.closest('.target')) return; state.misses++; state.streak = 0; updateHUD(); }
 
 function showFx(x, y, text, type) {
-  const ring = document.createElement('div');
-  ring.className = `hit-effect ${type === 'bonus' ? 'bonus' : ''}`;
-  ring.style.left = x + 'px'; ring.style.top = y + 'px';
-  playArea.appendChild(ring); setTimeout(() => ring.remove(), 500);
-  const s = document.createElement('div');
-  s.className = `hit-score ${type}`; s.textContent = text;
-  s.style.left = x + 'px'; s.style.top = (y - 20) + 'px';
-  playArea.appendChild(s); setTimeout(() => s.remove(), 800);
+  const ring = document.createElement('div'); ring.className = `hit-effect ${type === 'bonus' ? 'bonus' : ''}`; ring.style.left = x + 'px'; ring.style.top = y + 'px'; playArea.appendChild(ring); setTimeout(() => ring.remove(), 500);
+  const s = document.createElement('div'); s.className = `hit-score ${type}`; s.textContent = text; s.style.left = x + 'px'; s.style.top = (y - 20) + 'px'; playArea.appendChild(s); setTimeout(() => s.remove(), 800);
 }
 
-function updateHUD() {
-  $('scoreDisplay').textContent = state.score;
-  $('streakDisplay').textContent = state.streak;
-  $('missDisplay').textContent = state.misses;
-  const t = state.hits + state.misses;
-  $('accuracyDisplay').textContent = `ACC ${t > 0 ? Math.round((state.hits / t) * 100) : 100}%`;
-}
+function updateHUD() { $('scoreDisplay').textContent = state.score; $('streakDisplay').textContent = state.streak; $('missDisplay').textContent = state.misses; const t = state.hits + state.misses; $('accuracyDisplay').textContent = `ACC ${t > 0 ? Math.round((state.hits / t) * 100) : 100}%`; }
 
 function endGame() {
-  state.screen = 'results';
-  state.running = false;
+  state.screen = 'results'; state.running = false;
   clearInterval(gameTimer); clearInterval(strobeTimer); clearInterval(spawnTimer);
-  $('strobeOverlay').classList.remove('active');
-  playArea.removeEventListener('click', onMouseClick);
+  $('strobeOverlay').classList.remove('active'); playArea.removeEventListener('click', onMouseClick);
   document.querySelectorAll('.target').forEach(t => t.remove());
-
-  const total = state.hits + state.misses;
-  const acc = total > 0 ? Math.round((state.hits / total) * 100) : 0;
+  const total = state.hits + state.misses, acc = total > 0 ? Math.round((state.hits / total) * 100) : 0;
   const avgR = state.reactionTimes.length > 0 ? Math.round(state.reactionTimes.reduce((a, b) => a + b, 0) / state.reactionTimes.length) : 0;
-
   let grade, gc, msg, rankLabel, rankColor;
   if (state.score >= 3000 && acc >= 85) { grade = 'S'; gc = 's-rank'; msg = 'Radiant-level cognitive performance'; rankLabel = 'RADIANT'; rankColor = 'var(--gold)'; }
-  else if (state.score >= 2000 && acc >= 75) { grade = 'A'; gc = 'a-rank'; msg = 'Diamond-tier visual processing'; rankLabel = 'DIAMOND'; rankColor = 'var(--neon)'; }
-  else if (state.score >= 1200 && acc >= 60) { grade = 'B'; gc = 'b-rank'; msg = 'Gold-level reaction speed'; rankLabel = 'GOLD'; rankColor = 'var(--electric)'; }
-  else { grade = 'C'; gc = 'c-rank'; msg = 'Keep grinding — neural pathways adapting'; rankLabel = 'SILVER'; rankColor = 'var(--text-mid)'; }
-
-  $('resultRankLabel').textContent = rankLabel;
-  $('resultRankLabel').style.color = rankColor;
-  $('resultGrade').textContent = grade;
-  $('resultGrade').className = `result-grade ${gc}`;
-  $('resultMsg').textContent = msg;
-  $('resultInputTag').textContent = `Played with: ${gp.connected ? 'Controller 🎮' : 'Mouse 🖱️'}`;
-  $('resultScore').textContent = state.score;
-  $('resultAccuracy').textContent = acc + '%';
-  $('resultStreak').textContent = state.bestStreak;
-  $('resultHits').textContent = state.hits;
-  $('resultReaction').textContent = avgR + 'ms';
-  $('resultTier').textContent = config.short;
+  else if (state.score >= 2000 && acc >= 75) { grade = 'A'; gc = 'a-rank'; msg = 'Diamond-tier visual processing'; rankLabel = 'DIAMOND'; rankColor = 'var(--teal)'; }
+  else if (state.score >= 1200 && acc >= 60) { grade = 'B'; gc = 'b-rank'; msg = 'Gold-level reaction speed'; rankLabel = 'GOLD'; rankColor = 'var(--cyan)'; }
+  else { grade = 'C'; gc = 'c-rank'; msg = 'Keep grinding — neural pathways adapting'; rankLabel = 'SILVER'; rankColor = 'var(--muted)'; }
+  $('resultRankLabel').textContent = rankLabel; $('resultRankLabel').style.color = rankColor;
+  $('resultGrade').textContent = grade; $('resultGrade').className = `result-grade ${gc}`;
+  $('resultMsg').textContent = msg; $('resultInputTag').textContent = `Played with: ${gp.connected ? 'Controller 🎮' : 'Mouse 🖱️'}`;
+  $('resultScore').textContent = state.score; $('resultAccuracy').textContent = acc + '%';
+  $('resultStreak').textContent = state.bestStreak; $('resultHits').textContent = state.hits;
+  $('resultReaction').textContent = avgR + 'ms'; $('resultTier').textContent = config.short;
   $('resultsScreen').classList.remove('hidden');
-
-  // ─── SAVE SCORE TO SERVER ───
-  try {
-    fetch('/api/scores', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        game: 'strobe',
-        tier: state.tier,
-        score: state.score,
-        accuracy: acc,
-        bestStreak: state.bestStreak,
-        avgReaction: avgR,
-        hits: state.hits,
-        misses: state.misses,
-        inputMode: gp.connected ? 'controller' : 'mouse',
-        grade: grade
-      })
-    }).then(function() {}).catch(function() {});
-  } catch (ignore) {}
+  try { fetch('/api/scores', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ game: 'strobe', tier: state.tier, score: state.score, accuracy: acc, bestStreak: state.bestStreak, avgReaction: avgR, hits: state.hits, misses: state.misses, inputMode: gp.connected ? 'controller' : 'mouse', grade: grade }) }).then(function(){}).catch(function(){}); } catch(ignore){}
 }
 
-function restartGame() {
-  document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); });
-  $('strobeOverlay').classList.remove('active');
-  $('resultsScreen').classList.add('hidden');
-  startCountdown();
-}
-
-function backToMenu() {
-  state.screen = 'start';
-  document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); });
-  $('strobeOverlay').classList.remove('active');
-  $('resultsScreen').classList.add('hidden');
-  $('startScreen').classList.remove('hidden');
-}
+function restartGame() { document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); }); $('strobeOverlay').classList.remove('active'); $('resultsScreen').classList.add('hidden'); startCountdown(); }
+function backToMenu() { state.screen = 'start'; document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); }); $('strobeOverlay').classList.remove('active'); $('resultsScreen').classList.add('hidden'); $('startScreen').classList.remove('hidden'); }
 </script>
 
 </body>
