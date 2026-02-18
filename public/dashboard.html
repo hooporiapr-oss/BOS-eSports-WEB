@@ -663,7 +663,7 @@
             .then(function(data) {
                 if (!data) { upgradeBanner.classList.remove('hidden'); return; }
                 var plan = data.plan || 'free';
-                var status = data.status || 'none';
+                var status = data.subscriptionStatus || 'none';
 
                 planBadge.textContent = plan.toUpperCase();
                 if (status === 'trialing') planBadge.textContent = plan.toUpperCase() + ' (TRIAL)';
