@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
 const { router: stripeRoutes, handleWebhook } = require('./routes/stripe');
 const { ensureDataFiles } = require('./models/store');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -13,7 +14,6 @@ const PORT = process.env.PORT || 3000;
 app.set('trust proxy', 1);
 
 // ─── Stripe Webhook (MUST be before express.json) ───
-// Stripe needs the raw body to verify webhook signatures
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), handleWebhook);
 
 // ─── Middleware ───
@@ -60,6 +60,15 @@ app.get('/login', (req, res) => {
 
 app.get('/dashboard', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+// ─── Welcome page (post-Stripe checkout) ───
+app.get('/welcome', (req, res) => {
+  // If already logged in and no session_id, go to dashboard
+  if (req.session.user && !req.query.session_id) {
+    return res.redirect('/dashboard');
+  }
+  res.sendFile(path.join(__dirname, 'public', 'welcome.html'));
 });
 
 app.get('/play/:game', requireAuth, (req, res) => {
