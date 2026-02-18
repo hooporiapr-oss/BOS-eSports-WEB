@@ -172,23 +172,6 @@
             line-height: 1.6;
         }
 
-        /* ── Toggle ── */
-        .toggle-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .toggle-label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--gray-300);
-        }
-
-        .toggle-label.active { color: var(--white); }
-
         /* ── Pricing Grid ── */
         .pricing-section {
             position: relative;
@@ -386,26 +369,32 @@
             transform: translateY(-2px);
         }
 
+        .card-cta:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
         .cta-player {
             background: var(--teal);
             color: var(--dark);
         }
 
-        .cta-player:hover { box-shadow: 0 6px 24px rgba(0, 217, 165, 0.3); }
+        .cta-player:hover:not(:disabled) { box-shadow: 0 6px 24px rgba(0, 217, 165, 0.3); }
 
         .cta-pro {
             background: var(--gradient-gold);
             color: var(--dark);
         }
 
-        .cta-pro:hover { box-shadow: 0 6px 24px rgba(255, 215, 0, 0.3); }
+        .cta-pro:hover:not(:disabled) { box-shadow: 0 6px 24px rgba(255, 215, 0, 0.3); }
 
         .cta-team {
             background: var(--orange);
             color: var(--dark);
         }
 
-        .cta-team:hover { box-shadow: 0 6px 24px rgba(255, 107, 53, 0.3); }
+        .cta-team:hover:not(:disabled) { box-shadow: 0 6px 24px rgba(255, 107, 53, 0.3); }
 
         /* ── Trial Banner ── */
         .trial-banner {
@@ -578,6 +567,23 @@
         .pricing-card:nth-child(2) { animation: fadeUp 0.6s ease-out 0.2s both; }
         .pricing-card:nth-child(3) { animation: fadeUp 0.6s ease-out 0.3s both; }
         .trial-banner { animation: fadeUp 0.6s ease-out 0.4s both; }
+
+        /* ── Spinner for loading state ── */
+        .card-cta .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(10, 10, 15, 0.3);
+            border-top-color: var(--dark);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -631,7 +637,7 @@
                 <li class="disabled"><span class="check">—</span> Pro badge</li>
                 <li class="disabled"><span class="check">—</span> Early access to new games</li>
             </ul>
-            <a href="/login" class="card-cta cta-player">Start Free Trial</a>
+            <button class="card-cta cta-player" data-tier="player">Start Free Trial</button>
         </div>
 
         <!-- PRO (Featured) -->
@@ -657,7 +663,7 @@
                 <li class="disabled"><span class="check">—</span> Coach dashboard</li>
                 <li class="disabled"><span class="check">—</span> Roster analytics</li>
             </ul>
-            <a href="/login" class="card-cta cta-pro">Start Free Trial</a>
+            <button class="card-cta cta-pro" data-tier="pro">Start Free Trial</button>
         </div>
 
         <!-- TEAM -->
@@ -682,7 +688,7 @@
                 <li><span class="check check-team">✓</span> Custom onboarding</li>
                 <li><span class="check check-team">✓</span> Bulk invite management</li>
             </ul>
-            <a href="/login" class="card-cta cta-team">Start Free Trial</a>
+            <button class="card-cta cta-team" data-tier="team">Start Free Trial</button>
         </div>
 
     </div>
@@ -775,14 +781,84 @@
 </footer>
 
 <script>
-    // FAQ Accordion
+    // ═══════════════════════════════════════════════════
+    // STRIPE CHECKOUT FLOW
+    // ═══════════════════════════════════════════════════
+
+    // Attach click handlers to all CTA buttons
+    document.querySelectorAll('.card-cta[data-tier]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const tier = btn.dataset.tier;
+
+            // Prevent double-clicks
+            if (btn.disabled) return;
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.innerHTML = '<span class="spinner"></span> Loading...';
+
+            try {
+                const res = await fetch('/api/stripe/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ tier }),
+                });
+
+                const data = await res.json();
+
+                if (res.status === 401) {
+                    // Not logged in — redirect to login with return URL
+                    window.location.href = '/login?redirect=/pricing.html&tier=' + tier;
+                    return;
+                }
+
+                if (!res.ok) {
+                    // Already subscribed or other error
+                    alert(data.error || 'Something went wrong. Please try again.');
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    return;
+                }
+
+                if (data.url) {
+                    // Redirect to Stripe Checkout
+                    window.location.href = data.url;
+                } else {
+                    alert('Could not create checkout session. Please try again.');
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+
+            } catch (err) {
+                console.error('Checkout error:', err);
+                alert('Network error. Please check your connection and try again.');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        });
+    });
+
+    // ── On page load: if user came from login redirect with tier param, auto-trigger checkout ──
+    (function autoCheckout() {
+        const params = new URLSearchParams(window.location.search);
+        const tier = params.get('tier');
+        if (tier) {
+            const btn = document.querySelector(`.card-cta[data-tier="${tier}"]`);
+            if (btn) {
+                // Small delay to let page render, then auto-click
+                setTimeout(() => btn.click(), 500);
+            }
+            // Clean URL
+            window.history.replaceState({}, '', '/pricing.html');
+        }
+    })();
+
+    // ── FAQ Accordion ──
     document.querySelectorAll('.faq-question').forEach(btn => {
         btn.addEventListener('click', () => {
             const item = btn.closest('.faq-item');
             const wasOpen = item.classList.contains('open');
-            // Close all
             document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-            // Toggle clicked
             if (!wasOpen) item.classList.add('open');
         });
     });
