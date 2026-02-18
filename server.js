@@ -4,16 +4,22 @@ const session = require('express-session');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
+const { router: stripeRoutes, handleWebhook } = require('./routes/stripe');
 const { ensureDataFiles } = require('./models/store');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Trust Render's proxy so secure cookies work
+app.set('trust proxy', 1);
+
+// ─── Stripe Webhook (MUST be before express.json) ───
+// Stripe needs the raw body to verify webhook signatures
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), handleWebhook);
 
 // ─── Middleware ───
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(session({
   secret: process.env.SESSION_SECRET || 'bos-esports-dev-secret-change-me',
   resave: false,
@@ -35,6 +41,7 @@ app.use((req, res, next) => {
 // ─── Routes ───
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
+app.use('/api/stripe', stripeRoutes);
 
 // Page routes
 app.get('/', (req, res) => {
