@@ -60,11 +60,20 @@
     }
 
     .nav-logo {
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 1.4rem;
-        letter-spacing: 5px;
-        color: var(--gold);
+        display: flex;
+        align-items: center;
         text-decoration: none;
+    }
+
+    .nav-logo-img {
+        height: 38px;
+        width: auto;
+        display: block;
+        transition: opacity 0.2s;
+    }
+
+    .nav-logo-img:hover {
+        opacity: 0.85;
     }
 
     .nav-links {
@@ -783,11 +792,15 @@
     }
 
     .footer-logo {
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 1.1rem;
-        letter-spacing: 3px;
         margin-bottom: 8px;
-        color: var(--gold);
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer-logo-img {
+        height: 50px;
+        width: auto;
+        display: block;
     }
 
     .footer-links {
@@ -881,7 +894,7 @@
 
     @media (max-width: 640px) {
         .nav { padding: 10px 14px; }
-        .nav-logo { font-size: 1.1rem; letter-spacing: 3px; }
+        .nav-logo-img { height: 30px; }
 
         .hero { padding: 100px 18px 60px; }
         .hero h1 { letter-spacing: 3px; }
@@ -925,7 +938,7 @@
 
 <!-- ===== NAV ===== -->
 <nav class="nav">
-    <a href="/" class="nav-logo">BOS ESPORTS</a>
+    <a href="/" class="nav-logo"><img src="bos.png" alt="BOS Esports" class="nav-logo-img"></a>
     <div class="nav-links">
         <a href="#games" class="nav-link">Games</a>
         <a href="#science" class="nav-link">Science</a>
@@ -1166,7 +1179,7 @@
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
-    <div class="footer-logo">BOS ESPORTS</div>
+    <div class="footer-logo"><img src="bos.png" alt="BOS Esports" class="footer-logo-img"></div>
     <div class="footer-links">
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Use</a>
