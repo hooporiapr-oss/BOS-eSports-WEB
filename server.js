@@ -81,6 +81,9 @@ app.get('/play/:game', requireAuth, (req, res) => {
 app.get('/leaderboard', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'leaderboard.html'));
 });
+app.get('/partners', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'partners.html'));
+});
 
 // ─── Auth Middleware ───
 function requireAuth(req, res, next) {
