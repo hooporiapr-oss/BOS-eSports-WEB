@@ -96,7 +96,8 @@
     #bos-coach-drawer{position:fixed;bottom:100px;right:24px;width:380px;max-width:calc(100vw - 48px);height:540px;max-height:calc(100vh - 140px);background:#12121a;border:1.5px solid rgba(255,215,0,0.15);border-radius:20px;z-index:99999;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 20px rgba(255,215,0,0.3);opacity:0;transform:translateY(20px) scale(0.95);pointer-events:none;transition:opacity 0.35s cubic-bezier(0.4,0,0.2,1),transform 0.35s cubic-bezier(0.34,1.56,0.64,1)}
     #bos-coach-drawer.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
     .bos-ch-header{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,107,53,0.05));border-bottom:1px solid rgba(255,215,0,0.15);flex-shrink:0}
-    .bos-ch-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FF6B35);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 0 20px rgba(255,215,0,0.3)}
+    .bos-ch-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FF6B35);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 0 20px rgba(255,215,0,0.3);overflow:hidden}
+    .bos-ch-avatar img{width:100%;height:100%;object-fit:cover}
     .bos-ch-info{flex:1;min-width:0}
     .bos-ch-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1.5px;background:linear-gradient(135deg,#FFD700,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
     .bos-ch-status{font-family:'Outfit',sans-serif;font-size:0.72rem;color:#00D9A5;font-weight:600;display:flex;align-items:center;gap:5px}
@@ -149,7 +150,7 @@
     </div>
     <div id="bos-coach-drawer">
       <div class="bos-ch-header">
-        <div class="bos-ch-avatar">${PAGE.game ? PAGE.icon : '🎯'}</div>
+        <div class="bos-ch-avatar"><img src="/coachbos.png" alt="Coach Bos"></div>
         <div class="bos-ch-info">
           <div class="bos-ch-name">COACH BOS ${pageTag}</div>
           <div class="bos-ch-status">${t.gameReady}</div>
