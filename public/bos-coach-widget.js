@@ -133,7 +133,7 @@
     .bos-ch-send:hover{transform:scale(1.06);box-shadow:0 4px 16px rgba(255,215,0,0.35)}
     .bos-ch-send:disabled{opacity:0.35;transform:none;cursor:default;box-shadow:none}
     @media(max-width:480px){
-      #bos-coach-drawer{bottom:0;right:0;width:100vw;max-width:100vw;height:calc(100vh - 60px);max-height:calc(100vh - 60px);border-radius:20px 20px 0 0;border-bottom:none}
+      #bos-coach-drawer{top:56px;bottom:0;right:0;left:0;width:100vw;max-width:100vw;height:auto;max-height:none;border-radius:0;border:none;border-top:1.5px solid rgba(255,215,0,0.15)}
       #bos-coach-bubble{bottom:16px;right:16px;width:58px;height:58px}
     }
   `;
