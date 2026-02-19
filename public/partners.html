@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOS Esports — Partner With Us</title>
+<meta name="description" content="Bring neurocognitive training to your esports event, organization, or facility. BOS Esports powers the next generation of competitive gaming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #0a0a0f;
+  --dark2: #12121a;
+  --dark3: #1a1a25;
+  --gold: #FFD700;
+  --orange: #FF6B35;
+  --teal: #00D9A5;
+  --white: #ffffff;
+  --muted: #a0a0b8;
+  --gradient-gold: linear-gradient(135deg, #FFD700, #FF6B35);
+  --gradient-teal: linear-gradient(135deg, #00D9A5, #00b894);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 40%, rgba(255,215,0,0.06) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(255,107,53,0.04) 0%, transparent 50%),
+              radial-gradient(circle at 50% 80%, rgba(0,217,165,0.03) 0%, transparent 50%);
+  animation: heroGlow 12s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-2%, -2%) rotate(3deg); }
+}
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(255,215,0,0.08);
+  border: 1px solid rgba(255,215,0,0.2);
+  padding: 8px 20px;
+  border-radius: 50px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease-out;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  letter-spacing: 3px;
+  line-height: 0.95;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s ease-out 0.1s both;
+}
+.hero h1 span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 500;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0 auto 48px;
+  animation: fadeUp 0.8s ease-out 0.2s both;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s ease-out 0.3s both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ═══ BUTTONS ═══ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  cursor: pointer;
+  border: none;
+}
+.btn-gold {
+  background: var(--gradient-gold);
+  color: var(--dark);
+  box-shadow: 0 4px 20px rgba(255,215,0,0.25);
+}
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(255,215,0,0.4); }
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.15);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+.btn-teal {
+  background: var(--gradient-teal);
+  color: var(--dark);
+  box-shadow: 0 4px 20px rgba(0,217,165,0.25);
+}
+.btn-teal:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,217,165,0.4); }
+
+/* ═══ SECTIONS ═══ */
+section { padding: 100px 24px; }
+.container { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.section-title span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-desc {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: 56px;
+}
+
+/* ═══ PARTNER TYPES ═══ */
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+.partner-card {
+  background: var(--dark2);
+  border: 1.5px solid rgba(255,215,0,0.08);
+  border-radius: 20px;
+  padding: 40px 32px;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.partner-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-gold);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.partner-card:hover { border-color: rgba(255,215,0,0.2); transform: translateY(-4px); }
+.partner-card:hover::before { opacity: 1; }
+.partner-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(255,215,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+.partner-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+.partner-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+.partner-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.partner-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+}
+.partner-feature::before {
+  content: '⚡';
+  font-size: 0.75rem;
+}
+
+/* ═══ WHAT YOU GET ═══ */
+.features-section { background: var(--dark2); }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.feature-item {
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all 0.3s;
+}
+.feature-item:hover { border-color: rgba(255,215,0,0.15); }
+.feature-emoji { font-size: 2rem; margin-bottom: 16px; display: block; }
+.feature-item h4 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.feature-item p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* ═══ STATS BAR ═══ */
+.stats-bar {
+  background: linear-gradient(135deg, rgba(255,215,0,0.06), rgba(255,107,53,0.04));
+  border-top: 1px solid rgba(255,215,0,0.1);
+  border-bottom: 1px solid rgba(255,215,0,0.1);
+  padding: 60px 24px;
+}
+.stats-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+  text-align: center;
+}
+.stat-item h3 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  letter-spacing: 2px;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-item p {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ═══ COACH BOS SECTION ═══ */
+.coach-section {
+  position: relative;
+}
+.coach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.coach-visual {
+  background: var(--dark2);
+  border: 1.5px solid rgba(255,215,0,0.12);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+}
+.coach-chat-mock {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.mock-msg {
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-weight: 500;
+  max-width: 85%;
+}
+.mock-msg.bot {
+  align-self: flex-start;
+  background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,107,53,0.08));
+  border: 1px solid rgba(255,215,0,0.18);
+  border-bottom-left-radius: 4px;
+}
+.mock-msg.user {
+  align-self: flex-end;
+  background: rgba(0,217,165,0.14);
+  border: 1px solid rgba(0,217,165,0.25);
+  border-bottom-right-radius: 4px;
+}
+.mock-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 8px;
+}
+.mock-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.mock-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.mock-status { font-size: 0.65rem; color: var(--teal); font-weight: 600; }
+
+/* ═══ HOW IT WORKS ═══ */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  counter-reset: steps;
+}
+.step-card {
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 36px 28px;
+  position: relative;
+  counter-increment: steps;
+}
+.step-card::before {
+  content: '0' counter(steps);
+  font-family: var(--font-display);
+  font-size: 3rem;
+  letter-spacing: 2px;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.3;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+}
+.step-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.step-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ═══ CTA SECTION ═══ */
+.cta-section {
+  text-align: center;
+  padding: 120px 24px;
+  position: relative;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; top: 0;
+  background: radial-gradient(ellipse at center bottom, rgba(255,215,0,0.08), transparent 70%);
+}
+.cta-content { position: relative; z-index: 1; }
+.cta-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.cta-section h2 span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cta-section p {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 550px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+/* ═══ CONTACT FORM ═══ */
+.contact-form {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+.form-row { display: flex; gap: 16px; }
+.form-group { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 14px 18px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  background: var(--dark2);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: rgba(255,215,0,0.4); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-group select { cursor: pointer; }
+.form-group select option { background: var(--dark2); }
+.form-submit { margin-top: 8px; width: 100%; justify-content: center; }
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 40px;
+  background: rgba(0,217,165,0.08);
+  border: 1px solid rgba(0,217,165,0.2);
+  border-radius: 20px;
+}
+.form-success.show { display: block; }
+.form-success h3 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 1.5px;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.form-success p { color: var(--muted); font-size: 0.95rem; }
+
+/* ═══ FOOTER ═══ */
+.partners-footer {
+  padding: 40px 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.footer-sub {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.footer-sub a { color: var(--gold); text-decoration: none; }
+
+/* ═══ NAV ═══ */
+.partners-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .coach-grid { grid-template-columns: 1fr; }
+  .form-row { flex-direction: column; }
+  .nav-links { display: none; }
+  .partner-grid { grid-template-columns: 1fr; }
+  section { padding: 72px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="partners-nav">
+  <a href="/" class="nav-logo">BOS ESPORTS</a>
+  <div class="nav-links">
+    <a href="#partners">Solutions</a>
+    <a href="#features">Platform</a>
+    <a href="#how">How It Works</a>
+    <a href="#contact" class="btn btn-gold" style="padding:10px 24px;font-size:0.8rem;">Partner With Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">B2B Partnership Program</div>
+    <h1>POWER YOUR EVENT<br>WITH <span>COGNITIVE ESPORTS</span></h1>
+    <p class="hero-sub">BOS Esports brings neurocognitive training to esports events, organizations, and facilities. Give your audience a competitive edge they can feel — and measure.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-gold">Become a Partner</a>
+      <a href="#partners" class="btn btn-outline">Explore Solutions</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <h3>4</h3>
+      <p>Cognitive Training Games</p>
+    </div>
+    <div class="stat-item">
+      <h3>150MS</h3>
+      <p>Avg Reaction Improvement</p>
+    </div>
+    <div class="stat-item">
+      <h3>24/7</h3>
+      <p>AI Coach Available</p>
+    </div>
+    <div class="stat-item">
+      <h3>EN/ES</h3>
+      <p>Bilingual Platform</p>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNER TYPES -->
+<section id="partners">
+  <div class="container">
+    <div class="section-label">Solutions</div>
+    <h2 class="section-title">BUILT FOR <span>YOUR ARENA</span></h2>
+    <p class="section-desc">Whether you're running a global esports festival, managing a competitive team, or operating a gaming facility — BOS integrates seamlessly.</p>
+
+    <div class="partner-grid">
+      <!-- EVENT ORGANIZERS -->
+      <div class="partner-card">
+        <div class="partner-icon">🏟</div>
+        <h3>EVENT ORGANIZERS</h3>
+        <p>Add a neurocognitive training activation to your esports event. Live competitions, real-time leaderboards, crowd engagement — all branded to your event.</p>
+        <div class="partner-features">
+          <div class="partner-feature">Live BOS Challenge stations</div>
+          <div class="partner-feature">Real-time event leaderboards</div>
+          <div class="partner-feature">Custom branded tournament mode</div>
+          <div class="partner-feature">Player engagement analytics</div>
+          <div class="partner-feature">On-site tech support</div>
+        </div>
+      </div>
+
+      <!-- ESPORTS ORGANIZATIONS -->
+      <div class="partner-card">
+        <div class="partner-icon">🎮</div>
+        <h3>ESPORTS ORGANIZATIONS</h3>
+        <p>Give your roster a measurable cognitive edge. BOS trains the skills that separate good players from great ones — reaction time, focus, decision-making.</p>
+        <div class="partner-features">
+          <div class="partner-feature">Team dashboard & analytics</div>
+          <div class="partner-feature">Player performance tracking</div>
+          <div class="partner-feature">AI-powered training plans</div>
+          <div class="partner-feature">Competitive benchmarking</div>
+          <div class="partner-feature">Multi-player team accounts</div>
+        </div>
+      </div>
+
+      <!-- GAMING FACILITIES -->
+      <div class="partner-card">
+        <div class="partner-icon">🕹</div>
+        <h3>GAMING FACILITIES</h3>
+        <p>Offer neurocognitive training as a premium experience. Gaming cafés, LAN centers, and esports arenas can differentiate with science-backed training.</p>
+        <div class="partner-features">
+          <div class="partner-feature">Facility licensing program</div>
+          <div class="partner-feature">Station-ready deployment</div>
+          <div class="partner-feature">Local leaderboards</div>
+          <div class="partner-feature">Customer engagement tools</div>
+          <div class="partner-feature">Revenue sharing model</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-section">
+  <div class="container">
+    <div class="section-label">Platform</div>
+    <h2 class="section-title">WHAT <span>YOU GET</span></h2>
+    <p class="section-desc">Every partnership includes access to the full BOS Esports platform — four cognitive training games, AI coaching, and analytics.</p>
+
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-emoji">👁</span>
+        <h4>STROBE DRILL</h4>
+        <p>Visual processing under strobe disruption. Trains peripheral awareness and pattern recognition.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">🎯</span>
+        <h4>FLICKSHOT</h4>
+        <p>Precision flick aim training. Moving targets, shrinking targets, competitive reaction scoring.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">🧠</span>
+        <h4>SPLIT FOCUS</h4>
+        <p>Divided attention and cognitive flexibility. Track targets, ignore decoys, adapt to rule switches.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">⏱</span>
+        <h4>CLUTCH TIMER</h4>
+        <p>Decision quality under pressure. Multi-rule evaluation with shrinking time windows.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">🤖</span>
+        <h4>COACH BOS AI</h4>
+        <p>Built-in AI performance coach. Analyzes player data, creates training plans, provides real-time tips. Bilingual EN/ES.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">📊</span>
+        <h4>ANALYTICS ENGINE</h4>
+        <p>Performance tracking across all drills. Reaction time, accuracy, streaks, grades, and competitive rankings.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">🏆</span>
+        <h4>LIVE LEADERBOARDS</h4>
+        <p>Real-time competitive rankings. Filter by game, time period, and event. Drive engagement through competition.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-emoji">🎮</span>
+        <h4>MOUSE + CONTROLLER</h4>
+        <p>Full support for both input methods. Separate benchmarks and competitive categories for fair play.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COACH BOS -->
+<section class="coach-section">
+  <div class="container">
+    <div class="section-label">AI Integration</div>
+    <h2 class="section-title">MEET <span>COACH BOS</span></h2>
+    <p class="section-desc">Every player gets a personal AI coach that knows their data, adapts to their level, and speaks their language.</p>
+
+    <div class="coach-grid">
+      <div>
+        <div class="partner-features" style="gap:18px">
+          <div class="partner-feature" style="font-size:1rem">Page-aware — knows which game you're playing</div>
+          <div class="partner-feature" style="font-size:1rem">Data-driven — references your actual scores</div>
+          <div class="partner-feature" style="font-size:1rem">Bilingual — English and Puerto Rican Spanish</div>
+          <div class="partner-feature" style="font-size:1rem">Training plans — personalized to your weaknesses</div>
+          <div class="partner-feature" style="font-size:1rem">Controller-aware — detects your input device</div>
+          <div class="partner-feature" style="font-size:1rem">Event mode — competition coaching and hype</div>
+        </div>
+      </div>
+      <div class="coach-visual">
+        <div class="mock-header">
+          <div class="mock-avatar">🎯</div>
+          <div>
+            <div class="mock-name">COACH BOS</div>
+            <div class="mock-status">Game Ready</div>
+          </div>
+        </div>
+        <div class="coach-chat-mock">
+          <div class="mock-msg user">How can I improve my FlickShot score?</div>
+          <div class="mock-msg bot">Your accuracy is at <strong>78%</strong> but your reaction time is <strong>234ms</strong> — that's competitive range. Focus on accuracy drills at Gold tier for the next 3 sessions. Once you're hitting <strong>85%+</strong>, your score will jump. ¡Dale! 🎯</div>
+          <div class="mock-msg user">Create a training plan for me</div>
+          <div class="mock-msg bot"><strong>7-Day Plan:</strong><br>Mon/Wed/Fri — FlickShot (accuracy focus)<br>Tue/Thu — Strobe Drill (visual processing)<br>Sat — All 4 games (competition sim)<br>Sun — Rest 🔥</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">HOW <span>IT WORKS</span></h2>
+    <p class="section-desc">From first contact to live activation in weeks, not months.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <h4>CONNECT</h4>
+        <p>Tell us about your event, organization, or facility. We'll assess the best integration approach for your needs.</p>
+      </div>
+      <div class="step-card">
+        <h4>CUSTOMIZE</h4>
+        <p>We configure BOS for your audience — branded experience, tournament rules, leaderboard setup, and coaching parameters.</p>
+      </div>
+      <div class="step-card">
+        <h4>DEPLOY</h4>
+        <p>Web-based platform means zero installs. Works on any device with a browser. We handle the tech, you handle the crowd.</p>
+      </div>
+      <div class="step-card">
+        <h4>COMPETE</h4>
+        <p>Go live. Real-time leaderboards, AI coaching, and cognitive challenges that keep players engaged and coming back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA + CONTACT -->
+<section id="contact" class="cta-section">
+  <div class="cta-content">
+    <h2>READY TO <span>LEVEL UP</span><br>YOUR EVENT?</h2>
+    <p>Fill out the form below and our team will get back to you within 48 hours.</p>
+
+    <form class="contact-form" id="partnerForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Organization</label>
+          <input type="text" name="org" placeholder="Company or event name">
+        </div>
+        <div class="form-group">
+          <label>Partner Type</label>
+          <select name="type" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="event">Event Organizer</option>
+            <option value="esports">Esports Organization</option>
+            <option value="facility">Gaming Facility</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tell Us More</label>
+        <textarea name="message" placeholder="Describe your event, organization, or what you're looking for..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-gold form-submit">Send Partnership Inquiry</button>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <h3>MESSAGE SENT</h3>
+      <p>Our team will review your inquiry and get back to you within 48 hours. Game on.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="partners-footer">
+  <div class="footer-logo">BOS ESPORTS</div>
+  <p class="footer-sub">GoStar Digital LLC · Puerto Rico · <a href="https://bosesports.com">bosesports.com</a></p>
+</footer>
+
+<script>
+// Form handler
+document.getElementById('partnerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  const data = new FormData(form);
+  
+  // For now, show success (connect to API later)
+  form.style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+  
+  // Optional: send to your server
+  // fetch('/api/partner-inquiry', {
+  //   method: 'POST',
+  //   headers: {'Content-Type': 'application/json'},
+  //   body: JSON.stringify(Object.fromEntries(data))
+  // });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
