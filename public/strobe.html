@@ -738,5 +738,6 @@ function restartGame() { document.querySelectorAll('.target, .hit-effect, .hit-s
 function backToMenu() { state.screen = 'start'; document.querySelectorAll('.target, .hit-effect, .hit-score').forEach(function(el) { el.remove(); }); $('strobeOverlay').classList.remove('active'); $('resultsScreen').classList.add('hidden'); $('startScreen').classList.remove('hidden'); }
 </script>
 
+<script src="/bos-coach-widget.js"></script>
 </body>
 </html>
