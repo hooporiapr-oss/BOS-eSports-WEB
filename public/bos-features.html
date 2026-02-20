@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOS Esports — Features & Exclusive Capabilities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0a0a0f;color:#c0c8d4;font-family:'Outfit',sans-serif;font-weight:400;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{--gold:#FFD700;--orange:#FF6B35;--teal:#00D9A5;--cyan:#00CED1;--dark:#0a0a0f;--card:#111118;--text:#e8eaed;--sub:#8892a0;--muted:#5a6270;--border:rgba(255,215,0,0.1);--max-w:880px}
+
+/* Noise */
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+.glow-1{position:fixed;top:-20%;left:-10%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(255,215,0,0.035),transparent 70%);pointer-events:none}
+.glow-2{position:fixed;bottom:-15%;right:-10%;width:45%;height:45%;background:radial-gradient(ellipse,rgba(0,217,165,0.025),transparent 70%);pointer-events:none}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+.nav-left{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo{height:30px;width:auto}
+.nav-label{font-family:'Bebas Neue',sans-serif;font-size:0.6rem;letter-spacing:2px;color:var(--muted);border-left:1px solid rgba(255,215,0,0.15);padding-left:10px;line-height:1.1}
+.lang-wrap{display:flex;gap:4px}
+.lang-btn{font-family:'Outfit',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.3s}
+.lang-btn.on{background:linear-gradient(135deg,var(--gold),var(--orange));color:#0a0a0f;border-color:transparent}
+.lang-btn:hover:not(.on){border-color:rgba(255,215,0,0.25);color:var(--gold)}
+
+/* Container */
+.wrap{max-width:var(--max-w);margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* Cover */
+.cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative}
+.cover-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(255,215,0,0.07),transparent 70%);pointer-events:none}
+.cover-img{width:150px;height:150px;border-radius:20px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(255,215,0,0.2));animation:cfloat 5s ease-in-out infinite;margin-bottom:28px}
+@keyframes cfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.cover h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,7vw,4.5rem);letter-spacing:3px;color:var(--text);line-height:0.95;margin-bottom:10px}
+.cover h1 b{color:var(--gold)}
+.cover .sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(0.85rem,2.5vw,1.2rem);letter-spacing:4px;color:var(--orange);margin-bottom:20px}
+.cover .desc{font-size:0.88rem;color:var(--sub);max-width:500px;line-height:1.7;margin-bottom:6px}
+.cover .desc em{color:var(--gold);font-style:normal;font-weight:600}
+.cover .line{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:18px auto}
+.cover .cred{font-size:0.68rem;color:var(--muted)}
+.cover .cred a{color:var(--gold);text-decoration:none}
+.cover .scroll{margin-top:36px;font-size:0.55rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.cover .scroll span{display:block;margin-top:5px;font-size:1.1rem;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* Section */
+.sec{padding:80px 0}
+.divider{width:70px;height:2px;margin-bottom:36px;background:linear-gradient(90deg,var(--gold),var(--orange));border-radius:2px}
+.tag{font-size:0.52rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:2px;color:var(--text);line-height:1.05;margin-bottom:14px}
+.sintro{font-size:0.88rem;color:var(--sub);max-width:680px;line-height:1.7;margin-bottom:28px}
+.sintro strong{color:var(--text);font-weight:600}
+
+/* Story */
+.story p{font-size:0.9rem;color:var(--sub);line-height:1.8;margin-bottom:18px}
+.story p strong{color:var(--text);font-weight:700}
+.story .hl{font-size:0.95rem;color:var(--gold);font-weight:600;line-height:1.7;padding:14px 18px;border-left:3px solid var(--gold);background:rgba(255,215,0,0.03);border-radius:0 10px 10px 0;margin:22px 0}
+.story .punch{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,3vw,1.8rem);letter-spacing:1px;color:var(--text);margin:24px 0 14px}
+
+/* Game Grid */
+.gg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.gc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 18px;transition:all 0.3s;position:relative;overflow:hidden}
+.gc:hover{border-color:rgba(255,215,0,0.2);transform:translateY(-2px)}
+.gc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.3s}
+.gc:hover::before{opacity:1}
+.gc.s::before{background:var(--teal)}.gc.f::before{background:var(--cyan)}.gc.sp::before{background:var(--teal)}.gc.ct::before{background:var(--gold)}
+.gc .ico{font-size:1.4rem;margin-bottom:6px}
+.gc .gn{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:1.5px;margin-bottom:1px}
+.gc.s .gn{color:#00D9A5}.gc.f .gn{color:#00CED1}.gc.sp .gn{color:#00D9A5}.gc.ct .gn{color:#FFD700}
+.gc .gd{font-size:0.52rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.gc ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.gc ul li{font-size:0.68rem;color:var(--sub);padding-left:13px;position:relative;line-height:1.5}
+.gc ul li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:0.55rem}
+
+/* Feature List */
+.fg{margin-bottom:28px}
+.fg h3{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:1.5px;color:var(--text);margin-bottom:10px}
+.fl{list-style:none;display:flex;flex-direction:column;gap:6px}
+.fl li{font-size:0.8rem;color:var(--sub);padding-left:18px;position:relative;line-height:1.6}
+.fl li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:0.65rem;top:2px}
+
+/* Exclusive */
+.ex-head{display:flex;align-items:center;gap:14px;margin-bottom:8px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.ex-av{width:56px;height:56px;border-radius:12px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,215,0,0.2))}
+.ex-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);line-height:1}
+.ex-sub{font-size:0.55rem;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+
+.pb{margin:28px 0;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:12px;position:relative;overflow:hidden}
+.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.pb.p1::before{background:linear-gradient(90deg,var(--teal),transparent)}
+.pb.p2::before{background:linear-gradient(90deg,var(--orange),transparent)}
+.pb.p3::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.pb.bl::before{background:linear-gradient(90deg,#FF5252,var(--teal))}
+.pb.vo::before{background:linear-gradient(90deg,var(--cyan),transparent)}
+.pb.te::before{background:linear-gradient(90deg,var(--sub),transparent)}
+.pt{display:inline-block;font-size:0.48rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:50px;margin-bottom:8px}
+.pt.p1{background:rgba(0,217,165,0.1);color:var(--teal);border:1px solid rgba(0,217,165,0.2)}
+.pt.p2{background:rgba(255,107,53,0.1);color:var(--orange);border:1px solid rgba(255,107,53,0.2)}
+.pt.p3{background:rgba(255,215,0,0.1);color:var(--gold);border:1px solid rgba(255,215,0,0.2)}
+.pt.bl{background:rgba(255,82,82,0.08);color:#FF5252;border:1px solid rgba(255,82,82,0.2)}
+.pt.vo{background:rgba(0,206,209,0.1);color:var(--cyan);border:1px solid rgba(0,206,209,0.2)}
+.pt.te{background:rgba(136,146,160,0.1);color:var(--sub);border:1px solid rgba(136,146,160,0.2)}
+.pn{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:1.5px;color:var(--text);margin-bottom:5px}
+.pe{font-size:0.76rem;color:var(--sub);line-height:1.6;margin-bottom:12px}
+.pe em{color:var(--gold);font-style:normal;font-weight:700}
+.el{list-style:none;display:flex;flex-direction:column;gap:6px}
+.el li{font-size:0.76rem;color:var(--sub);padding-left:18px;position:relative;line-height:1.55}
+.el li::before{content:'★';position:absolute;left:0;color:var(--gold);font-size:0.5rem;top:4px}
+
+/* Closing */
+.closing{text-align:center;padding:80px 0 100px}
+.closing .cl{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,4vw,2.3rem);letter-spacing:1px;color:var(--text);margin-bottom:14px}
+.closing .cl b{color:var(--gold)}
+.closing p{font-size:0.88rem;color:var(--sub);max-width:520px;margin:0 auto 20px;line-height:1.7}
+.closing .cdiv{width:80px;height:1px;margin:20px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.closing .brand{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;color:var(--text)}
+.closing .cred{font-size:0.65rem;color:var(--muted);margin-top:4px}
+.closing .cred a{color:var(--gold);text-decoration:none}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(20px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* Language */
+.es{display:none}
+body.ES .en{display:none}
+body.ES .es{display:block}
+body.ES li.es{display:list-item}
+body.ES li.en{display:none}
+
+/* Mobile */
+@media(max-width:700px){
+  .gg{grid-template-columns:1fr}
+  .cover{padding:90px 16px 40px}
+  .cover-img{width:110px;height:110px}
+  .ex-head{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="glow-1"></div><div class="glow-2"></div>
+
+<!-- NAV -->
+<div class="nav">
+  <a href="/" class="nav-left">
+    <img src="/bos.png" alt="BOS" class="nav-logo">
+    <span class="nav-label en">FEATURES &<br>EXCLUSIVES</span>
+    <span class="nav-label es">CARACTERÍSTICAS &<br>EXCLUSIVAS</span>
+  </a>
+  <div class="lang-wrap">
+    <button class="lang-btn on" id="bEN" onclick="SL('en')">EN</button>
+    <button class="lang-btn" id="bES" onclick="SL('es')">ES 🇵🇷</button>
+  </div>
+</div>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-glow"></div>
+  <img src="/coachbos.png" alt="Coach BOS" class="cover-img">
+  <h1 class="en">BOS <b>ESPORTS</b></h1>
+  <h1 class="es">BOS <b>ESPORTS</b></h1>
+  <p class="sub en">FEATURES & EXCLUSIVE CAPABILITIES</p>
+  <p class="sub es">CARACTERÍSTICAS & CAPACIDADES EXCLUSIVAS</p>
+  <p class="desc en">Featuring <em>Coach BOS</em> — the world's first AI neurocognitive sideline coach for competitive esports.</p>
+  <p class="desc es">Presentando a <em>Coach BOS</em> — el primer coach AI neurocognitivo de línea lateral del mundo para esports competitivos.</p>
+  <div class="line"></div>
+  <p class="cred">GoStar Digital LLC · San Juan, Puerto Rico 🇵🇷 · <a href="https://bosesports.com">bosesports.com</a></p>
+  <p class="scroll en">Scroll <span>↓</span></p>
+  <p class="scroll es">Desplaza <span>↓</span></p>
+</section>
+
+<!-- ══════════════════════════════════ -->
+<!-- THE INVENTION MOMENT -->
+<!-- ══════════════════════════════════ -->
+<section class="sec">
+<div class="wrap">
+  <div class="divider rv"></div>
+  <span class="tag rv en">The Invention Moment</span>
+  <span class="tag rv es">El Momento de la Invención</span>
+  <h2 class="stitle rv en">THE PEACH BASKET</h2>
+  <h2 class="stitle rv es">EL CANASTO DE DURAZNOS</h2>
+  <div class="story">
+    <p class="rv en">In 1891, Dr. James Naismith nailed a peach basket to a gymnasium wall and invented basketball. Nobody asked for it. No market research said it was needed. He saw a problem — athletes needed an indoor winter sport — and he invented the solution from scratch.</p>
+    <p class="rv es">En 1891, el Dr. James Naismith clavó un canasto de duraznos a la pared de un gimnasio e inventó el baloncesto. Nadie lo pidió. Ninguna investigación de mercado dijo que era necesario. Vio un problema — los atletas necesitaban un deporte de invierno bajo techo — e inventó la solución desde cero.</p>
+
+    <p class="punch rv en">Coach BOS is that kind of invention.</p>
+    <p class="punch rv es">Coach BOS es ese tipo de invención.</p>
+
+    <p class="rv en">Before BOS Esports, competitive gamers had two options for cognitive training: none, or medical software designed for brain injury rehabilitation. Neither was built for them. Neither spoke their language. Neither understood what it feels like to be in a clutch moment with the match on the line.</p>
+    <p class="rv es">Antes de BOS Esports, los gamers competitivos tenían dos opciones para entrenamiento cognitivo: ninguna, o software médico diseñado para rehabilitación de lesiones cerebrales. Ninguno fue creado para ellos. Ninguno hablaba su idioma. Ninguno entendía lo que se siente estar en un momento clutch con el partido en juego.</p>
+
+    <p class="rv en">Coach BOS didn't come from a corporate lab. He came from the basketball court. Built by a former professional basketball player who understood that the difference between good and great isn't physical — it's cognitive. The speed of your decisions. The accuracy of your focus. The ability to perform when the pressure is highest.</p>
+    <p class="rv es">Coach BOS no salió de un laboratorio corporativo. Salió de la cancha de baloncesto. Creado por un ex jugador profesional de baloncesto que entendió que la diferencia entre bueno y excelente no es física — es cognitiva. La velocidad de tus decisiones. La precisión de tu enfoque. La capacidad de rendir cuando la presión es máxima.</p>
+
+    <div class="hl rv en">That's the peach basket moment: the world's first AI coach that sits on the sideline of a competitive gaming session and actually coaches — before, during, and after every workout — in the player's language, adapted to their performance in real-time.</div>
+    <div class="hl rv es">Ese es el momento del canasto: el primer coach AI del mundo que se sienta en la línea lateral de una sesión de gaming competitivo y realmente entrena — antes, durante y después de cada sesión — en el idioma del jugador, adaptado a su rendimiento en tiempo real.</div>
+
+    <p class="rv en">Nobody else has built this. Not Riot. Not FaZe. Not 100 Thieves. Not any gaming peripheral company, not any esports organization, not any AI startup. <strong>The sideline coach for esports didn't exist until BOS Esports invented it.</strong></p>
+    <p class="rv es">Nadie más ha construido esto. Ni Riot. Ni FaZe. Ni 100 Thieves. Ni ninguna compañía de periféricos gaming, ni ninguna organización de esports, ni ningún startup de AI. <strong>El coach de línea lateral para esports no existía hasta que BOS Esports lo inventó.</strong></p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════ -->
+<!-- PLATFORM FEATURES -->
+<!-- ══════════════════════════════════ -->
+<section class="sec" style="background:linear-gradient(180deg,transparent,rgba(17,17,24,0.4),transparent)">
+<div class="wrap">
+  <div class="divider rv"></div>
+  <span class="tag rv en">Platform Features</span>
+  <span class="tag rv es">Características de la Plataforma</span>
+  <h2 class="stitle rv en">BOS ESPORTS — THE PLATFORM</h2>
+  <h2 class="stitle rv es">BOS ESPORTS — LA PLATAFORMA</h2>
+
+  <!-- 4 GAMES -->
+  <div class="fg rv">
+    <h3 class="en">Four Neurocognitive Training Games</h3>
+    <h3 class="es">Cuatro Juegos de Entrenamiento Neurocognitivo</h3>
+    <div class="gg">
+      <div class="gc s">
+        <div class="ico">👁</div><div class="gn">STROBE DRILL</div>
+        <div class="gd en">Visual Processing</div><div class="gd es">Procesamiento Visual</div>
+        <ul>
+          <li class="en">Strobe blackout technology up to 150Hz</li><li class="es">Tecnología de blackout strobe hasta 150Hz</li>
+          <li class="en">5 tiers: no strobe → 550ms blackouts at Radiant</li><li class="es">5 niveles: sin strobe → blackouts de 550ms en Radiant</li>
+          <li class="en">Decoy targets test discrimination under disruption</li><li class="es">Señuelos prueban discriminación bajo disrupción visual</li>
+        </ul>
+      </div>
+      <div class="gc f">
+        <div class="ico">🎯</div><div class="gn">FLICKSHOT</div>
+        <div class="gd en">Precision Aiming</div><div class="gd es">Puntería de Precisión</div>
+        <ul>
+          <li class="en">Flick mechanics with distance bonus scoring</li><li class="es">Mecánicas de flick con bonus por distancia</li>
+          <li class="en">Targets shrink, move, and combine across tiers</li><li class="es">Los blancos se encogen, mueven y combinan</li>
+          <li class="en">44px precision targets at Radiant</li><li class="es">Blancos de precisión de 44px en Radiant</li>
+        </ul>
+      </div>
+      <div class="gc sp">
+        <div class="ico">🧩</div><div class="gn">SPLIT FOCUS</div>
+        <div class="gd en">Cognitive Control</div><div class="gd es">Control Cognitivo</div>
+        <ul>
+          <li class="en">Track correct-color orbs, ignore decoys</li><li class="es">Rastrea esferas del color correcto, ignora señuelos</li>
+          <li class="en">Rule switches mid-round force adaptation</li><li class="es">Cambios de regla fuerzan adaptación instantánea</li>
+          <li class="en">Three target colors at Radiant, switches every 7s</li><li class="es">Tres colores objetivo en Radiant, cambios cada 7s</li>
+        </ul>
+      </div>
+      <div class="gc ct">
+        <div class="ico">⚡</div><div class="gn">CLUTCH TIMER</div>
+        <div class="gd en">Decision Making</div><div class="gd es">Toma de Decisiones</div>
+        <ul>
+          <li class="en">25-prompt rounds, shrinking windows (3s → 0.54s)</li><li class="es">Rondas de 25 prompts, ventanas decrecientes (3s → 0.54s)</li>
+          <li class="en">Stacking rules, priority chains, conflicts</li><li class="es">Reglas apiladas, cadenas de prioridad, conflictos</li>
+          <li class="en">Wrong = -150 vs timeout = -50 — teaches smart play</li><li class="es">Incorrecto = -150 vs timeout = -50 — enseña juego inteligente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESSION -->
+  <div class="fg rv">
+    <h3 class="en">5-Tier Progression System</h3><h3 class="es">Sistema de Progresión de 5 Niveles</h3>
+    <ul class="fl">
+      <li class="en">Bronze → Silver → Gold → Diamond → Radiant progression</li><li class="es">Progresión Bronze → Silver → Gold → Diamond → Radiant</li>
+      <li class="en">Each tier increases cognitive load: more targets, faster timing, additional rules</li><li class="es">Cada nivel aumenta la carga cognitiva: más blancos, tiempos más rápidos, reglas adicionales</li>
+      <li class="en">Grade system: C → B → A → S-Rank based on score, accuracy, consistency</li><li class="es">Sistema de grados: C → B → A → S-Rank basado en puntuación, precisión y consistencia</li>
+    </ul>
+  </div>
+
+  <!-- SUBSCRIPTION -->
+  <div class="fg rv">
+    <h3 class="en">Subscription Model</h3><h3 class="es">Modelo de Suscripción</h3>
+    <ul class="fl">
+      <li class="en">Player: $9.99/mo — all 4 games, all tiers</li><li class="es">Player: $9.99/mes — los 4 juegos, todos los niveles</li>
+      <li class="en">Pro: $19.99/mo — advanced analytics, Coach BOS AI agent</li><li class="es">Pro: $19.99/mes — analíticas avanzadas, agente AI Coach BOS</li>
+      <li class="en">Team: $49.99/mo — multi-seat, shared leaderboards, coaching tools</li><li class="es">Team: $49.99/mes — multi-asiento, leaderboards compartidos, herramientas de coaching</li>
+      <li class="en">7-day free trial on all plans — no credit card required</li><li class="es">Prueba gratis de 7 días — sin tarjeta de crédito</li>
+    </ul>
+  </div>
+
+  <!-- INFRASTRUCTURE -->
+  <div class="fg rv">
+    <h3 class="en">Platform Infrastructure</h3><h3 class="es">Infraestructura de la Plataforma</h3>
+    <ul class="fl">
+      <li class="en">Public leaderboard for competitive benchmarking</li><li class="es">Leaderboard público para benchmarking competitivo</li>
+      <li class="en">Mobile-responsive across all games and pages</li><li class="es">Responsive en móvil para todos los juegos y páginas</li>
+      <li class="en">Stripe-powered secure billing</li><li class="es">Facturación segura con Stripe</li>
+      <li class="en">AI agent backend on Render for Coach BOS intelligence</li><li class="es">Backend de agente AI en Render para inteligencia de Coach BOS</li>
+      <li class="en">Bilingual: English + Puerto Rican Spanish</li><li class="es">Bilingüe: inglés + español puertorriqueño</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════ -->
+<!-- COACH BOS — EXCLUSIVE -->
+<!-- ══════════════════════════════════ -->
+<section class="sec">
+<div class="wrap">
+  <div class="divider rv"></div>
+  <div class="ex-head rv">
+    <img src="/coachbos.png" alt="Coach BOS" class="ex-av">
+    <div>
+      <div class="ex-name">COACH BOS — EXCLUSIVE</div>
+      <div class="ex-sub en">World's First AI Neurocognitive Sideline Coach</div>
+      <div class="ex-sub es">Primer Coach AI Neurocognitivo de Línea Lateral del Mundo</div>
+    </div>
+  </div>
+  <p class="sintro rv en">Coach BOS is not a feature. He is the product. Every capability below is <strong>exclusive to BOS Esports</strong> — no other platform offers anything comparable.</p>
+  <p class="sintro rv es">Coach BOS no es una función. Es el producto. Cada capacidad a continuación es <strong>exclusiva de BOS Esports</strong> — ninguna otra plataforma ofrece algo comparable.</p>
+
+  <!-- PHASE 1 -->
+  <div class="pb p1 rv">
+    <div class="pt p1 en">● Phase 1 — Exclusive</div><div class="pt p1 es">● Fase 1 — Exclusivo</div>
+    <div class="pn en">PRE-WORKOUT COACHING</div><div class="pn es">COACHING PRE-ENTRENAMIENTO</div>
+    <p class="pe en"><em>EXCLUSIVE:</em> Coach BOS appears on the start screen before every session with personalized coaching based on game and tier.</p>
+    <p class="pe es"><em>EXCLUSIVO:</em> Coach BOS aparece en la pantalla de inicio antes de cada sesión con coaching personalizado por juego y nivel.</p>
+    <ul class="el">
+      <li class="en">20 unique coaching scenarios (4 games × 5 tiers) with strategy and mental prep</li><li class="es">20 escenarios únicos (4 juegos × 5 niveles) con estrategia y preparación mental</li>
+      <li class="en">3 game-specific tactical tips per scenario — tier-accurate strategy</li><li class="es">3 tips tácticos específicos por escenario — estrategia precisa por nivel</li>
+      <li class="en">Mental preparation messaging — psychological readiness like a real coach</li><li class="es">Mensajes de preparación mental — preparación psicológica como un coach real</li>
+      <li class="en">Tier-aware: updates instantly when difficulty changes</li><li class="es">Consciente del nivel: se actualiza cuando cambia la dificultad</li>
+      <li class="en">40 total coaching packages across both languages</li><li class="es">40 paquetes de coaching totales en ambos idiomas</li>
+    </ul>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="pb p2 rv">
+    <div class="pt p2 en">● Phase 2 — Exclusive</div><div class="pt p2 es">● Fase 2 — Exclusivo</div>
+    <div class="pn en">REAL-TIME MID-SESSION COACHING</div><div class="pn es">COACHING EN TIEMPO REAL DURANTE LA SESIÓN</div>
+    <p class="pe en"><em>EXCLUSIVE:</em> Coach BOS watches live via DOM state tracking and delivers sideline callouts during gameplay.</p>
+    <p class="pe es"><em>EXCLUSIVO:</em> Coach BOS observa en vivo mediante rastreo del DOM y entrega llamadas de línea lateral durante el gameplay.</p>
+    <ul class="el">
+      <li class="en">Streak celebrations at 3, 5, 7, 10, 15 — escalating energy</li><li class="es">Celebraciones de racha en 3, 5, 7, 10, 15 — energía escalada</li>
+      <li class="en">Streak break recovery — different messages for 5+, 8+, 12+</li><li class="es">Recuperación de racha — mensajes diferentes para 5+, 8+, 12+</li>
+      <li class="en">Accuracy warnings at 50% and 40% with correction advice</li><li class="es">Advertencias de precisión al 50% y 40% con consejos de corrección</li>
+      <li class="en">Time pressure callouts at 30s, 10s, 5s</li><li class="es">Llamadas de presión a 30s, 10s y 5s</li>
+      <li class="en">Game-specific coaching: decoys, precision kills, rule switches, wrong vs timeout</li><li class="es">Coaching específico: señuelos, kills de precisión, cambios de regla, error vs timeout</li>
+      <li class="en">Toast system: glassmorphism, 5 color variants, anti-spam cooldown</li><li class="es">Sistema toast: glassmorphism, 5 variantes de color, cooldown anti-spam</li>
+      <li class="en">Zero interference — toasts never block gameplay</li><li class="es">Cero interferencia — los toasts nunca bloquean el gameplay</li>
+    </ul>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="pb p3 rv">
+    <div class="pt p3 en">● Phase 3 — Exclusive</div><div class="pt p3 es">● Fase 3 — Exclusivo</div>
+    <div class="pn en">POST-WORKOUT ANALYSIS</div><div class="pn es">ANÁLISIS POST-ENTRENAMIENTO</div>
+    <p class="pe en"><em>EXCLUSIVE:</em> Reads the results screen and delivers personalized analysis with a next-session recommendation.</p>
+    <p class="pe es"><em>EXCLUSIVO:</em> Lee la pantalla de resultados y entrega análisis personalizado con recomendación para la próxima sesión.</p>
+    <ul class="el">
+      <li class="en">Grade-based assessment: S-Rank through C-Rank with tailored messaging</li><li class="es">Evaluación por grado: S-Rank hasta C-Rank con mensajes adaptados</li>
+      <li class="en">Accuracy diagnosis with thresholds and correction advice</li><li class="es">Diagnóstico de precisión con umbrales y consejos de corrección</li>
+      <li class="en">Reaction time evaluation: sub-400ms elite to 900ms+ training</li><li class="es">Evaluación de tiempo de reacción: sub-400ms elite hasta 900ms+</li>
+      <li class="en">Streak analysis: flow state vs rhythm problems</li><li class="es">Análisis de racha: estado de flujo vs problemas de ritmo</li>
+      <li class="en">Game-specific insights: strobe adaptation, flick speed, rule-switch confusion</li><li class="es">Insights específicos: adaptación strobe, velocidad de flick, confusión de regla</li>
+      <li class="en">NEXT SESSION recommendation — move up, stay, or focus specific skill</li><li class="es">Recomendación de PRÓXIMA SESIÓN — sube, quédate, o enfócate</li>
+      <li class="en">34 conditional insight generators — no two sessions read the same</li><li class="es">34 generadores condicionales — ninguna sesión se lee igual</li>
+    </ul>
+  </div>
+
+  <!-- BILINGUAL -->
+  <div class="pb bl rv">
+    <div class="pt bl en">● Bilingual — Exclusive</div><div class="pt bl es">● Bilingüe — Exclusivo</div>
+    <div class="pn en">BILINGUAL COACHING SYSTEM</div><div class="pn es">SISTEMA DE COACHING BILINGÜE</div>
+    <p class="pe en"><em>EXCLUSIVE:</em> Natively bilingual — English and Puerto Rican Spanish. Not translated. Written authentically in both.</p>
+    <p class="pe es"><em>EXCLUSIVO:</em> Nativamente bilingüe — inglés y español puertorriqueño. No traducido. Escrito auténticamente en ambos.</p>
+    <ul class="el">
+      <li class="en">342 total coaching strings across both languages</li><li class="es">342 cadenas de coaching en ambos idiomas</li>
+      <li class="en">Auto-detects browser language — Spanish speakers get Spanish automatically</li><li class="es">Detecta idioma del navegador — hispanohablantes reciben español automáticamente</li>
+      <li class="en">One-tap toggle for instant language switching</li><li class="es">Toggle de un toque para cambio instantáneo</li>
+      <li class="en">Puerto Rican flavor: "¡Dale dale dale!" "Enséñale quién manda." — authentic energy</li><li class="es">Sabor boricua: "¡Dale dale dale!" "Enséñale quién manda." — energía auténtica</li>
+      <li class="en">All 3 phases fully bilingual: tips, callouts, analysis, recommendations</li><li class="es">Las 3 fases bilingües: tips, callouts, análisis, recomendaciones</li>
+    </ul>
+  </div>
+
+  <!-- VOICE -->
+  <div class="pb vo rv">
+    <div class="pt vo en">● The Voice — Exclusive</div><div class="pt vo es">● La Voz — Exclusivo</div>
+    <div class="pn en">THE COACHING VOICE</div><div class="pn es">LA VOZ DEL COACHING</div>
+    <p class="pe en"><em>EXCLUSIVE:</em> Speaks like a real sideline coach. Not clinical. Not robotic. Every message feels human.</p>
+    <p class="pe es"><em>EXCLUSIVO:</em> Habla como un coach real de línea lateral. No clínico. No robótico. Cada mensaje se siente humano.</p>
+    <ul class="el">
+      <li class="en">"TEN STREAK. Absolute machine." — not "You achieved a 10-hit streak."</li><li class="es">"RACHA DE DIEZ. Máquina total." — no "Has logrado una racha de 10."</li>
+      <li class="en">"Shake it off. Next target." — not "Your streak has been broken."</li><li class="es">"Sacúdelo. Próximo blanco." — no "Tu racha se ha roto."</li>
+      <li class="en">"FIVE. Go go go!" — not "5 seconds remaining."</li><li class="es">"CINCO. ¡Dale dale dale!" — no "Quedan 5 segundos."</li>
+      <li class="en">5 emotional variants: fire, ice, gold, warn, clutch</li><li class="es">5 variantes emocionales: fuego, hielo, oro, advertencia, clutch</li>
+      <li class="en">Probability-gated — natural coaching rhythm, never spam</li><li class="es">Controlado por probabilidad — ritmo natural, nunca spam</li>
+    </ul>
+  </div>
+
+  <!-- TECH -->
+  <div class="pb te rv">
+    <div class="pt te en">● Architecture — Exclusive</div><div class="pt te es">● Arquitectura — Exclusivo</div>
+    <div class="pn en">TECHNICAL ARCHITECTURE</div><div class="pn es">ARQUITECTURA TÉCNICA</div>
+    <p class="pe en"><em>EXCLUSIVE:</em> The entire 3-phase system lives in a single 659-line JavaScript file. Zero game code changes.</p>
+    <p class="pe es"><em>EXCLUSIVO:</em> Todo el sistema de 3 fases vive en un solo archivo JavaScript de 659 líneas. Cero cambios al código.</p>
+    <ul class="el">
+      <li class="en">Single file — one script tag loads the complete system</li><li class="es">Archivo único — un script tag carga todo el sistema</li>
+      <li class="en">Self-detecting: reads document.title to identify the game</li><li class="es">Auto-detección: lee document.title para identificar el juego</li>
+      <li class="en">DOM polling at 500ms without modifying game code</li><li class="es">Polling del DOM a 500ms sin modificar código de juegos</li>
+      <li class="en">MutationObserver for screen transitions</li><li class="es">MutationObserver para transiciones de pantalla</li>
+      <li class="en">Public API: window.BOSCoach for external integration</li><li class="es">API pública: window.BOSCoach para integración externa</li>
+      <li class="en">30-point audit: zero issues, zero warnings, zero blockers</li><li class="es">Auditoría de 30 puntos: cero problemas, cero advertencias, cero bloqueadores</li>
+      <li class="en">55.7KB total — lighter than a profile picture</li><li class="es">55.7KB total — más liviano que una foto de perfil</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════ -->
+<!-- CLOSING -->
+<!-- ══════════════════════════════════ -->
+<section class="closing">
+<div class="wrap">
+  <div class="cl rv en">COACH BOS IS THE <b>PEACH BASKET</b>.</div>
+  <div class="cl rv es">COACH BOS ES EL <b>CANASTO DE DURAZNOS</b>.</div>
+  <p class="rv en">The world's first AI sideline coach for esports. Invented in Puerto Rico. Built by an athlete. Ready for the world.</p>
+  <p class="rv es">El primer coach AI de línea lateral para esports. Inventado en Puerto Rico. Creado por un atleta. Listo para el mundo.</p>
+  <div class="cdiv"></div>
+  <div class="brand">BOS ESPORTS</div>
+  <div class="cred">GoStar Digital LLC · San Juan, Puerto Rico 🇵🇷 · <a href="https://bosesports.com">bosesports.com</a></div>
+</div>
+</section>
+
+<script>
+// Language toggle
+function SL(l){
+  document.body.className=l==='es'?'ES':'';
+  document.getElementById('bEN').className='lang-btn'+(l==='en'?' on':'');
+  document.getElementById('bES').className='lang-btn'+(l==='es'?' on':'');
+  try{localStorage.setItem('bos-feat-lang',l)}catch(e){}
+}
+// Auto-detect
+(function(){
+  try{var s=localStorage.getItem('bos-feat-lang');if(s){SL(s);return}}catch(e){}
+  if((navigator.language||'').toLowerCase().indexOf('es')===0)SL('es');
+})();
+// Scroll reveal
+(function(){
+  var els=document.querySelectorAll('.rv');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis')});
+  },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+  els.forEach(function(el){obs.observe(el)});
+})();
+</script>
+</body>
+</html>
