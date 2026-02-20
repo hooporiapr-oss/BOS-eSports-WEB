@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOS ESPORTS — Coach BOS Pre-Workout Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #FFD700;
+    --orange: #FF6B35;
+    --teal: #00D9A5;
+    --cyan: #00CED1;
+    --red: #FF1744;
+    --dark: #0a0a0f;
+    --darker: #050508;
+    --card: #111118;
+    --text: #FFFFFF;
+    --muted: #8892a0;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .preview-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--gold), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .preview-header p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 6px;
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .preview-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+  }
+
+  .preview-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .preview-card-tier {
+    font-size: 0.6rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .tier-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tier-tab {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tier-tab.active {
+    background: linear-gradient(135deg, var(--gold), var(--orange));
+    color: var(--dark);
+    border-color: transparent;
+  }
+
+  .tier-tab:hover:not(.active) {
+    border-color: rgba(255,255,255,0.15);
+    color: var(--text);
+  }
+
+  /* ═══ COACH PANEL STYLES (same as widget) ═══ */
+  .bos-coach-panel {
+    max-width: 480px;
+    width: 100%;
+    background: rgba(17, 17, 24, 0.95);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 16px;
+    padding: 16px 18px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    animation: coachSlideIn 0.5s ease-out;
+  }
+  .bos-coach-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #FFD700, #FF6B35, #FFD700);
+    opacity: 0.6;
+  }
+  @keyframes coachSlideIn {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .bos-coach-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .bos-coach-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+  }
+  .bos-coach-meta { flex: 1; }
+  .bos-coach-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #FFD700;
+    line-height: 1;
+  }
+  .bos-coach-role {
+    font-size: 0.55rem;
+    color: #8892a0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .bos-coach-domain-tag {
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .bos-coach-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .bos-coach-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+  .bos-coach-tips li {
+    font-size: 0.7rem;
+    color: #c0c8d4;
+    line-height: 1.5;
+    padding: 4px 0 4px 18px;
+    position: relative;
+  }
+  .bos-coach-tips li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+    font-size: 0.65rem;
+  }
+  .bos-coach-mental {
+    font-size: 0.7rem;
+    color: #8892a0;
+    font-style: italic;
+    line-height: 1.5;
+    padding: 8px 12px;
+    border-left: 2px solid rgba(255, 215, 0, 0.3);
+    margin-top: 6px;
+    background: rgba(255, 215, 0, 0.03);
+    border-radius: 0 8px 8px 0;
+  }
+  .bos-coach-mental::before { content: '💭 '; }
+
+  .deploy-notes {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-align: left;
+  }
+  .deploy-notes h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .deploy-notes p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+  .deploy-notes code {
+    background: rgba(255, 215, 0, 0.08);
+    color: var(--gold);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 500px) {
+    .preview-grid { grid-template-columns: 1fr; }
+    body { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-header">
+  <h1>COACH BOS — PRE-WORKOUT PREVIEW</h1>
+  <p>How the coaching panel appears on each game's start screen. Click tier tabs to see tier-specific coaching.</p>
+</div>
+
+<div class="preview-grid" id="previewGrid"></div>
+
+<div class="deploy-notes">
+  <h3>DEPLOYMENT INSTRUCTIONS</h3>
+  <p>1. Upload <code>bos-coach-widget.js</code> to your BOS Esports repo root (alongside strobe.html, etc.)</p>
+  <p>2. All 4 games already reference <code>&lt;script src="/bos-coach-widget.js"&gt;&lt;/script&gt;</code> — it auto-detects the game from the page title.</p>
+  <p>3. The coaching panel appears on the start screen, updates when the player changes tier, and can be minimized with the ✕ button.</p>
+  <p>4. No changes needed to strobe.html, flickshot.html, splitfocus.html, or clutchtimer.html — the widget self-injects.</p>
+</div>
+
+<script>
+/* ═══ COACHING DATA (same as widget) ═══ */
+const COACHING = {
+  strobe: {
+    name: 'Strobe Drill', domain: 'Visual Processing', icon: '🎯', color: '#00D9A5',
+    tiers: ['Bronze','Silver','Gold','Diamond','Radiant'],
+    pregame: {
+      1:{headline:"LET'S BUILD YOUR FOUNDATION",tips:["No strobe yet — pure target acquisition. Get your rhythm.","Don't chase the cursor. Let your eyes FIND the target, then click.","Accuracy over speed at this level. Build clean habits first."],mental:"Breathe. Relax your shoulders. Your eyes are your weapon — keep them soft and scanning."},
+      2:{headline:"STROBE KICKS IN — STAY DISCIPLINED",tips:["Strobe will black out your vision briefly. Don't panic.","Track target positions BEFORE the blackout hits.","Two targets now. Prioritize the closest one first."],mental:"The strobe is training your visual memory. Trust your brain — it remembers where targets were."},
+      3:{headline:"DECOYS ARE LIVE — READ THE FIELD",tips:["Red dashed targets are DECOYS. Hit one and you lose 50 points.","Take a split second to confirm before firing. That pause saves you.","Strobe is faster now. Use peripheral vision to pre-track targets."],mental:"Gold is where champions separate from grinders. Patience under pressure."},
+      4:{headline:"ELITE COGNITIVE LOAD — LOCK IN",tips:["Strobe at 120Hz with 450ms blackouts. Your brain must predict.","Three targets max on screen. Scan in patterns, not randomly.","Bonus targets appear briefly — high risk, high reward."],mental:"This is neurocognitive training at its peak. Every rep is building new neural pathways."},
+      5:{headline:"RADIANT TIER — PROVE IT",tips:["150Hz strobe. 550ms darkness. This is the ultimate visual challenge.","Trust your instincts. At this speed, hesitation is the enemy.","Your accuracy needs to stay above 85% for S-rank. Every click counts."],mental:"You've trained for this. The strobe can't break what you've built. Show it who's boss."}
+    }
+  },
+  flickshot: {
+    name: 'FlickShot', domain: 'Precision Aiming', icon: '🎯', color: '#00CED1',
+    tiers: ['Bronze','Silver','Gold','Diamond','Radiant'],
+    pregame: {
+      1:{headline:"LEARN YOUR FLICK",tips:["One target at a time. Flick to it, fire, repeat.","The golden line shows your flick path. Longer flicks = bonus points.","2.5 seconds per target. Don't rush — find your natural aim speed."],mental:"This isn't about being the fastest yet. It's about building muscle memory for clean flicks."},
+      2:{headline:"TARGETS ARE SHRINKING — ADJUST",tips:["Targets shrink over time. Hit them early for full size.","The flick distance bonus rewards aggressive cursor positioning.","Watch for the origin marker — it shows where your last click was."],mental:"Shrinking targets test your confidence. Commit to your flick — don't second-guess."},
+      3:{headline:"MOVING TARGETS — READ THE MOVEMENT",tips:["Purple targets MOVE. Lead your aim slightly ahead of their path.","Gold precision targets are small but worth 250 base points.","Mix of static and moving — adapt your strategy per target."],mental:"Moving targets train prediction. Your brain is learning to aim where the target WILL be."},
+      4:{headline:"DIAMOND MIX — EVERYTHING AT ONCE",tips:["Shrinking + Moving + Precision all in the same round.","1.7 seconds per target. Your reaction time needs to be under 600ms.","Streak bonus kicks in at 3x. Maintain consistency for score multipliers."],mental:"This is where your hours of training compound. Trust the process."},
+      5:{headline:"RADIANT FLICKSHOT — CHAOS PRECISION",tips:["900ms spawn rate. Targets appear nearly on top of each other.","44px targets — smallest in the game. Every pixel matters.","S-rank needs 3500+ score with 85% accuracy. That's elite."],mental:"Radiant FlickShot is for the top 1%. If you're here, you've already proven something. Now dominate."}
+    }
+  },
+  splitfocus: {
+    name: 'Split Focus', domain: 'Cognitive Control', icon: '👁', color: '#00D9A5',
+    tiers: ['Bronze','Silver','Gold','Diamond','Radiant'],
+    pregame: {
+      1:{headline:"TRACK THE RIGHT COLOR",tips:["Teal orbs are targets. Red dashed orbs are decoys. Simple.","Two targets, one decoy. Don't click the red — it costs 75 points.","Orbs move slowly. Track them with your eyes before clicking."],mental:"Split Focus is about IGNORING what doesn't matter. Train your filter."},
+      2:{headline:"MORE DECOYS — STRENGTHEN YOUR FILTER",tips:["Two decoys now. The field is getting crowded.","Decoys look tempting. Train yourself to see the dashed border first.","Speed bonus: hit targets under 500ms for +60 points."],mental:"Your brain wants to click everything. The discipline to NOT click is the real skill."},
+      3:{headline:"RULE SWITCHES ARE LIVE",tips:["Mid-round, the target color SWITCHES. Watch the banner!","Teal becomes Cyan or vice versa. Your brain must adapt instantly.","After a switch, pause for half a second to recalibrate. It's worth it."],mental:"Rule switches train cognitive flexibility — the ability to adapt on the fly. This is CLUTCH in competition."},
+      4:{headline:"DIAMOND — MAXIMUM DIVIDED ATTENTION",tips:["3 targets, 3 decoys. Six orbs moving simultaneously.","Switches every 10 seconds. Your brain gets no rest.","Wrong-color targets STAY on the field. Don't hit them twice."],mental:"This is the cognitive equivalent of guarding two players at once. Eyes everywhere."},
+      5:{headline:"RADIANT — THREE TARGET COLORS",tips:["Teal, Cyan, AND Gold are all possible target colors.","Switches every 7 seconds. Three colors means more confusion.","4 targets + 4 decoys = 8 orbs. Pure cognitive chaos."],mental:"Radiant Split Focus separates gamers from competitors. Your brain is the controller."}
+    }
+  },
+  clutchtimer: {
+    name: 'Clutch Timer', domain: 'Decision Making', icon: '⏱', color: '#FFD700',
+    tiers: ['Bronze','Silver','Gold','Diamond','Radiant'],
+    pregame: {
+      1:{headline:"LEARN THE DECISION SYSTEM",tips:["Two zones. One rule. Match the color to the zone.","3-second decision window. Plenty of time to think.","25 prompts per round. Build accuracy before chasing speed."],mental:"Clutch Timer tests your decision-making under time pressure. Start calm, finish fast."},
+      2:{headline:"THIRD ZONE — WIDER DECISION FIELD",tips:["Three zones now. Symbols OR colors — read the rule badge.","2.5-second window. Your processing speed needs to level up.","Wrong answers cost -150. Timeouts only -50. When in doubt, let it expire."],mental:"In competition, a bad decision is worse than no decision. Be smart."},
+      3:{headline:"FULL ARENA + RULE SWITCHES",tips:["All four zones active. TWO rules stacking simultaneously.","Rules change every 8 prompts. Watch the rules bar!","Follow Arrow vs Opposite Arrow — know which is active."],mental:"Gold Clutch is where game IQ shows. Reading and adapting in real-time is everything."},
+      4:{headline:"PRIORITY CHAINS — FIND THE BEST ANSWER",tips:["Multiple zones might be 'valid' — but only one is OPTIMAL.","Star ratings on zones show priority. Highest or Lowest depends on the rule.","1.5-second window. No time for deliberation — train until it's automatic."],mental:"Diamond forces you to find the BEST play, not just a good one. That's championship mentality."},
+      5:{headline:"CONFLICTING RULES — COGNITIVE OVERLOAD",tips:["THREE rules active. Some may CONFLICT with each other.","⚠ CONFLICT badge means rules are contradictory. Last rule takes priority.","1.2-second window that SHRINKS to 0.54s by prompt 25."],mental:"This is the hardest decision-making challenge in BOS. If you can perform here, you can perform anywhere."}
+    }
+  }
+};
+
+/* ═══ BUILD PREVIEW ═══ */
+const grid = document.getElementById('previewGrid');
+
+Object.entries(COACHING).forEach(([key, game]) => {
+  const card = document.createElement('div');
+  card.className = 'preview-card';
+
+  const tierTabs = game.tiers.map((t, i) =>
+    `<button class="tier-tab ${i === 0 ? 'active' : ''}" data-game="${key}" data-tier="${i+1}" onclick="switchPreviewTier(this)">${t}</button>`
+  ).join('');
+
+  card.innerHTML = `
+    <div class="preview-card-title" style="color: ${game.color}">${game.icon} ${game.name}</div>
+    <div class="preview-card-tier">${game.domain}</div>
+    <div class="tier-tabs">${tierTabs}</div>
+    <div class="panel-container" id="panel-${key}"></div>
+  `;
+  grid.appendChild(card);
+
+  // Render initial panel
+  renderPanel(key, 1);
+});
+
+function renderPanel(game, tier) {
+  const container = document.getElementById('panel-' + game);
+  if (!container) return;
+  const data = COACHING[game];
+  const pregame = data.pregame[tier];
+  if (!pregame) return;
+
+  const tipsHTML = pregame.tips.map(t => `<li>${t}</li>`).join('');
+
+  container.innerHTML = `
+    <div class="bos-coach-panel">
+      <div class="bos-coach-header">
+        <div class="bos-coach-avatar">🧠</div>
+        <div class="bos-coach-meta">
+          <div class="bos-coach-name">COACH BOS</div>
+          <div class="bos-coach-role">Pre-Workout Coaching</div>
+        </div>
+        <div class="bos-coach-domain-tag" style="background: ${data.color}15; border: 1px solid ${data.color}40; color: ${data.color}">
+          ${data.icon} ${data.domain}
+        </div>
+      </div>
+      <div class="bos-coach-headline">${pregame.headline}</div>
+      <ul class="bos-coach-tips">${tipsHTML}</ul>
+      <div class="bos-coach-mental">${pregame.mental}</div>
+    </div>
+  `;
+}
+
+function switchPreviewTier(btn) {
+  const game = btn.dataset.game;
+  const tier = parseInt(btn.dataset.tier);
+  
+  // Update active tab
+  btn.parentElement.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  
+  // Re-render panel
+  renderPanel(game, tier);
+}
+</script>
+
+</body>
+</html>
