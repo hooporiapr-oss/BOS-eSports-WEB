@@ -15,7 +15,7 @@ const PRICE_IDS = {
 // ─── POST /api/stripe/checkout ───
 // NO AUTH REQUIRED — Stripe-first flow
 // Creates a Stripe Checkout Session with 7-day trial
-// Stripe collects email + payment method
+// Stripe collects email — NO credit card required during trial
 router.post('/checkout', async (req, res) => {
   try {
     const { tier } = req.body;
@@ -33,6 +33,7 @@ router.post('/checkout', async (req, res) => {
 
     const sessionConfig = {
       mode: 'subscription',
+      payment_method_collection: 'if_required',
       line_items: [{ price: PRICE_IDS[tier], quantity: 1 }],
       subscription_data: {
         trial_period_days: 7,
