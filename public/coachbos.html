@@ -73,10 +73,18 @@ body::before{
   display:flex;align-items:center;justify-content:space-between;
 }
 .nav-brand{
-  font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;
-  color:var(--gold);text-decoration:none;
+  display:flex;align-items:center;gap:10px;text-decoration:none;
 }
-.nav-brand span{color:var(--text-muted);font-size:0.9rem;letter-spacing:1px;margin-left:6px}
+.nav-logo{
+  height:36px;width:auto;
+  transition:all 0.3s;
+}
+.nav-brand:hover .nav-logo{filter:drop-shadow(0 0 10px rgba(255,215,0,0.4));transform:scale(1.03)}
+.nav-brand-text{
+  font-family:'Bebas Neue',sans-serif;font-size:0.7rem;letter-spacing:2px;
+  color:var(--text-muted);border-left:1px solid rgba(255,215,0,0.15);
+  padding-left:10px;line-height:1.2;
+}
 .nav-links{display:flex;gap:24px;align-items:center}
 .nav-links a{
   font-size:0.75rem;font-weight:600;color:var(--text-secondary);
@@ -384,7 +392,10 @@ body::before{
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-brand">BOS ESPORTS <span>/ Coach</span></a>
+    <a href="/" class="nav-brand">
+      <img src="/bos.png" alt="BOS Esports" class="nav-logo">
+      <span class="nav-brand-text">COACH<br>BOS</span>
+    </a>
     <div class="nav-links">
       <a href="#philosophy">Philosophy</a>
       <a href="#system">System</a>
