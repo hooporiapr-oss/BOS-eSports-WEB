@@ -76,14 +76,36 @@ body::before{
   display:flex;align-items:center;gap:10px;text-decoration:none;
 }
 .nav-logo{
-  height:36px;width:auto;
+  height:40px;width:auto;
+  filter:brightness(1.3);
   transition:all 0.3s;
 }
-.nav-brand:hover .nav-logo{filter:drop-shadow(0 0 10px rgba(255,215,0,0.4));transform:scale(1.03)}
+.nav-brand:hover .nav-logo{filter:brightness(1.5) drop-shadow(0 0 10px rgba(255,215,0,0.4));transform:scale(1.03)}
 .nav-brand-text{
   font-family:'Bebas Neue',sans-serif;font-size:0.7rem;letter-spacing:2px;
   color:var(--text-muted);border-left:1px solid rgba(255,215,0,0.15);
   padding-left:10px;line-height:1.2;
+}
+
+/* ═══ TOP LOGO SHOWCASE ═══ */
+.logo-showcase{
+  width:100%;text-align:center;padding:80px 24px 20px;position:relative;z-index:1;
+}
+.logo-showcase-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:500px;height:200px;
+  background:radial-gradient(ellipse,rgba(255,215,0,0.08),rgba(255,107,53,0.04),transparent 70%);
+  pointer-events:none;
+}
+.logo-showcase img{
+  height:80px;width:auto;
+  filter:brightness(1.4) drop-shadow(0 0 30px rgba(255,215,0,0.25)) drop-shadow(0 0 60px rgba(0,217,165,0.1));
+  animation:logoShine 4s ease-in-out infinite;
+}
+@keyframes logoShine{0%,100%{filter:brightness(1.4) drop-shadow(0 0 30px rgba(255,215,0,0.25)) drop-shadow(0 0 60px rgba(0,217,165,0.1))}50%{filter:brightness(1.6) drop-shadow(0 0 40px rgba(255,215,0,0.35)) drop-shadow(0 0 80px rgba(0,217,165,0.15))}}
+.logo-showcase-line{
+  width:200px;height:1px;margin:16px auto 0;
+  background:linear-gradient(90deg,transparent,rgba(255,215,0,0.3),transparent);
 }
 .nav-links{display:flex;gap:24px;align-items:center}
 .nav-links a{
@@ -101,8 +123,8 @@ body::before{
 
 /* ═══ HERO ═══ */
 .hero{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:120px 24px 80px;position:relative;
+  min-height:90vh;display:flex;align-items:center;justify-content:center;
+  padding:20px 24px 80px;position:relative;
 }
 .hero-content{
   max-width:var(--max-w);width:100%;
@@ -404,6 +426,13 @@ body::before{
     </div>
   </div>
 </nav>
+
+<!-- LOGO SHOWCASE -->
+<div class="logo-showcase">
+  <div class="logo-showcase-glow"></div>
+  <img src="/bos.png" alt="BOS Esports">
+  <div class="logo-showcase-line"></div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
