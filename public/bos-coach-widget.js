@@ -1,312 +1,627 @@
-/**
- * ╔══════════════════════════════════════════════════════════╗
- * ║  COACH BOS — Chat Widget v2.0 (Phase 3)                ║
- * ║  Page-aware · Bilingual · Controller-aware              ║
- * ║  Usage: <script src="bos-coach-widget.js"></script>     ║
- * ║  Connects to: bos-agent-server on Render                ║
- * ╚══════════════════════════════════════════════════════════╝
- */
+/*═══════════════════════════════════════════════════════════════
+  BOS COACH WIDGET — Pre-Workout Sideline Integration
+  Coach BOS speaks to players BEFORE they train.
+  
+  Loaded by: strobe.html, flickshot.html, splitfocus.html, clutchtimer.html
+  Via: <script src="/bos-coach-widget.js"></script>
+  
+  Phase: Pre-Workout Coaching (Phase 2, Step 1)
+  Next: Real-time mid-session coaching, Post-workout analysis
+  
+  Architecture:
+  - Detects which game is loaded from <title> or body content
+  - Injects Coach BOS panel into the start/select screen
+  - Delivers game-specific coaching based on selected tier
+  - Talks like a real coach, not clinical AI
+  - BOS Design System: Bebas Neue, Outfit, dark/gold/orange/teal
+═══════════════════════════════════════════════════════════════*/
+
 (function() {
-  'use strict';
+'use strict';
 
-  // ═══ CONFIG ═══
-  const AGENT_URL = 'https://bos-agent-server.onrender.com';
-  const ENDPOINT = `${AGENT_URL}/api/coach/chat`;
+/* ═══ GAME DETECTION ═══ */
+const title = document.title.toLowerCase();
+let GAME = 'unknown';
+if (title.includes('strobe'))      GAME = 'strobe';
+else if (title.includes('flick'))  GAME = 'flickshot';
+else if (title.includes('split'))  GAME = 'splitfocus';
+else if (title.includes('clutch')) GAME = 'clutchtimer';
 
-  // ═══ PAGE DETECTION ═══
-  const currentPath = window.location.pathname;
-  const PAGE = detectPage();
+if (GAME === 'unknown') return; // Not a game page, bail
 
-  function detectPage() {
-    const p = currentPath.toLowerCase();
-    if (p.includes('strobe')) return { game: 'strobe', name: 'Strobe Drill', icon: '👁', domain: 'Visual Processing' };
-    if (p.includes('flickshot')) return { game: 'flickshot', name: 'FlickShot', icon: '🎯', domain: 'Precision & Speed' };
-    if (p.includes('split-focus')) return { game: 'splitfocus', name: 'Split Focus', icon: '🧠', domain: 'Cognitive Control' };
-    if (p.includes('clutch')) return { game: 'clutchtimer', name: 'Clutch Timer', icon: '⏱', domain: 'Decision Quality' };
-    if (p.includes('leaderboard')) return { game: null, name: 'Leaderboard', icon: '🏆', domain: null };
-    if (p.includes('dashboard')) return { game: null, name: 'Dashboard', icon: '📊', domain: null };
-    return { game: null, name: 'BOS Esports', icon: '🎮', domain: null };
+/* ═══ COACH BOS PERSONALITY ═══ */
+const COACH_NAME = 'COACH BOS';
+const COACH_AVATAR = '🧠'; // Could be replaced with image URL later
+
+/* ═══ GAME-SPECIFIC COACHING DATABASE ═══ */
+const COACHING = {
+  strobe: {
+    name: 'Strobe Drill',
+    domain: 'Visual Processing',
+    icon: '🎯',
+    color: '#00D9A5', // teal
+    pregame: {
+      1: { // Bronze
+        headline: "LET'S BUILD YOUR FOUNDATION",
+        tips: [
+          "No strobe yet — pure target acquisition. Get your rhythm.",
+          "Don't chase the cursor. Let your eyes FIND the target, then click.",
+          "Accuracy over speed at this level. Build clean habits first."
+        ],
+        mental: "Breathe. Relax your shoulders. Your eyes are your weapon — keep them soft and scanning."
+      },
+      2: { // Silver
+        headline: "STROBE KICKS IN — STAY DISCIPLINED",
+        tips: [
+          "Strobe will black out your vision briefly. Don't panic.",
+          "Track target positions BEFORE the blackout hits.",
+          "Two targets now. Prioritize the closest one first."
+        ],
+        mental: "The strobe is training your visual memory. Trust your brain — it remembers where targets were."
+      },
+      3: { // Gold
+        headline: "DECOYS ARE LIVE — READ THE FIELD",
+        tips: [
+          "Red dashed targets are DECOYS. Hit one and you lose 50 points.",
+          "Take a split second to confirm before firing. That pause saves you.",
+          "Strobe is faster now. Use peripheral vision to pre-track targets."
+        ],
+        mental: "Gold is where champions separate from grinders. Patience under pressure."
+      },
+      4: { // Diamond
+        headline: "ELITE COGNITIVE LOAD — LOCK IN",
+        tips: [
+          "Strobe at 120Hz with 450ms blackouts. Your brain must predict.",
+          "Three targets max on screen. Scan in patterns, not randomly.",
+          "Bonus targets appear briefly — high risk, high reward."
+        ],
+        mental: "This is neurocognitive training at its peak. Every rep is building new neural pathways."
+      },
+      5: { // Radiant
+        headline: "RADIANT TIER — PROVE IT",
+        tips: [
+          "150Hz strobe. 550ms darkness. This is the ultimate visual challenge.",
+          "Trust your instincts. At this speed, hesitation is the enemy.",
+          "Your accuracy needs to stay above 85% for S-rank. Every click counts."
+        ],
+        mental: "You've trained for this. The strobe can't break what you've built. Show it who's boss."
+      }
+    }
+  },
+
+  flickshot: {
+    name: 'FlickShot',
+    domain: 'Precision Aiming',
+    icon: '🎯',
+    color: '#00CED1', // cyan
+    pregame: {
+      1: {
+        headline: "LEARN YOUR FLICK",
+        tips: [
+          "One target at a time. Flick to it, fire, repeat.",
+          "The golden line shows your flick path. Longer flicks = bonus points.",
+          "2.5 seconds per target. Don't rush — find your natural aim speed."
+        ],
+        mental: "This isn't about being the fastest yet. It's about building muscle memory for clean flicks."
+      },
+      2: {
+        headline: "TARGETS ARE SHRINKING — ADJUST",
+        tips: [
+          "Targets shrink over time. Hit them early for full size.",
+          "The flick distance bonus rewards aggressive cursor positioning.",
+          "Watch for the origin marker — it shows where your last click was."
+        ],
+        mental: "Shrinking targets test your confidence. Commit to your flick — don't second-guess."
+      },
+      3: {
+        headline: "MOVING TARGETS — READ THE MOVEMENT",
+        tips: [
+          "Purple targets MOVE. Lead your aim slightly ahead of their path.",
+          "Gold precision targets are small but worth 250 base points.",
+          "Mix of static and moving — adapt your strategy per target."
+        ],
+        mental: "Moving targets train prediction. Your brain is learning to aim where the target WILL be."
+      },
+      4: {
+        headline: "DIAMOND MIX — EVERYTHING AT ONCE",
+        tips: [
+          "Shrinking + Moving + Precision all in the same round.",
+          "1.7 seconds per target. Your reaction time needs to be under 600ms.",
+          "Streak bonus kicks in at 3x. Maintain consistency for score multipliers."
+        ],
+        mental: "This is where your hours of training compound. Trust the process."
+      },
+      5: {
+        headline: "RADIANT FLICKSHOT — CHAOS PRECISION",
+        tips: [
+          "900ms spawn rate. Targets appear nearly on top of each other.",
+          "44px targets — smallest in the game. Every pixel matters.",
+          "S-rank needs 3500+ score with 85% accuracy. That's elite."
+        ],
+        mental: "Radiant FlickShot is for the top 1%. If you're here, you've already proven something. Now dominate."
+      }
+    }
+  },
+
+  splitfocus: {
+    name: 'Split Focus',
+    domain: 'Cognitive Control',
+    icon: '👁',
+    color: '#00D9A5', // teal
+    pregame: {
+      1: {
+        headline: "TRACK THE RIGHT COLOR",
+        tips: [
+          "Teal orbs are targets. Red dashed orbs are decoys. Simple.",
+          "Two targets, one decoy. Don't click the red — it costs 75 points.",
+          "Orbs move slowly. Track them with your eyes before clicking."
+        ],
+        mental: "Split Focus is about IGNORING what doesn't matter. Train your filter."
+      },
+      2: {
+        headline: "MORE DECOYS — STRENGTHEN YOUR FILTER",
+        tips: [
+          "Two decoys now. The field is getting crowded.",
+          "Decoys look tempting. Train yourself to see the dashed border first.",
+          "Speed bonus: hit targets under 500ms for +60 points."
+        ],
+        mental: "Your brain wants to click everything. The discipline to NOT click is the real skill."
+      },
+      3: {
+        headline: "RULE SWITCHES ARE LIVE",
+        tips: [
+          "Mid-round, the target color SWITCHES. Watch the banner!",
+          "Teal becomes Cyan or vice versa. Your brain must adapt instantly.",
+          "After a switch, pause for half a second to recalibrate. It's worth it."
+        ],
+        mental: "Rule switches train cognitive flexibility — the ability to adapt on the fly. This is CLUTCH in competition."
+      },
+      4: {
+        headline: "DIAMOND — MAXIMUM DIVIDED ATTENTION",
+        tips: [
+          "3 targets, 3 decoys. Six orbs moving simultaneously.",
+          "Switches every 10 seconds. Your brain gets no rest.",
+          "Wrong-color targets STAY on the field. Don't hit them twice."
+        ],
+        mental: "This is the cognitive equivalent of guarding two players at once. Eyes everywhere."
+      },
+      5: {
+        headline: "RADIANT — THREE TARGET COLORS",
+        tips: [
+          "Teal, Cyan, AND Gold are all possible target colors.",
+          "Switches every 7 seconds. Three colors means more confusion.",
+          "4 targets + 4 decoys = 8 orbs. Pure cognitive chaos."
+        ],
+        mental: "Radiant Split Focus separates gamers from competitors. Your brain is the controller."
+      }
+    }
+  },
+
+  clutchtimer: {
+    name: 'Clutch Timer',
+    domain: 'Decision Making',
+    icon: '⏱',
+    color: '#FFD700', // gold
+    pregame: {
+      bronze: {
+        headline: "LEARN THE DECISION SYSTEM",
+        tips: [
+          "Two zones. One rule. Match the color to the zone.",
+          "3-second decision window. Plenty of time to think.",
+          "25 prompts per round. Build accuracy before chasing speed."
+        ],
+        mental: "Clutch Timer tests your decision-making under time pressure. Start calm, finish fast."
+      },
+      silver: {
+        headline: "THIRD ZONE — WIDER DECISION FIELD",
+        tips: [
+          "Three zones now. Symbols OR colors — read the rule badge.",
+          "2.5-second window. Your processing speed needs to level up.",
+          "Wrong answers cost -150. Timeouts only -50. When in doubt, let it expire."
+        ],
+        mental: "In competition, a bad decision is worse than no decision. Be smart."
+      },
+      gold: {
+        headline: "FULL ARENA + RULE SWITCHES",
+        tips: [
+          "All four zones active. TWO rules stacking simultaneously.",
+          "Rules change every 8 prompts. Watch the rules bar!",
+          "Follow Arrow vs Opposite Arrow — know which is active."
+        ],
+        mental: "Gold Clutch is where game IQ shows. Reading and adapting in real-time is everything."
+      },
+      diamond: {
+        headline: "PRIORITY CHAINS — FIND THE BEST ANSWER",
+        tips: [
+          "Multiple zones might be 'valid' — but only one is OPTIMAL.",
+          "Star ratings on zones show priority. Highest or Lowest depends on the rule.",
+          "1.5-second window. No time for deliberation — train until it's automatic."
+        ],
+        mental: "Diamond forces you to find the BEST play, not just a good one. That's championship mentality."
+      },
+      radiant: {
+        headline: "CONFLICTING RULES — COGNITIVE OVERLOAD",
+        tips: [
+          "THREE rules active. Some may CONFLICT with each other.",
+          "⚠ CONFLICT badge means rules are contradictory. Last rule takes priority.",
+          "1.2-second window that SHRINKS to 0.54s by prompt 25."
+        ],
+        mental: "This is the hardest decision-making challenge in BOS. If you can perform here, you can perform anywhere."
+      }
+    }
+  }
+};
+
+/* ═══ INJECT STYLES ═══ */
+const style = document.createElement('style');
+style.textContent = `
+  /* ═══ COACH BOS PRE-WORKOUT PANEL ═══ */
+  .bos-coach-panel {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto 1.2rem;
+    background: rgba(17, 17, 24, 0.95);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 16px;
+    padding: 16px 18px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    animation: coachSlideIn 0.5s ease-out;
   }
 
-  // ═══ LANGUAGE ═══
-  let lang = 'en';
-  try {
-    const stored = localStorage.getItem('bos_lang') || localStorage.getItem('bosLang');
-    if (stored && stored.startsWith('es')) lang = 'es';
-    else if (navigator.language.startsWith('es')) lang = 'es';
-  } catch(e) {}
-
-  const T = {
-    en: {
-      placeholder: PAGE.game ? `Ask about ${PAGE.name}...` : 'Ask Coach anything...',
-      gameReady: 'Game Ready',
-      errNetwork: "⚠️ Can't reach Coach. Check your connection.",
-      errGeneral: '⚠️ Something went wrong. Try again.',
-      qStats: '📊 My Stats', qPlan: '🎯 Training Plan', qBoard: '🏆 Leaderboard', qRank: '🥇 My Rank',
-      qGamegy: '🏟 GAMERGY', qPricing: '💰 Plans',
-      qTips: '💡 Tips', qAnalyze: '📈 Analyze Me', qImprove: '🔥 How to Improve', qBench: '⚡ Benchmarks',
-      mStats: 'Show my stats', mPlan: 'Create a training plan for me', mBoard: 'Show the leaderboard', mRank: "What's my rank?",
-      mGamegy: 'Tell me about GAMERGY Puerto Rico', mPricing: 'What are the subscription plans?',
-      mTips: 'Give me tips for ' + PAGE.name, mAnalyze: 'Analyze my ' + PAGE.name + ' performance',
-      mImprove: 'How can I improve at ' + PAGE.name + '?', mBench: 'What are the benchmarks for ' + PAGE.name + '?',
-    },
-    es: {
-      placeholder: PAGE.game ? 'Pregunta sobre ' + PAGE.name + '...' : 'Pregúntale al Coach...',
-      gameReady: 'Listo',
-      errNetwork: '⚠️ No puedo conectar con el Coach.',
-      errGeneral: '⚠️ Algo salió mal. Intenta de nuevo.',
-      qStats: '📊 Mis Stats', qPlan: '🎯 Plan de Entreno', qBoard: '🏆 Ranking', qRank: '🥇 Mi Posición',
-      qGamegy: '🏟 GAMERGY', qPricing: '💰 Planes',
-      qTips: '💡 Consejos', qAnalyze: '📈 Analízame', qImprove: '🔥 Cómo Mejorar', qBench: '⚡ Métricas',
-      mStats: 'Muéstrame mis stats', mPlan: 'Crea un plan de entrenamiento', mBoard: 'Muéstrame el ranking', mRank: '¿Cuál es mi posición?',
-      mGamegy: 'Cuéntame sobre GAMERGY Puerto Rico', mPricing: '¿Cuáles son los planes de suscripción?',
-      mTips: 'Dame consejos para ' + PAGE.name, mAnalyze: 'Analiza mi rendimiento en ' + PAGE.name,
-      mImprove: '¿Cómo puedo mejorar en ' + PAGE.name + '?', mBench: '¿Cuáles son las métricas para ' + PAGE.name + '?',
-    }
-  };
-  const t = T[lang];
-
-  // ═══ QUICK ACTIONS PER PAGE ═══
-  const actions = PAGE.game
-    ? [ {l:t.qTips,m:t.mTips}, {l:t.qAnalyze,m:t.mAnalyze}, {l:t.qImprove,m:t.mImprove}, {l:t.qBench,m:t.mBench} ]
-    : [ {l:t.qStats,m:t.mStats}, {l:t.qPlan,m:t.mPlan}, {l:t.qBoard,m:t.mBoard}, {l:t.qRank,m:t.mRank} ];
-
-  const qHTML = actions.map(a => '<button class="bos-quick-btn" data-msg="'+a.m+'">'+a.l+'</button>').join('');
-  const pageTag = PAGE.game ? '<span class="bos-ch-page-tag">'+PAGE.icon+' '+PAGE.name+'</span>' : '';
-
-  // ═══ INJECT FONTS ═══
-  if (!document.querySelector('link[href*="Bebas+Neue"]')) {
-    const lk = document.createElement('link'); lk.rel = 'stylesheet';
-    lk.href = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&display=swap';
-    document.head.appendChild(lk);
+  .bos-coach-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #FFD700, #FF6B35, #FFD700);
+    opacity: 0.6;
   }
 
-  // ═══ STYLES ═══
-  const styles = document.createElement('style');
-  styles.id = 'bos-coach-styles';
-  styles.textContent = `
-    #bos-coach-bubble{position:fixed;bottom:24px;right:24px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FF6B35);cursor:pointer;z-index:99998;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(255,215,0,0.3),0 4px 16px rgba(0,0,0,0.4);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;border:2px solid rgba(255,215,0,0.6)}
-    #bos-coach-bubble:hover{transform:scale(1.12);box-shadow:0 0 30px rgba(255,215,0,0.5),0 6px 24px rgba(0,0,0,0.5)}
-    #bos-coach-bubble.active{transform:scale(0.9) rotate(90deg)}
-    #bos-coach-bubble svg{width:30px;height:30px;fill:#0a0a0f;transition:transform 0.3s}
-    #bos-coach-bubble.active svg{transform:rotate(-90deg)}
-    #bos-coach-bubble::after{content:'';position:absolute;top:4px;right:4px;width:14px;height:14px;background:#00D9A5;border-radius:50%;border:2px solid #0a0a0f;animation:bos-pulse 2s infinite;opacity:1;transition:opacity 0.3s}
-    #bos-coach-bubble.active::after,#bos-coach-bubble.seen::after{opacity:0}
-    @keyframes bos-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:0.7}}
-    #bos-coach-drawer{position:fixed;bottom:100px;right:24px;width:380px;max-width:calc(100vw - 48px);height:540px;max-height:calc(100vh - 140px);background:#12121a;border:1.5px solid rgba(255,215,0,0.15);border-radius:20px;z-index:99999;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 20px rgba(255,215,0,0.3);opacity:0;transform:translateY(20px) scale(0.95);pointer-events:none;transition:opacity 0.35s cubic-bezier(0.4,0,0.2,1),transform 0.35s cubic-bezier(0.34,1.56,0.64,1)}
-    #bos-coach-drawer.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
-    .bos-ch-header{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,107,53,0.05));border-bottom:1px solid rgba(255,215,0,0.15);flex-shrink:0}
-    .bos-ch-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FF6B35);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 0 20px rgba(255,215,0,0.3);overflow:hidden}
-    .bos-ch-avatar img{width:100%;height:100%;object-fit:cover}
-    .bos-ch-info{flex:1;min-width:0}
-    .bos-ch-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1.5px;background:linear-gradient(135deg,#FFD700,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-    .bos-ch-status{font-family:'Outfit',sans-serif;font-size:0.72rem;color:#00D9A5;font-weight:600;display:flex;align-items:center;gap:5px}
-    .bos-ch-status::before{content:'';width:6px;height:6px;background:#00D9A5;border-radius:50%;box-shadow:0 0 20px rgba(0,217,165,0.3)}
-    .bos-ch-page-tag{font-family:'Outfit',sans-serif;font-size:0.55rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#0a0a0f;background:linear-gradient(135deg,#FFD700,#FF6B35);padding:2px 8px;border-radius:50px;-webkit-text-fill-color:#0a0a0f}
-    .bos-ch-close{width:32px;height:32px;border:none;background:rgba(255,255,255,0.06);border-radius:10px;color:#a0a0b8;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
-    .bos-ch-close:hover{background:rgba(255,255,255,0.12);color:#fff}
-    .bos-lang-toggle{width:28px;height:28px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.04);color:#a0a0b8;font-size:0.6rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;letter-spacing:0.5px}
-    .bos-lang-toggle:hover{background:rgba(255,255,255,0.1);color:#fff}
-    .bos-ch-msgs{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
-    .bos-ch-msgs::-webkit-scrollbar{width:5px}
-    .bos-ch-msgs::-webkit-scrollbar-track{background:transparent}
-    .bos-ch-msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
-    .bos-msg{max-width:85%;padding:12px 16px;border-radius:18px;font-family:'Outfit',sans-serif;font-size:0.88rem;line-height:1.55;font-weight:500;animation:bos-msg-in 0.35s cubic-bezier(0.34,1.56,0.64,1);word-wrap:break-word}
-    @keyframes bos-msg-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-    .bos-msg.assistant{align-self:flex-start;background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,107,53,0.08));border:1px solid rgba(255,215,0,0.18);color:#fff;border-bottom-left-radius:4px}
-    .bos-msg.user{align-self:flex-end;background:rgba(0,217,165,0.14);border:1px solid rgba(0,217,165,0.25);color:#fff;border-bottom-right-radius:4px}
-    .bos-msg.system{align-self:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:#a0a0b8;font-size:0.78rem;text-align:center;border-radius:12px;max-width:90%}
-    .bos-typing-dots{display:flex;gap:5px;padding:4px 0}
-    .bos-typing-dots span{width:8px;height:8px;background:#FFD700;border-radius:50%;animation:bos-typing 1.4s infinite}
-    .bos-typing-dots span:nth-child(2){animation-delay:0.2s}
-    .bos-typing-dots span:nth-child(3){animation-delay:0.4s}
-    @keyframes bos-typing{0%,60%,100%{transform:translateY(0);opacity:0.35}30%{transform:translateY(-8px);opacity:1}}
-    .bos-quick-actions{display:flex;flex-wrap:wrap;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,0.04);flex-shrink:0}
-    .bos-quick-btn{padding:8px 14px;border:1.5px solid rgba(255,215,0,0.2);border-radius:100px;background:rgba(255,215,0,0.06);font-family:'Outfit',sans-serif;font-size:0.76rem;font-weight:700;color:#FFD700;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-    .bos-quick-btn:hover{background:rgba(255,215,0,0.14);border-color:rgba(255,215,0,0.35);transform:translateY(-1px)}
-    .bos-quick-btn:active{transform:scale(0.96);background:#FFD700;color:#0a0a0f}
-    .bos-ch-input-wrap{display:flex;align-items:center;gap:8px;padding:12px 14px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(255,215,0,0.15);flex-shrink:0;background:#12121a}
-    .bos-ch-input{flex:1;min-width:0;padding:11px 16px;border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:500;color:#fff;background:#1a1a25;outline:none;transition:border-color 0.2s;box-sizing:border-box}
-    .bos-ch-input::placeholder{color:rgba(255,255,255,0.3)}
-    .bos-ch-input:focus{border-color:rgba(255,215,0,0.4)}
-    .bos-ch-send{width:42px;height:42px;border:none;border-radius:14px;background:linear-gradient(135deg,#FFD700,#FF6B35);color:#0a0a0f;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s;box-shadow:0 2px 10px rgba(255,215,0,0.2)}
-    .bos-ch-send:hover{transform:scale(1.06);box-shadow:0 4px 16px rgba(255,215,0,0.35)}
-    .bos-ch-send:disabled{opacity:0.35;transform:none;cursor:default;box-shadow:none}
-    @media(max-width:480px){
-      #bos-coach-drawer{top:56px;bottom:0;right:0;left:0;width:100vw;max-width:100vw;height:auto;max-height:none;border-radius:0;border:none;border-top:1.5px solid rgba(255,215,0,0.15)}
-      #bos-coach-bubble{bottom:16px;right:16px;width:58px;height:58px}
+  @keyframes coachSlideIn {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .bos-coach-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .bos-coach-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+  }
+
+  .bos-coach-meta {
+    flex: 1;
+  }
+
+  .bos-coach-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #FFD700;
+    line-height: 1;
+  }
+
+  .bos-coach-role {
+    font-size: 0.55rem;
+    color: #8892a0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .bos-coach-domain-tag {
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .bos-coach-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  .bos-coach-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+
+  .bos-coach-tips li {
+    font-size: 0.7rem;
+    color: #c0c8d4;
+    line-height: 1.5;
+    padding: 4px 0 4px 18px;
+    position: relative;
+  }
+
+  .bos-coach-tips li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+    font-size: 0.65rem;
+  }
+
+  .bos-coach-mental {
+    font-size: 0.7rem;
+    color: #8892a0;
+    font-style: italic;
+    line-height: 1.5;
+    padding: 8px 12px;
+    border-left: 2px solid rgba(255, 215, 0, 0.3);
+    margin-top: 6px;
+    background: rgba(255, 215, 0, 0.03);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .bos-coach-mental::before {
+    content: '💭 ';
+  }
+
+  .bos-coach-dismiss {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #8892a0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .bos-coach-dismiss:hover {
+    color: #FFD700;
+  }
+
+  .bos-coach-panel.collapsed {
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .bos-coach-panel.collapsed:hover {
+    border-color: rgba(255, 215, 0, 0.3);
+  }
+
+  .bos-coach-panel.collapsed .bos-coach-body {
+    display: none;
+  }
+
+  .bos-coach-expand-hint {
+    display: none;
+    font-size: 0.55rem;
+    color: #8892a0;
+    letter-spacing: 0.5px;
+  }
+
+  .bos-coach-panel.collapsed .bos-coach-expand-hint {
+    display: inline;
+  }
+
+  .bos-coach-panel.collapsed .bos-coach-dismiss {
+    display: none;
+  }
+
+  /* ═══ MOBILE TWEAKS ═══ */
+  @media (max-width: 600px) {
+    .bos-coach-panel {
+      margin: 0 auto 0.8rem;
+      padding: 12px 14px;
+      border-radius: 12px;
+      max-width: 100%;
     }
-  `;
-  document.head.appendChild(styles);
+    .bos-coach-headline { font-size: 0.95rem; }
+    .bos-coach-tips li { font-size: 0.65rem; }
+    .bos-coach-mental { font-size: 0.65rem; padding: 6px 10px; }
+  }
 
-  // ═══ HTML ═══
-  const widget = document.createElement('div');
-  widget.id = 'bos-coach-root';
-  widget.innerHTML = `
-    <div id="bos-coach-bubble" title="Coach Bos">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C6.48 2 2 6.04 2 11c0 2.83 1.55 5.36 3.98 6.96L5 22l4.24-2.12C10.14 19.96 11.06 20 12 20c5.52 0 10-4.04 10-9S17.52 2 12 2zm-1 13H9v-2h2v2zm3 0h-2v-2h2v2zm3 0h-2v-2h2v2z"/>
-      </svg>
-    </div>
-    <div id="bos-coach-drawer">
-      <div class="bos-ch-header">
-        <div class="bos-ch-avatar"><img src="/coachbos.png" alt="Coach Bos"></div>
-        <div class="bos-ch-info">
-          <div class="bos-ch-name">COACH BOS ${pageTag}</div>
-          <div class="bos-ch-status">${t.gameReady}</div>
-        </div>
-        <button class="bos-lang-toggle" id="bos-lang-toggle" title="EN/ES">${lang === 'en' ? 'ES' : 'EN'}</button>
-        <button class="bos-ch-close" title="Close">✕</button>
+  /* ═══ CLUTCH TIMER SPECIFIC ═══ */
+  .clutch-coach-panel {
+    margin-bottom: 12px;
+  }
+`;
+document.head.appendChild(style);
+
+
+/* ═══ BUILD COACH PANEL HTML ═══ */
+function buildCoachPanel(gameData, tierKey) {
+  const pregame = gameData.pregame[tierKey];
+  if (!pregame) return null;
+
+  const domainColor = gameData.color;
+
+  const panel = document.createElement('div');
+  panel.className = 'bos-coach-panel';
+  panel.id = 'bosCoachPanel';
+
+  const tipsHTML = pregame.tips.map(t => `<li>${t}</li>`).join('');
+
+  panel.innerHTML = `
+    <button class="bos-coach-dismiss" onclick="this.parentElement.classList.add('collapsed')" title="Minimize">✕</button>
+    <div class="bos-coach-header">
+      <div class="bos-coach-avatar">${COACH_AVATAR}</div>
+      <div class="bos-coach-meta">
+        <div class="bos-coach-name">${COACH_NAME}</div>
+        <div class="bos-coach-role">Pre-Workout Coaching</div>
+        <span class="bos-coach-expand-hint">tap to expand</span>
       </div>
-      <div class="bos-ch-msgs" id="bos-coach-messages"></div>
-      <div class="bos-quick-actions" id="bos-quick-actions">${qHTML}</div>
-      <div class="bos-ch-input-wrap">
-        <input type="text" class="bos-ch-input" id="bos-coach-input" placeholder="${t.placeholder}" autocomplete="off"/>
-        <button class="bos-ch-send" id="bos-coach-send" title="Send">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
+      <div class="bos-coach-domain-tag" style="background: ${domainColor}15; border: 1px solid ${domainColor}40; color: ${domainColor}">
+        ${gameData.icon} ${gameData.domain}
       </div>
     </div>
+    <div class="bos-coach-body">
+      <div class="bos-coach-headline">${pregame.headline}</div>
+      <ul class="bos-coach-tips">${tipsHTML}</ul>
+      <div class="bos-coach-mental">${pregame.mental}</div>
+    </div>
   `;
-  document.body.appendChild(widget);
 
-  // ═══ STATE ═══
-  let isOpen = false;
-  let isLoading = false;
-  let conversationHistory = [];
+  // Re-expand on click when collapsed
+  panel.addEventListener('click', function(e) {
+    if (panel.classList.contains('collapsed') && !e.target.classList.contains('bos-coach-dismiss')) {
+      panel.classList.remove('collapsed');
+    }
+  });
 
-  const bubble = document.getElementById('bos-coach-bubble');
-  const drawer = document.getElementById('bos-coach-drawer');
-  const messagesEl = document.getElementById('bos-coach-messages');
-  const inputEl = document.getElementById('bos-coach-input');
-  const sendBtn = document.getElementById('bos-coach-send');
-  const closeBtn = widget.querySelector('.bos-ch-close');
-  const langBtn = document.getElementById('bos-lang-toggle');
+  return panel;
+}
 
-  // ═══ GET PLAYER ID ═══
-  function getPlayerId() {
-    try {
-      const keys = ['bos_user', 'bos_player', 'currentUser', 'bosUser'];
-      for (const key of keys) {
-        const stored = localStorage.getItem(key);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          return parsed.id || parsed.playerId || parsed.uid || null;
+
+/* ═══ INJECT INTO GAME START SCREENS ═══ */
+function injectCoaching() {
+  const gameData = COACHING[GAME];
+  if (!gameData) return;
+
+  if (GAME === 'clutchtimer') {
+    injectClutchTimerCoaching(gameData);
+  } else {
+    injectStandardCoaching(gameData);
+  }
+}
+
+/* ═══ STANDARD GAMES: Strobe, FlickShot, Split Focus ═══ */
+function injectStandardCoaching(gameData) {
+  const startScreen = document.getElementById('startScreen');
+  if (!startScreen) return;
+
+  // Find the start button to insert before it
+  const startBtn = document.getElementById('startBtn');
+  if (!startBtn) return;
+
+  let currentPanel = null;
+
+  function updatePanel() {
+    // Get selected tier from active tier button
+    const activeTier = document.querySelector('.tier-btn.active');
+    if (!activeTier) return;
+    const tierKey = parseInt(activeTier.dataset.tier) || 1;
+
+    // Remove old panel
+    if (currentPanel && currentPanel.parentNode) {
+      currentPanel.remove();
+    }
+
+    // Build new panel
+    currentPanel = buildCoachPanel(gameData, tierKey);
+    if (currentPanel) {
+      startBtn.parentNode.insertBefore(currentPanel, startBtn);
+    }
+  }
+
+  // Initial render
+  updatePanel();
+
+  // Update when tier changes
+  const tierSelect = document.getElementById('tierSelect');
+  if (tierSelect) {
+    tierSelect.addEventListener('click', function(e) {
+      if (e.target.closest('.tier-btn')) {
+        // Small delay to let the active class update
+        setTimeout(updatePanel, 50);
+      }
+    });
+  }
+}
+
+/* ═══ CLUTCH TIMER: Different structure (tier cards, not buttons) ═══ */
+function injectClutchTimerCoaching(gameData) {
+  // Clutch Timer uses a tier card selection → game screen flow
+  // We inject the panel into the game screen, above the GO button
+  
+  const actionBtn = document.getElementById('actionBtn');
+  const feedbackText = document.getElementById('feedbackText');
+  if (!actionBtn) return;
+
+  let currentPanel = null;
+
+  // Override selectTier to inject coaching
+  const originalSelectTier = window.selectTier;
+  if (originalSelectTier) {
+    window.selectTier = function(tier) {
+      originalSelectTier(tier);
+
+      // Remove old panel
+      if (currentPanel && currentPanel.parentNode) {
+        currentPanel.remove();
+      }
+
+      // Build coaching panel for this tier
+      currentPanel = buildCoachPanel(gameData, tier);
+      if (currentPanel) {
+        currentPanel.classList.add('clutch-coach-panel');
+        // Insert before the action button
+        const feedbackBar = feedbackText ? feedbackText.parentElement : null;
+        if (feedbackBar) {
+          feedbackBar.parentNode.insertBefore(currentPanel, feedbackBar);
+        } else {
+          actionBtn.parentNode.insertBefore(currentPanel, actionBtn);
         }
       }
-    } catch (e) {}
-    const params = new URLSearchParams(window.location.search);
-    return params.get('playerId') || null;
+    };
   }
+}
 
-  // ═══ CONTROLLER DETECTION ═══
-  let hasController = false;
-  window.addEventListener('gamepadconnected', () => { hasController = true; });
-  window.addEventListener('gamepaddisconnected', () => { hasController = false; });
 
-  // ═══ TOGGLE ═══
-  function toggle() {
-    isOpen = !isOpen;
-    if (isOpen) {
-      drawer.classList.add('open');
-      bubble.classList.add('active', 'seen');
-      setTimeout(() => inputEl?.focus(), 350);
-    } else {
-      drawer.classList.remove('open');
-      bubble.classList.remove('active');
-    }
+/* ═══ INITIALIZE ═══ */
+// Wait for DOM to be fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', injectCoaching);
+} else {
+  // Small delay to ensure game scripts have initialized
+  setTimeout(injectCoaching, 100);
+}
+
+/* ═══ EXPOSE API FOR FUTURE PHASES ═══ */
+window.BOSCoach = {
+  game: GAME,
+  version: '2.0.0',
+  phase: 'pre-workout',
+  
+  // Phase 2: Real-time mid-session (future)
+  onSessionStart: function(tierData) {
+    console.log('[Coach BOS] Session started:', GAME, tierData);
+  },
+  
+  // Phase 3: Post-workout analysis (future)
+  onSessionEnd: function(results) {
+    console.log('[Coach BOS] Session ended:', GAME, results);
+  },
+  
+  // Get coaching for a specific game + tier
+  getCoaching: function(game, tier) {
+    const g = COACHING[game];
+    if (!g) return null;
+    return g.pregame[tier] || null;
   }
+};
 
-  // ═══ ADD MESSAGE ═══
-  function addMessage(role, content) {
-    const msg = document.createElement('div');
-    msg.className = 'bos-msg ' + role;
-    msg.innerHTML = content
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
-    messagesEl.appendChild(msg);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-    if (role !== 'system') conversationHistory.push({ role: role, content: content });
-  }
+console.log(`[Coach BOS] Pre-workout coaching loaded for ${GAME}`);
 
-  // ═══ TYPING ═══
-  function showTyping() {
-    const el = document.createElement('div');
-    el.className = 'bos-msg assistant'; el.id = 'bos-typing';
-    el.innerHTML = '<div class="bos-typing-dots"><span></span><span></span><span></span></div>';
-    messagesEl.appendChild(el); messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-  function hideTyping() { const el = document.getElementById('bos-typing'); if (el) el.remove(); }
-
-  // ═══ SEND ═══
-  async function send() {
-    const text = inputEl?.value?.trim();
-    if (!text || isLoading) return;
-    inputEl.value = '';
-    isLoading = true;
-    sendBtn.disabled = true;
-
-    addMessage('user', text);
-    showTyping();
-
-    // Inject page + controller context
-    let ctx = text;
-    if (PAGE.game) ctx = '[Currently on: ' + PAGE.name + ' (' + PAGE.domain + ')]\n' + ctx;
-    if (hasController) ctx = '[Input: Controller]\n' + ctx;
-
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: ctx, userId: getPlayerId(), history: conversationHistory.slice(-20) })
-      });
-      hideTyping();
-      if (!res.ok) throw new Error('Server: ' + res.status);
-      const data = await res.json();
-      addMessage('assistant', data.reply || data.response || 'Try again?');
-    } catch (err) {
-      hideTyping();
-      console.error('Coach Bos:', err);
-      addMessage('system', err.message.includes('fetch') || err.message.includes('Network') ? T[lang].errNetwork : T[lang].errGeneral);
-    } finally {
-      isLoading = false;
-      sendBtn.disabled = false;
-      inputEl?.focus();
-    }
-  }
-
-  // ═══ EVENTS ═══
-  bubble.addEventListener('click', toggle);
-  closeBtn.addEventListener('click', toggle);
-  sendBtn.addEventListener('click', send);
-  inputEl.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
-  widget.querySelectorAll('.bos-quick-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() { inputEl.value = btn.dataset.msg; send(); });
-  });
-  langBtn.addEventListener('click', function() {
-    lang = lang === 'en' ? 'es' : 'en';
-    try { localStorage.setItem('bos_lang', lang); } catch(e) {}
-    var nt = T[lang];
-    // Update toggle button
-    langBtn.textContent = lang === 'en' ? 'ES' : 'EN';
-    // Update placeholder
-    inputEl.placeholder = nt.placeholder;
-    // Update status
-    widget.querySelector('.bos-ch-status').childNodes[widget.querySelector('.bos-ch-status').childNodes.length - 1].textContent = nt.gameReady;
-    // Update quick actions
-    var newActions = PAGE.game
-      ? [ {l:nt.qTips,m:nt.mTips}, {l:nt.qAnalyze,m:nt.mAnalyze}, {l:nt.qImprove,m:nt.mImprove}, {l:nt.qBench,m:nt.mBench} ]
-      : [ {l:nt.qStats,m:nt.mStats}, {l:nt.qPlan,m:nt.mPlan}, {l:nt.qBoard,m:nt.mBoard}, {l:nt.qRank,m:nt.mRank} ];
-    var qaEl = document.getElementById('bos-quick-actions');
-    qaEl.innerHTML = newActions.map(function(a) { return '<button class="bos-quick-btn" data-msg="'+a.m+'">'+a.l+'</button>'; }).join('');
-    qaEl.querySelectorAll('.bos-quick-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() { inputEl.value = btn.dataset.msg; send(); });
-    });
-  });
-
-  // ═══ PUBLIC ═══
-  window.BosCoach = { toggle: toggle, send: send };
 })();
