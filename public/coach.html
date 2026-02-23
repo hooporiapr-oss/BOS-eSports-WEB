@@ -3,109 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Talk to Coach BOS — Your AI Sideline Coach. GET COACHED.™ BOS Esports">
-  <title>Coach BOS — GET COACHED.™</title>
+  <meta name="description" content="Coach BOS — The voice of Puerto Rico esports. Talk tournaments, GAMERGY, strategy, training, and everything competitive gaming. Bilingual EN/ES. GET COACHED.™">
+  <meta property="og:title" content="Coach BOS — The Voice of PR Esports">
+  <meta property="og:description" content="Talk to Coach BOS — AI esports authority for Puerto Rico. Tournaments, strategy, GAMERGY, and the whole scene. GET COACHED.™">
+  <meta property="og:type" content="website">
+  <title>Coach BOS — Talk Esports 🇵🇷 | GET COACHED.™</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --display:'Bebas Neue',sans-serif;
-      --sans:'Outfit',sans-serif;
-      --dark:#0a0a0f;--darker:#050508;--card:#111118;--card-hover:#16161f;
+      --display:'Bebas Neue',sans-serif;--sans:'Outfit',sans-serif;
+      --dark:#0a0a0f;--darker:#050508;--card:#111118;
       --gold:#FFD700;--gold-dim:rgba(255,215,0,0.08);--gold-glow:rgba(255,215,0,0.3);
       --orange:#FF6B35;--teal:#00D9A5;--cyan:#00CED1;--red:#FF1744;
-      --text:#FFFFFF;--muted:#8892a0;--border:rgba(255,255,255,0.08);
-      --radius:20px
+      --text:#FFFFFF;--muted:#8892a0;--border:rgba(255,255,255,0.08)
     }
     html,body{height:100%;overflow:hidden}
     body{font-family:var(--sans);background:var(--dark);color:var(--text);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
-
-    /* ═══ LANG TOGGLE ═══ */
     body.en .es{display:none!important}body.es .en{display:none!important}
 
-    /* ═══ AMBIENT BG ═══ */
+    /* ═══ BG ═══ */
     .bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
     .bg::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,0.06) 0%,transparent 60%)}
     .bg::after{content:'';position:absolute;bottom:-15%;right:-10%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,165,0.04) 0%,transparent 55%)}
     .bg-grid{position:absolute;inset:0;background:linear-gradient(rgba(255,215,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 50% at 50% 30%,black 10%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 30%,black 10%,transparent 70%)}
 
     /* ═══ HEADER ═══ */
-    .hdr{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
-    .hdr-back{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-size:16px;text-decoration:none;color:var(--text);-webkit-tap-highlight-color:transparent;transition:all .15s;flex-shrink:0}
+    .hdr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(5,5,8,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
+    .hdr-back{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);font-size:15px;text-decoration:none;color:var(--text);-webkit-tap-highlight-color:transparent;transition:all .15s;flex-shrink:0}
     .hdr-back:active{transform:scale(.9)}
-    .hdr-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 0 24px rgba(255,215,0,0.25);position:relative}
-    .hdr-av::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid rgba(255,215,0,0.15);animation:ring 3s ease infinite}
+    .hdr-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 0 20px rgba(255,215,0,0.25);position:relative}
+    .hdr-av::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid rgba(255,215,0,0.12);animation:ring 3s ease infinite}
     @keyframes ring{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:0}}
     .hdr-info{flex:1;min-width:0}
-    .hdr-name{font-family:var(--display);font-size:18px;letter-spacing:2px;line-height:1;background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hdr-status{display:flex;align-items:center;gap:5px;margin-top:3px}
-    .hdr-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s ease infinite;box-shadow:0 0 10px rgba(0,217,165,0.4)}
+    .hdr-name{font-family:var(--display);font-size:16px;letter-spacing:2px;line-height:1;background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hdr-status{display:flex;align-items:center;gap:4px;margin-top:2px}
+    .hdr-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s ease infinite;box-shadow:0 0 8px rgba(0,217,165,0.4)}
     @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,217,165,.4)}50%{box-shadow:0 0 0 5px rgba(0,217,165,0)}}
-    .hdr-stat{font-size:11px;color:var(--muted);font-weight:600}
-    .hdr-lang{width:32px;height:32px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;flex-shrink:0}
-    .hdr-lang:active{transform:scale(.9);color:var(--gold);border-color:rgba(255,215,0,.2)}
-    .hdr-share{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;flex-shrink:0}
-    .hdr-share:active{transform:scale(.9);color:var(--gold)}
+    .hdr-stat{font-size:10px;color:var(--muted);font-weight:600}
+    .hdr-flag{font-size:13px;margin-left:2px}
+    .hdr-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+    .hdr-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;flex-shrink:0}
+    .hdr-btn:active{transform:scale(.9);color:var(--gold);border-color:rgba(255,215,0,.2)}
+    .hdr-lang{font-size:10px;font-weight:800;letter-spacing:.5px;font-family:var(--sans)}
+    .hdr-share{font-size:15px}
 
-    /* ═══ CHAT AREA ═══ */
-    .chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+    /* ═══ CHAT ═══ */
+    .chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
     .chat::-webkit-scrollbar{width:3px}
     .chat::-webkit-scrollbar-thumb{background:rgba(255,255,255,.06);border-radius:10px}
 
     /* ═══ WELCOME ═══ */
-    .hero{text-align:center;padding:28px 16px;animation:fadeUp .6s ease}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .hero-av{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto 14px;box-shadow:0 8px 40px rgba(255,215,0,0.25);animation:float 5s ease-in-out infinite}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-    .hero-title{font-family:var(--display);font-size:28px;letter-spacing:4px;line-height:1;margin-bottom:4px}
-    .hero-title .gold{color:var(--gold)}
-    .hero-coached{font-family:var(--display);font-size:16px;letter-spacing:5px;color:var(--gold);margin-bottom:10px;opacity:.8}
-    .hero-coached .tm{font-family:var(--sans);font-size:.5em;vertical-align:super;letter-spacing:0}
-    .hero-sub{font-size:13px;color:var(--muted);line-height:1.6;max-width:320px;margin:0 auto;font-weight:400}
-    .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:18px}
-    .chip{padding:9px 16px;border-radius:60px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.12);font-size:12px;font-weight:600;color:var(--gold);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap}
-    .chip:active{transform:scale(.95);background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,.25)}
+    .welcome{text-align:center;padding:20px 12px 8px;animation:fadeUp .5s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .w-av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 12px;box-shadow:0 6px 30px rgba(255,215,0,0.25);animation:float 5s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    .w-title{font-family:var(--display);font-size:24px;letter-spacing:3px;line-height:1;margin-bottom:3px}
+    .w-title .gold{color:var(--gold)}
+    .w-coached{font-family:var(--display);font-size:13px;letter-spacing:4px;color:var(--gold);margin-bottom:10px;opacity:.7}
+    .w-coached .tm{font-family:var(--sans);font-size:.5em;vertical-align:super;letter-spacing:0}
+    .w-sub{font-size:12.5px;color:var(--muted);line-height:1.55;max-width:340px;margin:0 auto;font-weight:400}
+    .w-badge{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:5px 14px;border-radius:50px;background:rgba(0,217,165,0.08);border:1px solid rgba(0,217,165,0.15);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal)}
+    .w-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+
+    /* ═══ CHIPS ═══ */
+    .chip-section{margin-top:16px;text-align:left;padding:0 4px}
+    .chip-label{font-family:var(--display);font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;padding-left:2px}
+    .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+    .chip{padding:8px 14px;border-radius:50px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap;line-height:1}
+    .chip:active{transform:scale(.95)}
+    .chip-gold{background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.15);color:var(--gold)}
+    .chip-teal{background:rgba(0,217,165,0.07);border:1px solid rgba(0,217,165,0.15);color:var(--teal)}
+    .chip-orange{background:rgba(255,107,53,0.07);border:1px solid rgba(255,107,53,0.15);color:var(--orange)}
+    .chip-cyan{background:rgba(0,206,209,0.07);border:1px solid rgba(0,206,209,0.15);color:var(--cyan)}
 
     /* ═══ MESSAGES ═══ */
-    .row{display:flex;gap:8px;max-width:88%;animation:msgPop .35s cubic-bezier(.22,1,.36,1)}
-    @keyframes msgPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .row{display:flex;gap:8px;max-width:88%;animation:msgPop .3s cubic-bezier(.22,1,.36,1)}
+    @keyframes msgPop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     .row-user{align-self:flex-end;flex-direction:row-reverse}
     .row-bos{align-self:flex-start}
-    .av{width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:14px}
+    .av{width:26px;height:26px;border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:13px}
     .av-bos{background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,107,53,0.15));border:1px solid rgba(255,215,0,0.15)}
     .av-user{background:linear-gradient(135deg,rgba(0,217,165,0.15),rgba(0,206,209,0.1));border:1px solid rgba(0,217,165,0.15)}
-    .bub{padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.6;font-weight:400;word-wrap:break-word;overflow-wrap:break-word}
+    .bub{padding:10px 14px;border-radius:16px;font-size:13.5px;line-height:1.6;font-weight:400;word-wrap:break-word;overflow-wrap:break-word}
     .bub-bos{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text)}
-    .bub-user{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,107,53,0.1));border:1px solid rgba(255,215,0,0.12);border-bottom-right-radius:4px;color:var(--text)}
-    .bub-err{background:rgba(255,23,68,0.1);border:1px solid rgba(255,23,68,0.15);border-bottom-left-radius:4px;color:#FF8A80}
+    .bub-user{background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,107,53,0.08));border:1px solid rgba(255,215,0,0.1);border-bottom-right-radius:4px;color:var(--text)}
+    .bub-err{background:rgba(255,23,68,0.08);border:1px solid rgba(255,23,68,0.12);border-bottom-left-radius:4px;color:#FF8A80}
     .dots{display:flex;align-items:center;gap:4px;padding:12px 16px}
-    .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);opacity:.4;animation:bounce 1.4s ease-in-out infinite}
-    .dot:nth-child(2){animation-delay:.2s}
-    .dot:nth-child(3){animation-delay:.4s}
-    @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.4;animation:bounce 1.4s ease-in-out infinite}
+    .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+    @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
 
     /* ═══ INPUT ═══ */
-    .bar{padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:rgba(5,5,8,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
-    .bar-row{display:flex;gap:8px;align-items:flex-end;max-width:520px;margin:0 auto}
+    .bar{padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:rgba(5,5,8,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);position:relative;z-index:10;flex-shrink:0}
+    .bar-row{display:flex;gap:8px;align-items:flex-end;max-width:560px;margin:0 auto}
     .bar-input{flex:1;min-height:44px;max-height:120px;padding:10px 14px;border-radius:14px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-family:var(--sans);font-size:15px;font-weight:500;resize:none;outline:none;line-height:1.4;transition:border-color .2s;-webkit-appearance:none}
-    .bar-input::placeholder{color:rgba(255,255,255,.3);font-weight:400}
-    .bar-input:focus{border-color:rgba(255,215,0,.25)}
+    .bar-input::placeholder{color:rgba(255,255,255,.25);font-weight:400}
+    .bar-input:focus{border-color:rgba(255,215,0,.2)}
     .bar-input:disabled{opacity:.4}
     .bar-send{width:44px;height:44px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:var(--dark);font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;-webkit-tap-highlight-color:transparent;cursor:pointer;box-shadow:0 2px 12px rgba(255,215,0,0.2)}
     .bar-send:active{transform:scale(.9)}
-    .bar-send:disabled{opacity:.3;transform:none;cursor:default;box-shadow:none}
+    .bar-send:disabled{opacity:.25;transform:none;cursor:default;box-shadow:none}
     .bar-send svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 
-    /* ═══ DEBUG BAR ═══ */
-    .dbg{display:none;position:fixed;top:0;left:0;right:0;z-index:200;padding:6px 12px;font-size:10px;font-family:monospace;text-align:center;animation:fadeUp .3s ease}
-    .dbg.on{display:block}
-    .dbg-ok{background:rgba(0,217,165,.15);color:#6EE7B7;border-bottom:1px solid rgba(0,217,165,.2)}
-    .dbg-err{background:rgba(255,23,68,.15);color:#FF8A80;border-bottom:1px solid rgba(255,23,68,.2)}
+    /* ═══ POWERED ═══ */
+    .powered{text-align:center;padding:4px 0 2px;font-size:9px;color:rgba(136,146,160,0.4);letter-spacing:.5px;background:rgba(5,5,8,0.94);position:relative;z-index:10}
+    .powered a{color:rgba(255,215,0,0.4);text-decoration:none}
 
-    @media(max-width:420px){.hdr-name{font-size:16px}.hero-av{width:72px;height:72px;font-size:34px}.hero-title{font-size:24px}.bub{font-size:13.5px}}
-    @media(max-height:500px){.hero{padding:12px}.hero-av{width:56px;height:56px;font-size:28px}.chips{margin-top:10px}}
-    @media(min-width:600px){.row{max-width:75%}}
+    @media(max-width:420px){.hdr-name{font-size:14px}.w-av{width:64px;height:64px;font-size:30px}.w-title{font-size:21px}.chip{font-size:11px;padding:7px 12px}.bub{font-size:13px}}
+    @media(max-height:550px){.welcome{padding:10px 12px 4px}.w-av{width:52px;height:52px;font-size:24px}.chip-section{margin-top:10px}.chips{margin-bottom:8px}}
+    @media(min-width:600px){.row{max-width:70%}}
   </style>
 </head>
 <body class="en">
@@ -113,42 +121,44 @@
 
   <!-- ═══ HEADER ═══ -->
   <div class="hdr">
-    <a href="/" class="hdr-back">←</a>
+    <a href="/" class="hdr-back" title="BOS Esports">←</a>
     <div class="hdr-av">🎯</div>
     <div class="hdr-info">
       <div class="hdr-name">COACH BOS</div>
-      <div class="hdr-status"><span class="hdr-dot"></span><span class="hdr-stat en">Game Ready</span><span class="hdr-stat es">Listo Pa'l Game</span></div>
+      <div class="hdr-status">
+        <span class="hdr-dot"></span>
+        <span class="hdr-stat en">PR Esports Authority</span>
+        <span class="hdr-stat es">Autoridad Esports PR</span>
+        <span class="hdr-flag">🇵🇷</span>
+      </div>
     </div>
-    <button class="hdr-lang" id="langBtn" onclick="toggleLang()">ES</button>
-    <button class="hdr-share" id="shareBtn" onclick="shareCoach()">↗</button>
+    <div class="hdr-actions">
+      <button class="hdr-btn hdr-lang" id="langBtn" onclick="toggleLang()">ES</button>
+      <button class="hdr-btn hdr-share" id="shareBtn" onclick="shareCoach()">↗</button>
+    </div>
   </div>
 
-  <!-- ═══ CHAT AREA ═══ -->
+  <!-- ═══ CHAT ═══ -->
   <div class="chat" id="chat"></div>
 
-  <!-- ═══ INPUT BAR ═══ -->
+  <!-- ═══ INPUT ═══ -->
   <div class="bar">
     <div class="bar-row">
-      <textarea class="bar-input" id="inp" rows="1" placeholder="Ask Coach BOS..." enterkeyhint="send"></textarea>
+      <textarea class="bar-input" id="inp" rows="1" placeholder="Talk esports with Coach BOS..." enterkeyhint="send"></textarea>
       <button class="bar-send" id="sendBtn" onclick="doSend()" disabled>
         <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
       </button>
     </div>
   </div>
-
-  <!-- ═══ DEBUG BAR ═══ -->
-  <div class="dbg" id="dbg"></div>
+  <div class="powered en">Powered by <a href="/">BOS Esports</a> · GoStar Digital LLC 🇵🇷</div>
+  <div class="powered es">Impulsado por <a href="/">BOS Esports</a> · GoStar Digital LLC 🇵🇷</div>
 
   <script>
   (function(){
-    /* ═══ DOM ═══ */
     var chat=document.getElementById('chat');
     var inp=document.getElementById('inp');
     var sendBtn=document.getElementById('sendBtn');
-    var dbg=document.getElementById('dbg');
     var langBtn=document.getElementById('langBtn');
-
-    /* ═══ STATE ═══ */
     var hist=[];
     var busy=false;
     var lang='en';
@@ -158,54 +168,82 @@
       lang=l;
       document.body.className=l;
       langBtn.textContent=l==='en'?'ES':'EN';
-      inp.placeholder=l==='en'?'Ask Coach BOS...':'Pregúntale al Coach BOS...';
+      inp.placeholder=l==='en'?'Talk esports with Coach BOS...':'Habla esports con Coach BOS...';
       try{localStorage.setItem('bos-lang',l);}catch(e){}
     }
     window.toggleLang=function(){setLang(lang==='en'?'es':'en');};
 
-    /* ═══ DEBUG ═══ */
-    function debug(msg,ok){
-      dbg.textContent=msg;
-      dbg.className='dbg on '+(ok?'dbg-ok':'dbg-err');
-      if(ok)setTimeout(function(){dbg.classList.remove('on')},3000);
-    }
-
     /* ═══ WELCOME ═══ */
     function showWelcome(){
-      var chipsEN=[
-        {t:'📊 My Stats',q:'Show my stats'},
-        {t:'🎯 Training Plan',q:'Create a training plan for me'},
-        {t:'🏆 Leaderboard',q:'Show the leaderboard'},
-        {t:'🧠 How It Works',q:'How does BOS training work?'},
-        {t:'⚡ Quick Warmup',q:'Give me a quick warmup routine'}
-      ];
-      var chipsES=[
-        {t:'📊 Mis Stats',q:'Muéstrame mis estadísticas'},
-        {t:'🎯 Plan de Entrenamiento',q:'Crea un plan de entrenamiento para mí'},
-        {t:'🏆 Leaderboard',q:'Muéstrame el leaderboard'},
-        {t:'🧠 Cómo Funciona',q:'¿Cómo funciona el entrenamiento BOS?'},
-        {t:'⚡ Calentamiento',q:'Dame una rutina rápida de calentamiento'}
-      ];
-      var chips=lang==='es'?chipsES:chipsEN;
-      var html='<div class="hero">'
-        +'<div class="hero-av">🎯</div>'
-        +'<div class="hero-title"><span class="gold">COACH</span> BOS</div>'
-        +'<div class="hero-coached">GET COACHED.<span class="tm">™</span></div>'
-        +'<div class="hero-sub en">Your AI sideline coach. Ask me about your performance, training plans, or anything esports. I\'m here to make you better.</div>'
-        +'<div class="hero-sub es">Tu coach AI de banquillo. Pregúntame sobre tu rendimiento, planes de entrenamiento, o cualquier cosa de esports. Estoy aquí pa\' hacerte mejor.</div>'
-        +'<div class="chips">';
-      chips.forEach(function(c){
-        html+='<div class="chip" onclick="tapChip(\''+c.q.replace(/'/g,"\\'")+'\')">'+c.t+'</div>';
-      });
-      html+='</div></div>';
+      var html='<div class="welcome">'
+        +'<div class="w-av">🎯</div>'
+        +'<div class="w-title"><span class="gold">COACH</span> BOS</div>'
+        +'<div class="w-coached">GET COACHED.<span class="tm">™</span></div>'
+        +'<div class="w-sub en">The voice of Puerto Rico esports. Ask me anything — tournaments, strategy, GAMERGY, game tips, the PR scene, or how to level up your game. I\'m here for every gamer on the island.</div>'
+        +'<div class="w-sub es">La voz del esports en Puerto Rico. Pregúntame lo que sea — torneos, estrategia, GAMERGY, tips de juego, la escena PR, o cómo subir tu nivel. Estoy aquí pa\' cada gamer en la isla.</div>'
+        +'<div class="w-badge en">🇵🇷 Puerto Rico Esports Authority</div>'
+        +'<div class="w-badge es">🇵🇷 Autoridad Esports de Puerto Rico</div>'
+        +'</div>';
+
+      if(lang==='es'){
+        html+='<div class="chip-section">'
+          +'<div class="chip-label">🏆 ESCENA PR</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-gold" onclick="tapChip(\'¿Qué es GAMERGY Puerto Rico?\')">GAMERGY PR</div>'
+          +'<div class="chip chip-gold" onclick="tapChip(\'¿Cómo está la escena competitiva en Puerto Rico?\')">Escena Competitiva</div>'
+          +'<div class="chip chip-gold" onclick="tapChip(\'¿Dónde puedo competir en PR?\')">Dónde Competir</div>'
+          +'</div>'
+          +'<div class="chip-label">🎮 ESTRATEGIA</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-teal" onclick="tapChip(\'Dame tips para mejorar en Valorant\')">Tips Valorant</div>'
+          +'<div class="chip chip-teal" onclick="tapChip(\'¿Cómo mejorar mi aim?\')">Mejorar Aim</div>'
+          +'<div class="chip chip-teal" onclick="tapChip(\'Mejores agentes para ranked\')">Mejores Agentes</div>'
+          +'</div>'
+          +'<div class="chip-label">🧠 ENTRENAMIENTO</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-orange" onclick="tapChip(\'Crea una rutina de calentamiento antes de ranked\')">Rutina Warmup</div>'
+          +'<div class="chip chip-orange" onclick="tapChip(\'¿Cómo entreno mi velocidad de reacción?\')">Velocidad de Reacción</div>'
+          +'</div>'
+          +'<div class="chip-label">💬 GENERAL</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-cyan" onclick="tapChip(\'¿Qué es BOS Esports?\')">Qué es BOS</div>'
+          +'<div class="chip chip-cyan" onclick="tapChip(\'¿Cuáles son los juegos más populares en PR?\')">Juegos Populares PR</div>'
+          +'</div>'
+          +'</div>';
+      }else{
+        html+='<div class="chip-section">'
+          +'<div class="chip-label">🏆 PR SCENE</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-gold" onclick="tapChip(\'What is GAMERGY Puerto Rico?\')">GAMERGY PR</div>'
+          +'<div class="chip chip-gold" onclick="tapChip(\'How is the competitive esports scene in Puerto Rico?\')">PR Comp Scene</div>'
+          +'<div class="chip chip-gold" onclick="tapChip(\'Where can I compete in Puerto Rico?\')">Where to Compete</div>'
+          +'</div>'
+          +'<div class="chip-label">🎮 STRATEGY</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-teal" onclick="tapChip(\'Give me tips to improve at Valorant\')">Valorant Tips</div>'
+          +'<div class="chip chip-teal" onclick="tapChip(\'How do I improve my aim?\')">Improve Aim</div>'
+          +'<div class="chip chip-teal" onclick="tapChip(\'Best agents for ranked play\')">Best Agents</div>'
+          +'</div>'
+          +'<div class="chip-label">🧠 TRAINING</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-orange" onclick="tapChip(\'Create a warmup routine before ranked\')">Warmup Routine</div>'
+          +'<div class="chip chip-orange" onclick="tapChip(\'How do I train my reaction speed?\')">Reaction Speed</div>'
+          +'</div>'
+          +'<div class="chip-label">💬 GENERAL</div>'
+          +'<div class="chips">'
+          +'<div class="chip chip-cyan" onclick="tapChip(\'What is BOS Esports?\')">What is BOS</div>'
+          +'<div class="chip chip-cyan" onclick="tapChip(\'What are the most popular games in Puerto Rico?\')">Popular Games PR</div>'
+          +'</div>'
+          +'</div>';
+      }
       chat.innerHTML=html;
     }
 
     /* ═══ MESSAGES ═══ */
-    function clearHero(){var h=chat.querySelector('.hero');if(h)h.remove();}
+    function clearWelcome(){var w=chat.querySelector('.welcome');if(w)w.remove();var c=chat.querySelector('.chip-section');if(c)c.remove();}
 
     function addBub(who,text,isErr){
-      clearHero();
+      clearWelcome();
       var r=document.createElement('div');
       r.className='row row-'+who;
       var a=document.createElement('div');
@@ -220,7 +258,7 @@
     }
 
     function addDots(){
-      clearHero();
+      clearWelcome();
       var r=document.createElement('div');
       r.className='row row-bos';r.id='dots';
       var a=document.createElement('div');
@@ -262,11 +300,9 @@
 
       addBub('user',text);
       hist.push({role:'user',content:text});
-
       addDots();
 
       try{
-        debug('Calling Coach BOS...',true);
         var ctrl=new AbortController();
         var tmout=setTimeout(function(){ctrl.abort();},30000);
 
@@ -281,9 +317,6 @@
         killDots();
 
         if(!res.ok){
-          var errText='HTTP '+res.status;
-          try{var errData=await res.json();errText=errData.error||errText;}catch(e){}
-          debug('Error: '+errText,false);
           var errMsgEN='Had a timeout. Try again — I\'m warming back up. ⚡';
           var errMsgES='Se me fue el tiempo. Intenta de nuevo — estoy calentando. ⚡';
           addBub('bos',lang==='es'?errMsgES:errMsgEN,true);
@@ -292,7 +325,6 @@
 
         var data=await res.json();
         var reply=data.reply||'...';
-        debug('✅ Coach responded',true);
         addBub('bos',reply);
         hist.push({role:'assistant',content:reply});
         if(hist.length>40)hist=hist.slice(-40);
@@ -300,14 +332,12 @@
       }catch(e){
         killDots();
         if(e.name==='AbortError'){
-          debug('Timeout — 30s no response',false);
           var toEN='I\'m warming up from cold start. Give me 10 seconds and try again. ⚡';
           var toES='Estoy calentando del cold start. Dame 10 segundos e intenta de nuevo. ⚡';
           addBub('bos',lang==='es'?toES:toEN,true);
         }else{
-          debug('Error: '+e.message,false);
-          var ceEN='Connection error ('+e.message+'). Try again. ⚡';
-          var ceES='Error de conexión ('+e.message+'). Intenta de nuevo. ⚡';
+          var ceEN='Connection issue. Try again. ⚡';
+          var ceES='Problema de conexión. Intenta de nuevo. ⚡';
           addBub('bos',lang==='es'?ceES:ceEN,true);
         }
       }
@@ -319,15 +349,15 @@
 
     /* ═══ SHARE ═══ */
     window.shareCoach=function(){
-      var shareData={title:'Coach BOS — GET COACHED.™',text:'Talk to Coach BOS — your AI sideline coach for esports. GET COACHED.™',url:window.location.href};
+      var url=window.location.href;
+      var shareData={title:'Coach BOS — PR Esports Authority 🇵🇷',text:'Talk esports with Coach BOS — the AI authority on Puerto Rico esports. GAMERGY, tournaments, strategy, training. GET COACHED.™',url:url};
       if(navigator.share){navigator.share(shareData).catch(function(){});}
-      else{navigator.clipboard.writeText('Coach BOS — AI Esports Coach. GET COACHED.™ '+window.location.href).then(function(){var b=document.getElementById('shareBtn');b.textContent='✓';b.style.color='var(--teal)';setTimeout(function(){b.textContent='↗';b.style.color='';},2000);}).catch(function(){});}
+      else{navigator.clipboard.writeText('Coach BOS — PR Esports Authority 🇵🇷 '+url).then(function(){var b=document.getElementById('shareBtn');b.textContent='✓';b.style.color='var(--teal)';setTimeout(function(){b.textContent='↗';b.style.color='';},2000);}).catch(function(){});}
     };
 
     /* ═══ BOOT ═══ */
-    var savedLang;
-    try{savedLang=localStorage.getItem('bos-lang');}catch(e){}
-    setLang(savedLang||'en');
+    var saved;try{saved=localStorage.getItem('bos-lang');}catch(e){}
+    setLang(saved||'en');
     showWelcome();
     if(window.innerWidth>600)inp.focus();
 
