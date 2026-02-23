@@ -170,6 +170,8 @@
       langBtn.textContent=l==='en'?'ES':'EN';
       inp.placeholder=l==='en'?'Talk esports with Coach BOS...':'Habla esports con Coach BOS...';
       try{localStorage.setItem('bos-lang',l);}catch(e){}
+      /* re-render welcome if still showing */
+      if(chat.querySelector('.welcome'))showWelcome();
     }
     window.toggleLang=function(){setLang(lang==='en'?'es':'en');};
 
@@ -185,62 +187,11 @@
         +'<div class="w-badge es">🇵🇷 Autoridad Esports de Puerto Rico</div>'
         +'</div>';
 
-      if(lang==='es'){
-        html+='<div class="chip-section">'
-          +'<div class="chip-label">🏆 ESCENA PR</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-gold" onclick="tapChip(\'¿Qué es GAMERGY Puerto Rico?\')">GAMERGY PR</div>'
-          +'<div class="chip chip-gold" onclick="tapChip(\'¿Cómo está la escena competitiva en Puerto Rico?\')">Escena Competitiva</div>'
-          +'<div class="chip chip-gold" onclick="tapChip(\'¿Dónde puedo competir en PR?\')">Dónde Competir</div>'
-          +'</div>'
-          +'<div class="chip-label">🎮 ESTRATEGIA</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-teal" onclick="tapChip(\'Dame tips para mejorar en Valorant\')">Tips Valorant</div>'
-          +'<div class="chip chip-teal" onclick="tapChip(\'¿Cómo mejorar mi aim?\')">Mejorar Aim</div>'
-          +'<div class="chip chip-teal" onclick="tapChip(\'Mejores agentes para ranked\')">Mejores Agentes</div>'
-          +'</div>'
-          +'<div class="chip-label">🧠 ENTRENAMIENTO</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-orange" onclick="tapChip(\'Crea una rutina de calentamiento antes de ranked\')">Rutina Warmup</div>'
-          +'<div class="chip chip-orange" onclick="tapChip(\'¿Cómo entreno mi velocidad de reacción?\')">Velocidad de Reacción</div>'
-          +'</div>'
-          +'<div class="chip-label">💬 GENERAL</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-cyan" onclick="tapChip(\'¿Qué es BOS Esports?\')">Qué es BOS</div>'
-          +'<div class="chip chip-cyan" onclick="tapChip(\'¿Cuáles son los juegos más populares en PR?\')">Juegos Populares PR</div>'
-          +'</div>'
-          +'</div>';
-      }else{
-        html+='<div class="chip-section">'
-          +'<div class="chip-label">🏆 PR SCENE</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-gold" onclick="tapChip(\'What is GAMERGY Puerto Rico?\')">GAMERGY PR</div>'
-          +'<div class="chip chip-gold" onclick="tapChip(\'How is the competitive esports scene in Puerto Rico?\')">PR Comp Scene</div>'
-          +'<div class="chip chip-gold" onclick="tapChip(\'Where can I compete in Puerto Rico?\')">Where to Compete</div>'
-          +'</div>'
-          +'<div class="chip-label">🎮 STRATEGY</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-teal" onclick="tapChip(\'Give me tips to improve at Valorant\')">Valorant Tips</div>'
-          +'<div class="chip chip-teal" onclick="tapChip(\'How do I improve my aim?\')">Improve Aim</div>'
-          +'<div class="chip chip-teal" onclick="tapChip(\'Best agents for ranked play\')">Best Agents</div>'
-          +'</div>'
-          +'<div class="chip-label">🧠 TRAINING</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-orange" onclick="tapChip(\'Create a warmup routine before ranked\')">Warmup Routine</div>'
-          +'<div class="chip chip-orange" onclick="tapChip(\'How do I train my reaction speed?\')">Reaction Speed</div>'
-          +'</div>'
-          +'<div class="chip-label">💬 GENERAL</div>'
-          +'<div class="chips">'
-          +'<div class="chip chip-cyan" onclick="tapChip(\'What is BOS Esports?\')">What is BOS</div>'
-          +'<div class="chip chip-cyan" onclick="tapChip(\'What are the most popular games in Puerto Rico?\')">Popular Games PR</div>'
-          +'</div>'
-          +'</div>';
-      }
       chat.innerHTML=html;
     }
 
     /* ═══ MESSAGES ═══ */
-    function clearWelcome(){var w=chat.querySelector('.welcome');if(w)w.remove();var c=chat.querySelector('.chip-section');if(c)c.remove();}
+    function clearWelcome(){var w=chat.querySelector('.welcome');if(w)w.remove();}
 
     function addBub(who,text,isErr){
       clearWelcome();
@@ -281,12 +232,6 @@
     inp.addEventListener('keydown',function(e){
       if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(!busy&&this.value.trim())doSend();}
     });
-
-    window.tapChip=function(q){
-      inp.value=q;
-      sendBtn.disabled=false;
-      doSend();
-    };
 
     /* ═══ SEND ═══ */
     window.doSend=async function(){
